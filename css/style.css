@@ -22,9 +22,11 @@ body {
     font-family: var(--font-jp);
     background-color: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.8;
+    line-height: 1.7;
     font-size: 18px;
-    /* 本文 18-20px */
+    /* 18-19px */
+    letter-spacing: 0.03em;
+    /* 0.02-0.04em */
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
 }
@@ -53,7 +55,8 @@ h3 {
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: background-color 0.2s;
+    transition: background-color 0.12s;
+    /* 0.12s */
 }
 
 .kg-header.is-flashing {
@@ -80,22 +83,42 @@ h3 {
     align-items: center;
 }
 
+/* ナビリンク全体のベース */
 .kg-nav-link {
     margin-left: 26px;
     text-decoration: none;
     color: #1a1d21;
     font-size: 16px;
-    /* ナビ 15-16px */
     font-weight: 500;
     position: relative;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s ease-out;
     display: inline-flex;
     align-items: center;
+    gap: 6px;
+    /* 呼吸アニメ（常時） */
+    animation: nav-opacity-breathe 2.6s ease-in-out infinite;
+}
+
+/* 呼吸アニメ（透明度パルス） */
+@keyframes nav-opacity-breathe {
+    0% {
+        opacity: 0.85;
+    }
+
+    50% {
+        opacity: 1.0;
+    }
+
+    100% {
+        opacity: 0.85;
+    }
 }
 
 /* ナビのホバー・アクティブ演出 */
 .kg-nav-link:hover {
     color: var(--accent-color);
+    transform: scale(1.04);
+    /* 軽く拡大 */
 }
 
 /* 下線アニメーション用の要素 */
@@ -116,50 +139,45 @@ h3 {
     opacity: 1;
 }
 
-/* クリック時のスライドバーアニメーション用クラス */
+/* クリック時のスライドバーアニメーション用クラス（左→右） */
 .kg-nav-link.is-active::after {
     width: 100%;
     opacity: 1;
     transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* ナビ横の青春ドット（JSで制御、またはCSSでホバー時表示） */
-.nav-dot {
+/* ナビ横の小さなドット */
+.kg-nav-link .nav-dot {
     display: inline-block;
     width: 6px;
     height: 6px;
-    background-color: var(--accent-color);
-    border-radius: 50%;
-    margin-left: 6px;
+    border-radius: 999px;
+    background: rgba(0, 180, 255, 0.0);
+    transform: scale(0.8);
     opacity: 0;
-    transform: scale(0);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
+/* ホバー時：ふわっと光る */
 .kg-nav-link:hover .nav-dot {
-    opacity: 1;
-    transform: scale(1);
-    animation: nav-dot-pulse 1.2s infinite;
+    opacity: 0.9;
+    background: rgba(0, 180, 255, 0.9);
+    transform: scale(1.0);
 }
 
+/* クリック時：ポンと光る */
 .kg-nav-link.is-clicked .nav-dot {
     opacity: 1;
     transform: scale(1.4);
+    background: rgba(0, 180, 255, 1.0);
     transition: transform 0.1s;
 }
 
-@keyframes nav-dot-pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.2);
-    }
+/* アクティブなナビリンク */
+.kg-nav-link.is-active .nav-dot {
+    opacity: 0.9;
+    background: rgba(0, 180, 255, 0.9);
 }
-
 
 /* スマホ用ナビ */
 @media (max-width: 640px) {
@@ -186,7 +204,6 @@ h3 {
 
 .section {
     padding: var(--spacing-section) 0;
-    /* 背景色は透明または白に統一（Hero以外が水色にならないように） */
     background: transparent;
 }
 
@@ -194,9 +211,10 @@ h3 {
     position: relative;
     display: inline-block;
     font-family: var(--font-jp);
-    font-size: 44px;
-    /* 40-44px */
+    font-size: 42px;
+    /* 42px */
     font-weight: 800;
+    /* 800 */
     color: #1a2a33;
     margin-bottom: 32px;
     letter-spacing: 0.02em;
@@ -227,7 +245,8 @@ h3 {
 }
 
 .section-content {
-    font-size: 18px;
+    font-size: 19px;
+    /* 18-19px */
     line-height: 1.7;
     opacity: 0;
     transform: translateY(20px);
@@ -241,7 +260,7 @@ h3 {
 
 .section-content p {
     margin-bottom: 1.5rem;
-    font-size: 18px;
+    font-size: 19px;
     line-height: 1.7;
 }
 
@@ -250,6 +269,8 @@ h3 {
 ================================ */
 
 .hero {
+    position: relative;
+    overflow: hidden;
     height: 80vh;
     padding-top: 120px;
     padding-bottom: 80px;
@@ -257,10 +278,50 @@ h3 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
-    overflow: hidden;
     /* アニメーションで背景を制御 */
     animation: hero-bg-wipe 3s ease-out forwards;
+}
+
+/* 筆でシャッと引いたようなアクアの帯（左→右） */
+.hero::before {
+    content: "";
+    position: absolute;
+    left: -20%;
+    top: 45%;
+    width: 0;
+    height: 50%;
+    /* 太めの筆 */
+    background: linear-gradient(90deg,
+            rgba(0, 180, 255, 0.0) 0%,
+            rgba(0, 180, 255, 0.25) 25%,
+            rgba(0, 180, 255, 0.55) 50%,
+            rgba(0, 180, 255, 0.25) 75%,
+            transparent 100%);
+    opacity: 0;
+    filter: blur(8px);
+    transform-origin: left center;
+    pointer-events: none;
+    /* 1回のみ発動 */
+    animation: hero-brush 0.9s ease-out 0.2s forwards;
+    will-change: width, opacity;
+}
+
+@keyframes hero-brush {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+
+    30% {
+        width: 50%;
+        opacity: 0.8;
+    }
+
+    100% {
+        width: 150%;
+        opacity: 0;
+        /* 残像0.35sで消える */
+    }
 }
 
 @keyframes hero-bg-wipe {
@@ -269,10 +330,10 @@ h3 {
     }
 
     100% {
-        /* 中央は白をしっかり残しつつ、外側にごく薄いアクアがにじむ程度 */
+        /* 白80%を残す */
         background: radial-gradient(circle at center,
-                #ffffff 60%,
-                #f7fbff 85%,
+                #ffffff 70%,
+                #f7fbff 90%,
                 #eaf6ff 100%);
     }
 }
@@ -284,9 +345,10 @@ h3 {
 
 .hero-title {
     font-family: var(--font-jp);
-    font-size: 64px;
-    /* 60-68px */
+    font-size: 72px;
+    /* 72px */
     font-weight: 900;
+    /* 900 */
     line-height: 1.15;
     color: #1a2a33;
     letter-spacing: 0.01em;
@@ -383,7 +445,6 @@ h3 {
 
     12% {
         transform: scale(1.15);
-        /* 14px -> ~16px, 16px -> ~18px range */
         opacity: 0.95;
         box-shadow: 0 0 18px rgba(0, 180, 255, 0.8);
     }
@@ -429,38 +490,25 @@ h3 {
 
 .cursor-dot {
     position: fixed;
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    /* PC 8px */
+    height: 8px;
     border-radius: 50%;
-    background: rgba(0, 180, 255, 0.25);
     pointer-events: none;
     z-index: 9999;
+
+    background: rgba(0, 180, 255, 0.35);
+    /* rgba(0,180,255,0.35) */
+
+    mix-blend-mode: screen;
+    filter: blur(1px);
+    /* ブラー少し */
+
     transform: translate(-50%, -50%);
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-    filter: blur(0.8px);
-    animation: cursor-heartbeat 4s ease-in-out infinite;
-}
-
-@keyframes cursor-heartbeat {
-
-    0%,
-    60%,
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.6;
-    }
-
-    15%,
-    65% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0.9;
-    }
-
-    25%,
-    75% {
-        transform: translate(-50%, -50%) scale(1.05);
-        opacity: 0.7;
-    }
+    transition: transform 0.15s ease-out;
+    /* 遅延 0.15s */
+    opacity: 0.85;
+    will-change: transform;
 }
 
 /* ================================
@@ -468,13 +516,15 @@ h3 {
 ================================ */
 
 .mission.section,
-.services.section {
+.services.section,
+.consultation.section {
     position: relative;
     overflow: hidden;
 }
 
 .mission.section::before,
-.services.section::before {
+.services.section::before,
+.consultation.section::before {
     content: "";
     position: absolute;
     left: -20%;
@@ -490,7 +540,8 @@ h3 {
 }
 
 .mission.section.section-visible::before,
-.services.section.section-visible::before {
+.services.section.section-visible::before,
+.consultation.section.section-visible::before {
     animation: section-bg-swipe 0.8s ease-out forwards;
 }
 
@@ -512,7 +563,12 @@ h3 {
 
 .mission .section-content {
     text-align: left;
-    /* 0.1秒ずつずらしてフェードインはJSでdelay設定、またはCSSでnth-child */
+}
+
+.mission-target {
+    margin-top: 2rem;
+    font-weight: 700;
+    color: #1a2a33;
 }
 
 /* ================================
@@ -608,7 +664,6 @@ h3 {
     position: relative;
     overflow: hidden;
     opacity: 0;
-    /* 上段は左から、下段は右から */
 }
 
 .service-item::before {
@@ -623,7 +678,6 @@ h3 {
 
 .service-item:hover {
     transform: translateY(-4px) !important;
-    /* アニメーション後のtransformを上書き */
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.07);
 }
 
@@ -645,8 +699,10 @@ h3 {
 }
 
 .service-item h3 {
-    font-size: 22px;
+    font-size: 24px;
+    /* 22-24px */
     font-weight: 700;
+    /* 700 */
     margin-bottom: 1rem;
 }
 
@@ -654,6 +710,41 @@ h3 {
     font-size: 17px;
     font-weight: 500;
     color: #555;
+}
+
+/* ================================
+   Consultation
+================================ */
+
+.consultation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 800px;
+    background: #f8fbff;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #eaf4ff;
+}
+
+.consultation-list li {
+    margin-bottom: 1rem;
+    padding-left: 1.5em;
+    position: relative;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.consultation-list li:last-child {
+    margin-bottom: 0;
+}
+
+.consultation-list li::before {
+    content: '✔';
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 /* ================================
@@ -705,23 +796,6 @@ h3 {
     transition-delay: 0.5s;
 }
 
-/* Messageセクション内のRipple (大きく広がる) */
-.youth-ripple.message-ripple {
-    animation: message-ripple-animation 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-@keyframes message-ripple-animation {
-    0% {
-        transform: scale(0);
-        opacity: 0.3;
-    }
-
-    100% {
-        transform: scale(6);
-        opacity: 0;
-    }
-}
-
 /* ================================
    Contact
 ================================ */
@@ -735,11 +809,16 @@ h3 {
 .contact-email-pill {
     text-align: center;
     margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
 }
 
-.contact-email-pill a {
+/* Pillデザイン */
+.contact-email-pill span {
     display: inline-block;
-    padding: 14px 32px;
+    padding: 14px 24px;
     border-radius: 999px;
     background: #00B4FF;
     color: #ffffff;
@@ -747,27 +826,56 @@ h3 {
     font-size: 18px;
     letter-spacing: 0.03em;
     box-shadow: 0 10px 24px rgba(0, 180, 255, 0.35);
-    transition:
-        transform 0.16s ease-out,
-        box-shadow 0.16s ease-out,
-        background 0.2s ease-out;
 }
 
-.contact-email-pill a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0, 180, 255, 0.45);
-    background: #11c0ff;
+.copy-btn {
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid #00B4FF;
+    background: #fff;
+    color: #00B4FF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.contact-email-pill a:active {
+.copy-btn:hover {
+    background: #eaf6ff;
+}
+
+.copy-result {
+    text-align: center;
+    font-size: 14px;
+    color: #00B4FF;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.copy-result.show {
+    opacity: 1;
     transform: translateY(0);
-    box-shadow: 0 8px 18px rgba(0, 180, 255, 0.30);
 }
 
 .contact-note {
     text-align: center;
     font-size: 15px;
     color: #666;
+    margin-bottom: 1rem;
+}
+
+.contact-price-note {
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.contact-privacy {
+    text-align: center;
+    font-size: 13px;
+    color: #999;
 }
 
 /* ================================
@@ -775,161 +883,192 @@ h3 {
 ================================ */
 
 .footer {
-    padding: 2rem 0;
+    padding: 3rem 0;
+    background: #f9fbfd;
+    border-top: 1px solid #edf2f7;
+    margin-top: 4rem;
+}
+
+.footer-info-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.footer-info-wrapper h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a2a33;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+}
+
+.footer-info-wrapper p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.copyright {
     text-align: center;
     font-size: 14px;
     color: #999;
-    margin-top: 2rem;
 }
 
-/* ================================
-   Youth Ripple (旧 Ripple)
-================================ */
-
-/* ================================
-   Youth Ripple (旧 Ripple) -> 全画面波紋用に統合
-   ================================ */
+@media (max-width: 640px) {
+    .footer-info-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+}
 
 /* =========================
    青春ドット（アクア波紋）のスタイル
    ========================= */
+
+/* 内側の波紋（第1波：小さく強い） */
 .ripple {
     position: absolute;
     pointer-events: none;
     border-radius: 999px;
     z-index: 9998;
 
-    /* 画面全体をベタ塗りにせず、中心からにじむようなアクアの水紋 */
+    /* rgba(0,180,255,0.45) */
     background: radial-gradient(circle,
-            rgba(0, 180, 255, 0.40) 0%,
-            rgba(0, 180, 255, 0.22) 35%,
-            rgba(0, 180, 255, 0.08) 60%,
+            rgba(0, 180, 255, 0.45) 0%,
+            rgba(0, 180, 255, 0.25) 40%,
             rgba(0, 180, 255, 0.0) 80%);
 
-    transform: scale(0.2);
+    transform: scale(0.6);
     opacity: 0;
-    animation: ripple-soft 1.1s ease-out forwards;
+    animation: ripple-soft-inner 0.7s ease-out forwards;
+    will-change: transform, opacity;
 }
 
-/* 静かに波紋が広がっていくアニメーション */
-@keyframes ripple-soft {
+/* 外側の波紋（第2波：淡く大きい） */
+.ripple-outer {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+    z-index: 9997;
+
+    /* rgba(0,180,255,0.18) */
+    background: radial-gradient(circle,
+            rgba(0, 180, 255, 0.18) 0%,
+            rgba(0, 180, 255, 0.08) 40%,
+            rgba(0, 180, 255, 0.0) 80%);
+
+    transform: scale(1.2);
+    opacity: 0;
+    animation: ripple-soft-outer 0.7s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+/* 内側：scale 0.6 -> 1.8 */
+@keyframes ripple-soft-inner {
     0% {
-        transform: scale(0.2);
+        transform: scale(0.6);
+        opacity: 0.0;
+    }
+
+    20% {
+        transform: scale(0.9);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0.0;
+    }
+}
+
+/* 外側：scale 1.2 -> 3.2 */
+@keyframes ripple-soft-outer {
+    0% {
+        transform: scale(1.2);
         opacity: 0.0;
     }
 
     30% {
-        transform: scale(0.9);
-        opacity: 0.55;
-    }
-
-    70% {
-        transform: scale(1.7);
-        opacity: 0.30;
+        transform: scale(1.5);
+        opacity: 0.5;
     }
 
     100% {
-        transform: scale(2.2);
+        transform: scale(3.2);
         opacity: 0.0;
     }
 }
 
 /* ================================
-   Responsive
+   Mobile Optimization
 ================================ */
+@media (max-width: 640px) {
 
-@media (max-width: 768px) {
-    .section {
-        padding: var(--spacing-section-mobile) 0;
-    }
-
-    .hero {
-        height: auto;
-        padding-top: 120px;
-        padding-bottom: 80px;
-    }
-
+    /* Heroフォントサイズ縮小 */
     .hero-title {
-        font-size: 40px;
+        font-size: 48px;
+        /* 18%縮小相当 */
     }
 
-    .hero-sub {
-        font-size: 18px;
+    /* 筆アニメ弱め */
+    .hero::before {
+        opacity: 0.6;
     }
 
-    .section-title {
-        font-size: 30px;
+    /* カーソル追従：スマホでは無効化（JSで制御またはdisplay:none） */
+    .cursor-dot {
+        display: none;
     }
 
-    .submit-btn {
-        width: 100%;
+    /* 波紋サイズ 60% */
+    .ripple {
+        transform: scale(0.36);
+        /* 0.6 * 0.6 */
+        animation-name: ripple-soft-inner-mobile;
     }
-}
 
-a {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: color 0.3s;
-}
+    .ripple-outer {
+        transform: scale(0.72);
+        /* 1.2 * 0.6 */
+        animation-name: ripple-soft-outer-mobile;
+    }
 
-a:hover {
-    color: var(--accent-color);
-}
+    @keyframes ripple-soft-inner-mobile {
+        0% {
+            transform: scale(0.36);
+            opacity: 0;
+        }
 
-/* Contact：メールコピー UI */
-.contact-email-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 24px auto 12px;
-    padding: 12px 24px;
-    background: #ffffff;
-    border-radius: 999px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 180, 255, 0.2);
-    font-size: 18px;
-    font-weight: 500;
-}
+        20% {
+            transform: scale(0.54);
+            opacity: 0.8;
+        }
 
-.contact-email-pill #email-text {
-    letter-spacing: 0.03em;
-}
+        100% {
+            transform: scale(1.08);
+            opacity: 0;
+        }
+    }
 
-/* コピー用ボタン */
-.copy-btn {
-    margin-left: 4px;
-    padding: 6px 14px;
-    background: var(--accent-color);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.08s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 180, 255, 0.25);
-}
+    @keyframes ripple-soft-outer-mobile {
+        0% {
+            transform: scale(0.72);
+            opacity: 0;
+        }
 
-.copy-btn:hover {
-    background: #0095d9;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(0, 180, 255, 0.32);
-}
+        30% {
+            transform: scale(0.9);
+            opacity: 0.5;
+        }
 
-.copy-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 8px rgba(0, 180, 255, 0.2);
-}
-
-
-
-/* コピー完了メッセージ */
-.copy-result {
-    opacity: 0;
-    font-size: 14px;
-    margin-top: 4px;
-    color: var(--accent-color);
-    transition: opacity 0.3s ease;
-    text-align: center;
+        100% {
+            transform: scale(1.92);
+            opacity: 0;
+        }
+    }
 }

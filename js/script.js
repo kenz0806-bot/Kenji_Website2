@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupScrollAnimations();
     setupRippleEffect();
     setupNavigation();
+    setupContact();
 });
 
 // ================================
@@ -17,18 +18,19 @@ function setupCursorDot() {
     const cursorDot = document.querySelector('.cursor-dot');
     if (!cursorDot) return;
 
+    // スマホではCSSでdisplay:noneにしているため、JSはシンプルに
     document.addEventListener('mousemove', (e) => {
+        // 遅延はCSSのtransition: transform 0.15s ease-out で実現
         cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     });
 }
 
 // ================================
 // スクロールアニメーション
-//  - Intersection Observer で .section-visible を付与
 // ================================
 
 function setupScrollAnimations() {
-    const targets = document.querySelectorAll('.section');
+    const targets = document.querySelectorAll('.section, .fade-up');
     if (!targets.length) return;
 
     const observer = new IntersectionObserver(
@@ -37,99 +39,108 @@ function setupScrollAnimations() {
                 if (!entry.isIntersecting) return;
 
                 const el = entry.target;
-                el.classList.add('section-visible');
+                if (el.classList.contains('section')) {
+                    el.classList.add('section-visible');
+                } else {
+                    const section = el.closest('.section');
+                    if (section) {
+                        section.classList.add('section-visible');
+                    }
+                }
                 obs.unobserve(el);
             });
-        },
-        {
-            threshold: 0.15, // 少し早めに発火
-        }
+        }, {
+        threshold: 0.15,
+    }
     );
 
     targets.forEach((el) => observer.observe(el));
 }
 
 // ================================
-// ボタン・リンクの Youth Ripple Effect
+// 全画面 2段階波紋（青春ドット Ripple）
 // ================================
 
 function setupRippleEffect() {
-    // ============================
-    // 全画面 青春ドット（水の波紋）
-    // ============================
     document.addEventListener('click', function (event) {
-        // 必要であれば、波紋を出したくない要素があればここで除外できます
-        // 例：コピー用ボタンなど
-        // if (event.target.closest('#copy-email')) return;
+        // コピーボタンなどは除外
+        if (event.target.closest('.copy-btn')) return;
 
-        const ripple = document.createElement('span');
-        ripple.classList.add('ripple');
+        const baseSize = 260; // 基本サイズ
 
-        // 画面全体をベタ塗りにしないように、サイズは「ほどよい円」にとどめる
-        const size = 260; // 必要に応じて 220〜320 程度で微調整可
-        ripple.style.width = size + 'px';
-        ripple.style.height = size + 'px';
+        // クリック位置
+        const x = event.clientX;
+        const y = event.clientY + window.scrollY;
 
-        // スクロール位置を考慮しつつ、クリック位置を中心に配置
-        const x = event.clientX - size / 2;
-        const y = event.clientY + window.scrollY - size / 2;
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
+        // 内側の波紋 (第1波)
+        const inner = document.createElement('span');
+        inner.classList.add('ripple');
+        inner.style.width = baseSize + 'px';
+        inner.style.height = baseSize + 'px';
+        inner.style.left = (x - baseSize / 2) + 'px';
+        inner.style.top = (y - baseSize / 2) + 'px';
 
-        document.body.appendChild(ripple);
+        // 外側の波紋 (第2波)
+        const outer = document.createElement('span');
+        outer.classList.add('ripple-outer');
+        const outerSize = baseSize * 1.4;
+        outer.style.width = outerSize + 'px';
+        outer.style.height = outerSize + 'px';
+        outer.style.left = (x - outerSize / 2) + 'px';
+        outer.style.top = (y - outerSize / 2) + 'px';
 
-        // CSS のアニメーション終了後に削除
-        ripple.addEventListener('animationend', () => {
-            ripple.remove();
-        });
+        document.body.appendChild(inner);
+        document.body.appendChild(outer);
+
+        // アニメーション終了後に削除
+        inner.addEventListener('animationend', () => inner.remove());
+        outer.addEventListener('animationend', () => outer.remove());
     });
 }
 
 // ================================
-// ナビゲーションのインタラクション
+// ナビゲーション
 // ================================
 
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.kg-nav-link');
     const header = document.querySelector('.kg-header');
 
-    // ナビリンクにドット要素を追加
+    // 初期状態で1つ目をアクティブに
+    if (navLinks.length > 0) {
+        navLinks[0].classList.add('is-active');
+    }
+
     navLinks.forEach(link => {
-        const dot = document.createElement('span');
-        dot.classList.add('nav-dot');
-        link.appendChild(dot);
+        if (!link.querySelector('.nav-dot')) {
+            const dot = document.createElement('span');
+            dot.classList.add('nav-dot');
+            link.appendChild(dot);
+        }
 
         link.addEventListener('click', function (e) {
-            e.preventDefault(); // スムーススクロールを自前で制御するため
+            e.preventDefault();
 
-            // 1. ドットがポンッと光る (is-clicked クラス)
-            this.classList.add('is-clicked');
-
-            // 2. 下線が走る (is-active クラス)
             // 他のリンクのactiveを外す
             navLinks.forEach(l => l.classList.remove('is-active'));
             this.classList.add('is-active');
 
-            // 3. 背景が一瞬淡いアクアに (header is-flashing)
+            // クリック演出（ポンと光る）
+            this.classList.add('is-clicked');
+            setTimeout(() => this.classList.remove('is-clicked'), 300);
+
+            // ヘッダーフラッシュ (0.12s)
             if (header) {
                 header.classList.add('is-flashing');
-                setTimeout(() => {
-                    header.classList.remove('is-flashing');
-                }, 100);
+                setTimeout(() => header.classList.remove('is-flashing'), 120);
             }
 
-            // ドットのアニメーションリセット
-            setTimeout(() => {
-                this.classList.remove('is-clicked');
-            }, 300);
-
-            // 4. スムーススクロール
+            // スムーススクロール
             const href = this.getAttribute('href');
             if (href && href.startsWith('#')) {
                 const targetId = href.substring(1);
                 const targetSection = document.getElementById(targetId);
                 if (targetSection) {
-                    // 少し遅延させてスクロール開始（演出を見せるため）
                     setTimeout(() => {
                         targetSection.scrollIntoView({
                             behavior: 'smooth',
@@ -142,30 +153,33 @@ function setupNavigation() {
     });
 }
 
-// ============================
-// Contact: メールアドレスコピー
-// ============================
-document.addEventListener("DOMContentLoaded", () => {
-    const copyBtn = document.getElementById("copy-email");
-    const emailTextEl = document.getElementById("email-text");
-    const copyResultEl = document.getElementById("copy-result");
+// ================================
+// Contact: メールコピー
+// ================================
 
-    if (!copyBtn || !emailTextEl || !copyResultEl) return;
+function setupContact() {
+    const copyBtn = document.getElementById('copy-email');
+    const emailText = document.getElementById('email-text');
+    const resultMsg = document.getElementById('copy-result');
 
-    copyBtn.addEventListener("click", () => {
-        const email = emailTextEl.textContent.trim();
-        if (!email) return;
+    if (!copyBtn || !emailText) return;
 
-        // Clipboard API を使ってコピー
-        navigator.clipboard.writeText(email).then(() => {
-            // メッセージを一時的に表示
-            copyResultEl.style.opacity = 1;
-            setTimeout(() => {
-                copyResultEl.style.opacity = 0;
-            }, 1800);
-        }).catch(() => {
-            // もし Clipboard API が使えない場合は、控えめなフォールバックだけ
-            alert("メールアドレスをコピーできませんでした。お手数ですが手動でコピーしてください。");
+    copyBtn.addEventListener('click', () => {
+        const textToCopy = emailText.textContent;
+
+        // mailtoリンクを開く
+        window.location.href = `mailto:${textToCopy}`;
+
+        // クリップボードにコピー
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            if (resultMsg) {
+                resultMsg.classList.add('show');
+                setTimeout(() => {
+                    resultMsg.classList.remove('show');
+                }, 3000);
+            }
+        }).catch(err => {
+            console.error('Copy failed', err);
         });
     });
-});
+}
