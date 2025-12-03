@@ -790,37 +790,47 @@ h3 {
    Youth Ripple (旧 Ripple) -> 全画面波紋用に統合
    ================================ */
 
-/* 青春ドット：全画面アクア波紋 */
-.youth-ripple {
+/* =========================
+   青春ドット（アクア波紋）のスタイル
+   ========================= */
+.ripple {
     position: absolute;
-    display: block;
-    /* width/height が効くようにする */
-    border-radius: 50%;
-    background: radial-gradient(circle,
-            rgba(0, 180, 255, 0.35) 0%,
-            rgba(0, 180, 255, 0.20) 40%,
-            rgba(0, 180, 255, 0.00) 70%);
-    transform: scale(0.1);
-    animation: youth-ripple 0.9s ease-out;
     pointer-events: none;
-    opacity: 0.9;
-    z-index: 3;
+    border-radius: 999px;
+    z-index: 9998;
+
+    /* 画面全体をベタ塗りにせず、中心からにじむようなアクアの水紋 */
+    background: radial-gradient(circle,
+            rgba(0, 180, 255, 0.40) 0%,
+            rgba(0, 180, 255, 0.22) 35%,
+            rgba(0, 180, 255, 0.08) 60%,
+            rgba(0, 180, 255, 0.0) 80%);
+
+    transform: scale(0.2);
+    opacity: 0;
+    animation: ripple-soft 1.1s ease-out forwards;
 }
 
-@keyframes youth-ripple {
+/* 静かに波紋が広がっていくアニメーション */
+@keyframes ripple-soft {
     0% {
-        transform: scale(0.1);
-        opacity: 0.9;
+        transform: scale(0.2);
+        opacity: 0.0;
     }
 
-    60% {
-        transform: scale(2.8);
-        opacity: 0.5;
+    30% {
+        transform: scale(0.9);
+        opacity: 0.55;
+    }
+
+    70% {
+        transform: scale(1.7);
+        opacity: 0.30;
     }
 
     100% {
-        transform: scale(3.4);
-        opacity: 0;
+        transform: scale(2.2);
+        opacity: 0.0;
     }
 }
 

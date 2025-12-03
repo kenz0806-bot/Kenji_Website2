@@ -54,33 +54,34 @@ function setupScrollAnimations() {
 // ================================
 
 function setupRippleEffect() {
-    // 画面全体で青春ドット（水の波紋）を出す
+    // ============================
+    // 全画面 青春ドット（水の波紋）
+    // ============================
     document.addEventListener('click', function (event) {
-        // 必要であれば、特定の要素では波紋を出さない条件をここに追加してください。
-        // 例）navのリンクだけ除外したい場合など：
-        // if (event.target.closest('.kg-nav-link')) return;
+        // 必要であれば、波紋を出したくない要素があればここで除外できます
+        // 例：コピー用ボタンなど
+        // if (event.target.closest('#copy-email')) return;
 
         const ripple = document.createElement('span');
-        ripple.classList.add('youth-ripple');
+        ripple.classList.add('ripple');
 
-        // 波紋の基本サイズ（画面サイズ基準で大きく）
-        const size = Math.max(window.innerWidth, window.innerHeight) * 2;
-        ripple.style.width = ripple.style.height = size + 'px';
+        // 画面全体をベタ塗りにしないように、サイズは「ほどよい円」にとどめる
+        const size = 260; // 必要に応じて 220〜320 程度で微調整可
+        ripple.style.width = size + 'px';
+        ripple.style.height = size + 'px';
 
-        // スクロール位置を考慮して、クリック位置の中央に配置
+        // スクロール位置を考慮しつつ、クリック位置を中心に配置
         const x = event.clientX - size / 2;
         const y = event.clientY + window.scrollY - size / 2;
-
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
 
-        // body 直下に追加して、どのセクション上でも確実に表示されるようにする
         document.body.appendChild(ripple);
 
-        // アニメーションが終わったら要素を削除して、DOMが溜まらないようにする
-        setTimeout(() => {
+        // CSS のアニメーション終了後に削除
+        ripple.addEventListener('animationend', () => {
             ripple.remove();
-        }, 1200);
+        });
     });
 }
 
