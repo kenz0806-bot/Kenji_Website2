@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupScrollAnimations();
     setupRippleEffect();
     setupNavigation();
-    setupContact();
+    setupNavigation();
+    setupContactCopy();
 });
 
 // ================================
@@ -30,7 +31,7 @@ function setupCursorDot() {
 // ================================
 
 function setupScrollAnimations() {
-    const targets = document.querySelectorAll('.section, .fade-up');
+    const targets = document.querySelectorAll('.section, .fade-up, .section-title, .section-content');
     if (!targets.length) return;
 
     const observer = new IntersectionObserver(
@@ -39,6 +40,11 @@ function setupScrollAnimations() {
                 if (!entry.isIntersecting) return;
 
                 const el = entry.target;
+
+                // 要素自体に is-visible を付与
+                el.classList.add('is-visible');
+
+                // 親セクションにも section-visible を付与（セクション単位の制御用）
                 if (el.classList.contains('section')) {
                     el.classList.add('section-visible');
                 } else {
@@ -65,36 +71,31 @@ function setupRippleEffect() {
     document.addEventListener('click', function (event) {
         // コピーボタンなどは除外
         if (event.target.closest('.copy-btn')) return;
+        if (event.target.closest('a')) return; // リンククリック時は邪魔しない
 
-        const baseSize = 260; // 基本サイズ
+        const isMobile = window.innerWidth <= 768;
+        const baseSize = isMobile ? 160 : 260; // モバイルは小さめ
 
         // クリック位置
         const x = event.clientX;
         const y = event.clientY + window.scrollY;
 
-        // 内側の波紋 (第1波)
-        const inner = document.createElement('span');
-        inner.classList.add('ripple');
-        inner.style.width = baseSize + 'px';
-        inner.style.height = baseSize + 'px';
-        inner.style.left = (x - baseSize / 2) + 'px';
-        inner.style.top = (y - baseSize / 2) + 'px';
+        // 波紋要素の生成
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        if (isMobile) {
+            ripple.classList.add('ripple--mobile');
+        }
 
-        // 外側の波紋 (第2波)
-        const outer = document.createElement('span');
-        outer.classList.add('ripple-outer');
-        const outerSize = baseSize * 1.4;
-        outer.style.width = outerSize + 'px';
-        outer.style.height = outerSize + 'px';
-        outer.style.left = (x - outerSize / 2) + 'px';
-        outer.style.top = (y - outerSize / 2) + 'px';
+        ripple.style.width = baseSize + 'px';
+        ripple.style.height = baseSize + 'px';
+        ripple.style.left = (x - baseSize / 2) + 'px';
+        ripple.style.top = (y - baseSize / 2) + 'px';
 
-        document.body.appendChild(inner);
-        document.body.appendChild(outer);
+        document.body.appendChild(ripple);
 
         // アニメーション終了後に削除
-        inner.addEventListener('animationend', () => inner.remove());
-        outer.addEventListener('animationend', () => outer.remove());
+        ripple.addEventListener('animationend', () => ripple.remove());
     });
 }
 
@@ -157,29 +158,33 @@ function setupNavigation() {
 // Contact: メールコピー
 // ================================
 
-function setupContact() {
-    const copyBtn = document.getElementById('copy-email');
-    const emailText = document.getElementById('email-text');
-    const resultMsg = document.getElementById('copy-result');
+function setupContactCopy() {
+    const copyBtn = document.getElementById("copy-email");
+    const emailTextEl = document.getElementById("email-text");
+    const copyResultEl = document.getElementById("copy-result");
 
-    if (!copyBtn || !emailText) return;
+    if (!copyBtn || !emailTextEl || !copyResultEl) return;
 
-    copyBtn.addEventListener('click', () => {
-        const textToCopy = emailText.textContent;
+    copyBtn.addEventListener("click", () => {
+        const email = emailTextEl.textContent.trim();
+        if (!email) return;
 
-        // mailtoリンクを開く
-        window.location.href = `mailto:${textToCopy}`;
+        // Clipboard API でコピー
+        navigator.clipboard.writeText(email).then(() => {
+            copyResultEl.textContent = "メールアドレスをコピーしました。";
+            copyResultEl.style.opacity = 1;
 
-        // クリップボードにコピー
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            if (resultMsg) {
-                resultMsg.classList.add('show');
-                setTimeout(() => {
-                    resultMsg.classList.remove('show');
-                }, 3000);
-            }
-        }).catch(err => {
-            console.error('Copy failed', err);
+            setTimeout(() => {
+                copyResultEl.style.opacity = 0;
+            }, 1800);
+        }).catch(() => {
+            // Clipboard API が使えない環境向けフォールバック
+            copyResultEl.textContent = "コピーできませんでした。お手数ですが手動でコピーしてください。";
+            copyResultEl.style.opacity = 1;
+
+            setTimeout(() => {
+                copyResultEl.style.opacity = 0;
+            }, 2500);
         });
     });
 }

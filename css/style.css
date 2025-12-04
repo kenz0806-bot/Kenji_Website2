@@ -78,6 +78,48 @@ h3 {
     color: #1a1d21;
 }
 
+/* Header 用の青春ドット（アクアドット） */
+.header-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background-color: #00B4FF;
+    opacity: 0.7;
+    vertical-align: middle;
+
+    /* 既存の aqua-pulse を再利用（なければ同等のものを使う） */
+    animation: aqua-pulse-header 2.6s ease-in-out infinite;
+}
+
+/* ヘッダー専用に少しだけ控えめな鼓動アニメーション */
+@keyframes aqua-pulse-header {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.25);
+        opacity: 0.45;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+/* スマホで崩れないように最小限の調整 */
+@media (max-width: 640px) {
+    .header-dot {
+        width: 7px;
+        height: 7px;
+        margin-left: 4px;
+    }
+}
+
 .kg-nav {
     display: flex;
     align-items: center;
@@ -156,6 +198,64 @@ h3 {
     transform: scale(0.8);
     opacity: 0;
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle,
+            rgba(0, 180, 255, 0.35) 0%,
+            rgba(0, 180, 255, 0.15) 40%,
+            rgba(0, 180, 255, 0.0) 70%);
+    transform: scale(0);
+    opacity: 0.8;
+    animation: ripple-animation 0.9s ease-out forwards;
+    z-index: 9998;
+}
+
+/* モバイル時に波紋を少し控えめにする */
+@media (max-width: 768px) {
+    .ripple {
+        opacity: 0.6;
+    }
+
+    .ripple--mobile {
+        background: radial-gradient(circle,
+                rgba(0, 180, 255, 0.25) 0%,
+                rgba(0, 180, 255, 0.1) 50%,
+                rgba(0, 180, 255, 0.0) 80%);
+    }
+}
+
+@keyframes ripple-animation {
+    0% {
+        transform: scale(0.3);
+        opacity: 0.85;
+    }
+
+    70% {
+        transform: scale(2.2);
+        opacity: 0.35;
+    }
+
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
+/* 汎用フェードアップクラス */
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-up.is-visible,
+.section-visible .fade-up {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ホバー時：ふわっと光る */
@@ -800,6 +900,13 @@ h3 {
    Contact
 ================================ */
 
+.contact-intro {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 18px;
+    color: #4b5a64;
+}
+
 .contact-email-lead {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -857,11 +964,35 @@ h3 {
     transform: translateY(0);
 }
 
+.contact-sample {
+    max-width: 640px;
+    margin: 2rem auto 0;
+    padding: 1.5rem 1.75rem;
+    border-radius: 10px;
+    background-color: #f7fbff;
+    border: 1px dashed rgba(0, 180, 255, 0.35);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.contact-sample-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    color: #445566;
+}
+
+.contact-sample-body {
+    font-size: 15px;
+    color: #555;
+}
+
 .contact-note {
     text-align: center;
     font-size: 15px;
     color: #666;
     margin-bottom: 1rem;
+    margin-top: 2rem;
 }
 
 .contact-price-note {
@@ -1005,6 +1136,124 @@ h3 {
 }
 
 /* ================================
+   News Section
+================================ */
+
+.news.section {
+    background: #f5fbff;
+    /* やや淡いアクア */
+}
+
+.news-intro {
+    margin-bottom: 24px;
+    font-size: 15px;
+    color: #5a6b76;
+    text-align: center;
+}
+
+.news-list {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e3edf7;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.news-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    column-gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-date {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #00b4ff;
+}
+
+.news-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a2a33;
+    margin-bottom: 4px;
+}
+
+.news-summary {
+    font-size: 14px;
+    color: #5a6b76;
+}
+
+.news-more {
+    text-align: right;
+    margin-top: 18px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.news-more a {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #00b4ff;
+    border-bottom: 1px solid rgba(0, 180, 255, 0.4);
+    padding-bottom: 2px;
+    text-decoration: none;
+}
+
+.news-more a:hover {
+    opacity: 0.8;
+}
+
+/* ================================
+   News Page (news.html)
+================================ */
+
+.page-hero {
+    padding: 140px 0 60px;
+    background: radial-gradient(circle at top, #f4fbff 0%, #ffffff 60%);
+    text-align: center;
+}
+
+.page-hero-en {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #00b4ff;
+    margin-bottom: 8px;
+}
+
+.page-hero-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a2a33;
+    margin-bottom: 8px;
+}
+
+.page-hero-sub {
+    font-size: 15px;
+    color: #5a6b76;
+}
+
+.news-archive {
+    padding: 40px 0 80px;
+}
+
+.news-list-archive .news-item {
+    cursor: default;
+}
+
+/* ================================
    Mobile Optimization
 ================================ */
 @media (max-width: 640px) {
@@ -1070,5 +1319,33 @@ h3 {
             transform: scale(1.92);
             opacity: 0;
         }
+    }
+
+    /* News Section Mobile */
+    .news-list {
+        padding: 18px 16px;
+    }
+
+    .news-item {
+        grid-template-columns: 1fr;
+        row-gap: 4px;
+    }
+
+    .news-date {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .news-title {
+        font-size: 15px;
+    }
+
+    .news-summary {
+        font-size: 13px;
+    }
+
+    .news-more {
+        text-align: center;
+        margin-top: 16px;
     }
 }
