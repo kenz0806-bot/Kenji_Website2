@@ -9,7 +9,7 @@
 const NEWS_ITEMS = [
     {
         date: '2025.12.10',
-        title: 'ホームページを公開しました。',
+        title: 'ウェブサイトを公開しました。',
         summary: '「佐藤健司 公認会計士事務所」の公式サイトを公開しました。'
     }
 ];
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupContactCopy();
     renderTopNews();
     renderNewsArchive();
+    setupFloatingBackButton();
 });
 
 // ================================
