@@ -2,14 +2,68 @@
 // 初期化
 // ================================
 
+// ================================
+// News Data
+// ================================
+
+const NEWS_ITEMS = [
+    {
+        date: '2025.12.10',
+        title: 'ホームページを公開しました。',
+        summary: '「佐藤健司 公認会計士事務所」の公式サイトを公開しました。'
+    }
+];
+
+// ================================
+// 初期化
+// ================================
+
 document.addEventListener('DOMContentLoaded', () => {
     setupCursorDot();
     setupScrollAnimations();
     setupRippleEffect();
     setupNavigation();
-    setupNavigation();
     setupContactCopy();
+    renderTopNews();
+    renderNewsArchive();
 });
+
+// ================================
+// News Rendering
+// ================================
+
+function createNewsItemHTML(item) {
+    return `
+        <article class="news-item">
+            <div class="news-date">${item.date}</div>
+            <div class="news-content">
+                <p class="news-title">${item.title}</p>
+                <p class="news-summary">${item.summary}</p>
+            </div>
+        </article>
+    `;
+}
+
+function renderTopNews() {
+    const container = document.getElementById('top-news-list');
+    if (!container || NEWS_ITEMS.length === 0) return;
+
+    // トップページは最新1件のみ
+    const latestItem = NEWS_ITEMS[0];
+    container.innerHTML = createNewsItemHTML(latestItem);
+}
+
+function renderNewsArchive() {
+    const container = document.getElementById('news-archive-list');
+    if (!container) return;
+
+    // 全件表示
+    let html = '';
+    NEWS_ITEMS.forEach(item => {
+        html += createNewsItemHTML(item);
+    });
+    container.innerHTML = html;
+}
 
 // ================================
 // カーソル追従 Youth Dot
@@ -74,7 +128,8 @@ function setupRippleEffect() {
         if (event.target.closest('a')) return; // リンククリック時は邪魔しない
 
         const isMobile = window.innerWidth <= 768;
-        const baseSize = isMobile ? 160 : 260; // モバイルは小さめ
+        // モバイル時は現状の80% (160px * 0.8 = 128px)
+        const baseSize = isMobile ? 128 : 260;
 
         // クリック位置
         const x = event.clientX;
@@ -176,7 +231,7 @@ function setupContactCopy() {
 
             setTimeout(() => {
                 copyResultEl.style.opacity = 0;
-            }, 1800);
+            }, 1500); // 1.5秒
         }).catch(() => {
             // Clipboard API が使えない環境向けフォールバック
             copyResultEl.textContent = "コピーできませんでした。お手数ですが手動でコピーしてください。";

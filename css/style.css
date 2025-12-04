@@ -8,8 +8,979 @@
     --accent-color: #00B4FF;
     --font-jp: 'Noto Sans JP', sans-serif;
     --font-en: 'Inter', sans-serif;
-    --spacing-section: 160px;
+    --spacing-section: 176px;
+    /* +16px */
     --spacing-section-mobile: 96px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-jp);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.75;
+    /* 行間を少し広げる */
+    font-size: 18px;
+    letter-spacing: 0.04em;
+    /* 高級感補強 */
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 17px;
+        /* SP版本文 +1px (16px -> 17px) */
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    letter-spacing: 0.06em;
+}
+
+/* ================================
+   Header Navigation
+================================ */
+
+.kg-header {
+    width: 100%;
+    background: #f7f9fc;
+    border-bottom: 1px solid #e5e8ee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.12s;
+}
+
+.kg-header.is-flashing {
+    background-color: rgba(0, 180, 255, 0.1);
+}
+
+.kg-header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    /* 左右余白微調整 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kg-office-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #1a1d21;
+}
+
+/* Header 用の青春ドット（アクアドット） */
+.header-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-left: 8px;
+    /* 位置微調整 */
+    border-radius: 50%;
+    background-color: #00B4FF;
+    opacity: 0.7;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    /* 上下位置微調整 */
+    animation: aqua-pulse-header 2.6s ease-in-out infinite;
+}
+
+@keyframes aqua-pulse-header {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.25);
+        opacity: 0.45;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-dot {
+        width: 7px;
+        height: 7px;
+        margin-left: 6px;
+    }
+}
+
+.kg-nav {
+    display: flex;
+    align-items: center;
+}
+
+.kg-nav-link {
+    margin-left: 26px;
+    text-decoration: none;
+    color: #1a1d21;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s, transform 0.3s ease-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    animation: nav-opacity-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes nav-opacity-breathe {
+    0% {
+        opacity: 0.85;
+    }
+
+    50% {
+        opacity: 1.0;
+    }
+
+    100% {
+        opacity: 0.85;
+    }
+}
+
+.kg-nav-link:hover {
+    color: var(--accent-color);
+    transform: scale(1.04);
+}
+
+.kg-nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-out;
+    opacity: 0;
+}
+
+.kg-nav-link:hover::after {
+    width: 100%;
+    opacity: 1;
+}
+
+.kg-nav-link.is-active::after {
+    width: 100%;
+    opacity: 1;
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.kg-nav-link .nav-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(0, 180, 255, 0.0);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle,
+            rgba(0, 180, 255, 0.35) 0%,
+            rgba(0, 180, 255, 0.15) 40%,
+            rgba(0, 180, 255, 0.0) 70%);
+    transform: scale(0);
+    opacity: 0.8;
+    animation: ripple-animation 0.9s ease-out forwards;
+    z-index: 9998;
+}
+
+/* モバイル時に波紋を少し控えめにする */
+@media (max-width: 768px) {
+    .ripple {
+        opacity: 0.2;
+        /* 0.15〜0.25 */
+    }
+
+    .ripple--mobile {
+        background: radial-gradient(circle,
+                rgba(0, 180, 255, 0.25) 0%,
+                rgba(0, 180, 255, 0.1) 50%,
+                rgba(0, 180, 255, 0.0) 80%);
+    }
+}
+
+@keyframes ripple-animation {
+    0% {
+        transform: scale(0.3);
+        opacity: 0.85;
+    }
+
+    70% {
+        transform: scale(2.2);
+        opacity: 0.35;
+    }
+
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-up.is-visible,
+.section-visible .fade-up {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.kg-nav-link:hover .nav-dot {
+    opacity: 0.9;
+    background: rgba(0, 180, 255, 0.9);
+    transform: scale(1.0);
+}
+
+.kg-nav-link.is-clicked .nav-dot {
+    opacity: 1;
+    transform: scale(1.4);
+    background: rgba(0, 180, 255, 1.0);
+    transition: transform 0.1s;
+}
+
+.kg-nav-link.is-active .nav-dot {
+    opacity: 0.9;
+    background: rgba(0, 180, 255, 0.9);
+}
+
+@media (max-width: 640px) {
+    .kg-header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .kg-nav {
+        margin-top: 6px;
+        flex-wrap: wrap;
+    }
+
+    .kg-nav-link {
+        margin-left: 0;
+        margin-right: 18px;
+        margin-top: 6px;
+    }
+}
+
+/* ================================
+   Sections Common
+================================ */
+
+.section {
+    padding: var(--spacing-section) 0;
+    background: transparent;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-jp);
+    font-size: 42px;
+    font-weight: 800;
+    color: #1a2a33;
+    margin-bottom: 48px;
+    /* 余白調整 */
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 0;
+    background-color: var(--accent-color);
+    left: 0;
+    bottom: -10px;
+    transition: width 0.5s ease-out;
+}
+
+.section-visible .section-title {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.section-visible .section-title::after {
+    width: 80px;
+    /* 全セクションで統一 */
+}
+
+.section-content {
+    font-size: 19px;
+    line-height: 1.8;
+    /* 行間調整 */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+}
+
+.section-visible .section-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-content p {
+    margin-bottom: 1.5rem;
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+/* ================================
+   Hero
+================================ */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    height: 80vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: hero-bg-wipe 3s ease-out forwards;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    left: -20%;
+    top: 45%;
+    width: 0;
+    height: 50%;
+    background: linear-gradient(90deg,
+            rgba(0, 180, 255, 0.0) 0%,
+            rgba(0, 180, 255, 0.25) 25%,
+            rgba(0, 180, 255, 0.55) 50%,
+            rgba(0, 180, 255, 0.25) 75%,
+            transparent 100%);
+    opacity: 0;
+    filter: blur(8px);
+    transform-origin: left center;
+    pointer-events: none;
+    animation: hero-brush 0.9s ease-out 0.2s forwards;
+    will-change: width, opacity;
+}
+
+@keyframes hero-brush {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+
+    30% {
+        width: 50%;
+        opacity: 0.8;
+    }
+
+    100% {
+        width: 150%;
+        opacity: 0;
+    }
+}
+
+@keyframes hero-bg-wipe {
+    0% {
+        background: #ffffff;
+    }
+
+    100% {
+        background: radial-gradient(circle at center,
+                #ffffff 70%,
+                #f7fbff 90%,
+                #eaf6ff 100%);
+    }
+}
+
+.hero-logo {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.hero-title {
+    font-family: var(--font-jp);
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1.15;
+    color: #1a2a33;
+    letter-spacing: 0.01em;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateX(-32px);
+    animation: hero-text-in 0.7s ease-out forwards;
+    animation-delay: 0.35s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 1px rgba(26, 42, 51, 0.2);
+    /* 視認性と力強さを調整 */
+}
+
+.hero-sub {
+    font-size: 22px;
+    font-weight: 500;
+    color: #4b5a64;
+    margin-top: 18px;
+    opacity: 0;
+    transform: translateX(-32px);
+    animation: hero-text-in 0.7s ease-out forwards;
+    animation-delay: 0.55s;
+}
+
+.hero-concept-line {
+    font-size: 20px;
+    color: #4b5a64;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateX(-32px);
+    animation: hero-text-in 0.7s ease-out forwards;
+    animation-delay: 0.75s;
+}
+
+.hero-concept-line:nth-of-type(2) {
+    animation-delay: 0.95s;
+}
+
+.hero-concept {
+    font-family: var(--font-en);
+    font-size: 18px;
+    font-weight: 600;
+    color: #9aa4ad;
+    margin-top: 18px;
+    opacity: 0;
+    transform: translateX(-32px);
+    animation: hero-text-in 0.7s ease-out forwards;
+    animation-delay: 1.15s;
+}
+
+.youth-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 12px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    opacity: 0;
+    box-shadow: 0 0 14px rgba(0, 180, 255, 0.6);
+    animation:
+        youth-pop 0.7s ease-out forwards,
+        youth-pulse 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation-delay: 0.9s, 1.4s;
+}
+
+@keyframes youth-pop {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.85;
+    }
+}
+
+@keyframes youth-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.85;
+        box-shadow: 0 0 10px rgba(0, 180, 255, 0.4);
+    }
+
+    12% {
+        transform: scale(1.15);
+        opacity: 0.95;
+        box-shadow: 0 0 18px rgba(0, 180, 255, 0.8);
+    }
+
+    24% {
+        transform: scale(1.02);
+        opacity: 0.85;
+    }
+
+    36% {
+        transform: scale(1.1);
+        opacity: 0.9;
+        box-shadow: 0 0 16px rgba(0, 180, 255, 0.7);
+    }
+
+    48% {
+        transform: scale(1.0);
+        opacity: 0.65;
+    }
+
+    100% {
+        transform: scale(1.0);
+        opacity: 0.85;
+        box-shadow: 0 0 10px rgba(0, 180, 255, 0.4);
+    }
+}
+
+@keyframes hero-text-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-32px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ================================
+   Cursor Dot
+================================ */
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    background: rgba(0, 180, 255, 0.35);
+    mix-blend-mode: screen;
+    filter: blur(1px);
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out;
+    opacity: 0.85;
+    will-change: transform;
+}
+
+/* ================================
+   Mission / Services 背景スワイプ
+================================ */
+
+.mission.section,
+.services.section {
+    position: relative;
+    overflow: hidden;
+}
+
+.mission.section::before,
+.services.section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s;
+    z-index: -1;
+}
+
+.section-visible.mission.section::before,
+.section-visible.services.section::before {
+    opacity: 0.4;
+    transform: translateX(0);
+}
+
+.mission-text {
+    font-size: 20px;
+    line-height: 2;
+    margin-bottom: 40px;
+    color: #2c3e50;
+}
+
+.mission-target {
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-top: 24px;
+}
+
+/* ================================
+   Services Grid
+================================ */
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+}
+
+.service-item {
+    background: #ffffff;
+    border: 1px solid #eef1f5;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.service-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 180, 255, 0.1);
+}
+
+.service-item h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: #1a2a33;
+    border-bottom: 2px solid rgba(0, 180, 255, 0.2);
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+.service-item ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.service-item li {
+    position: relative;
+    padding-left: 1.2em;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #4b5a64;
+}
+
+.service-item li::before {
+    content: "・";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+/* よくあるご相談 (Services内) */
+.consultation-wrapper {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.consultation-title {
+    font-size: 24px;
+    margin-bottom: 32px;
+    color: #1a2a33;
+    display: inline-block;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.consultation-cards {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.consultation-card {
+    background: #f9fcff;
+    border: 1px solid #e0f0ff;
+    border-radius: 8px;
+    padding: 24px;
+    width: 300px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+}
+
+.consultation-card p {
+    margin: 0;
+    font-size: 16px;
+    color: #4b5a64;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .consultation-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .consultation-card {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+/* ================================
+   Profile
+================================ */
+
+.profile-name {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #1a2a33;
+}
+
+.profile-title {
+    font-size: 16px;
+    color: var(--accent-color);
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+.profile-list {
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.profile-list li {
+    margin-bottom: 12px;
+    padding-left: 1.5em;
+    position: relative;
+}
+
+.profile-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 50%;
+}
+
+/* ================================
+   Message
+================================ */
+
+.message {
+    background: #fcfdfe;
+}
+
+/* ================================
+   News
+================================ */
+
+.news-list {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.news-item {
+    border-bottom: 1px solid #eee;
+    padding: 24px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    transition: background-color 0.3s;
+}
+
+.news-item:hover {
+    background-color: #fafbfc;
+}
+
+.news-date {
+    font-family: var(--font-en);
+    font-size: 14px;
+    color: #9aa4ad;
+    white-space: nowrap;
+    margin-top: 4px;
+}
+
+.news-content {
+    flex: 1;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a2a33;
+}
+
+.news-summary {
+    font-size: 15px;
+    color: #6c7a89;
+    margin: 0;
+}
+
+.news-more {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.news-more a {
+    display: inline-block;
+    padding: 12px 32px;
+    border: 1px solid #e5e8ee;
+    border-radius: 99px;
+    text-decoration: none;
+    color: #1a1d21;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.news-more a:hover {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+@media (max-width: 640px) {
+    .news-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* ================================
+   Contact
+================================ */
+
+.contact-intro {
+    font-size: 20px;
+    margin-bottom: 32px;
+}
+
+.contact-intro strong {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.contact-email-lead {
+    margin-bottom: 16px;
+}
+
+.contact-email-pill {
+    display: inline-block;
+    background: rgba(0, 180, 255, 0.1);
+    color: var(--accent-color);
+    padding: 16px 48px;
+    border-radius: 99px;
+    font-family: var(--font-en);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.contact-email-pill:hover {
+    transform: scale(1.05);
+    background: rgba(0, 180, 255, 0.15);
+}
+
+.contact-email-pill:active {
+    transform: scale(0.98);
+}
+
+.copy-result {
+    margin-top: 0.75rem;
+    font-size: 14px;
+    color: #00B4FF;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.contact-sample {
+    max-width: 600px;
+    margin: 48px auto 32px;
+    padding: 24px;
+    background: #f8fbff;
+    border: 1px dashed #cce5ff;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.contact-sample-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+}
+
+.contact-sample-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #4b5a64;
+}
+
+.contact-note {
+    font-size: 15px;
+    color: #6c7a89;
+    line-height: 1.8;
+    margin-top: 24px;
+}
+
+.contact-privacy {
+    color: #4b5a64;
+    /* 少し濃く */
+    font-weight: 500;
+}
+
+/* ================================
+   Footer
+================================ */
+
+.footer {
+    background: #f7f9fc;
+    padding: 60px 0 20px;
+    text-align: center;
+    border-top: 1px solid #e5e8ee;
+}
+
+.footer-logo {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1a2a33;
+}
+
+.footer-info {
+    font-size: 14px;
+    color: #6c7a89;
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+
+.copyright {
+    font-size: 12px;
+    color: #9aa4ad;
+    font-family: var(--font-en);
 }
 
 * {

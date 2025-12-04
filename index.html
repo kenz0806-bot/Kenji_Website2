@@ -162,23 +162,26 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- FAQ / Consultation -->
-    <section class="consultation section">
-        <div class="container">
-            <h2 class="section-title">よくいただくご相談</h2>
-            <div class="section-content fade-up">
-                <ul class="consultation-list">
-                    <li>監査法人との調整や論点が重く、社内で抱えきれない</li>
-                    <li>J-SOXの整理が煩雑で、どこから手を付ければいいか迷う</li>
-                    <li>経営数値を腹落ちする形で整理したい</li>
-                    <li>経理・財務の方針について相談できる相手がいない</li>
-                </ul>
+            <!-- よくあるご相談 (Services内に統合) -->
+            <div class="consultation-wrapper fade-up">
+                <h3 class="consultation-title">よくあるご相談</h3>
+                <div class="consultation-cards">
+                    <div class="consultation-card">
+                        <p>監査法人との対応・資料要求がしんどい</p>
+                    </div>
+                    <div class="consultation-card">
+                        <p>J-SOX・内部統制まわりの文書整理が追いついていない</p>
+                    </div>
+                    <div class="consultation-card">
+                        <p>管理部門に相談できる相手がいない</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Message -->
     <section id="message" class="message section">
         <div class="container">
             <h2 class="section-title">Message</h2>
@@ -204,36 +207,10 @@
     <!-- News -->
     <section id="news" class="news section">
         <div class="container">
-            <h2 class="section-title fade-up">News</h2>
+            <h2 class="section-title">News</h2>
 
-            <div class="news-intro fade-up">
-                <p>事務所からのお知らせや更新情報を掲載します。</p>
-            </div>
-
-            <div class="news-list fade-up">
-                <article class="news-item">
-                    <div class="news-date">2025.01.15</div>
-                    <div class="news-content">
-                        <p class="news-title">ウェブサイトを公開しました。</p>
-                        <p class="news-summary">「佐藤健司 公認会計士事務所」の公式サイトを公開しました。</p>
-                    </div>
-                </article>
-
-                <article class="news-item">
-                    <div class="news-date">2024.12.20</div>
-                    <div class="news-content">
-                        <p class="news-title">事業内容ページを更新しました。</p>
-                        <p class="news-summary">社外CFOサポート・内部統制支援の説明を整理しました。</p>
-                    </div>
-                </article>
-
-                <article class="news-item">
-                    <div class="news-date">2024.11.30</div>
-                    <div class="news-content">
-                        <p class="news-title">お問い合わせ窓口を整備しました。</p>
-                        <p class="news-summary">メールでのご相談受付体制を整えました。</p>
-                    </div>
-                </article>
+            <div class="news-list fade-up" id="top-news-list">
+                <!-- JSでレンダリング -->
             </div>
 
             <p class="news-more fade-up">
@@ -249,7 +226,7 @@
             <div class="section-content">
                 <!-- 誘導コピー -->
                 <p class="contact-intro fade-up">
-                    まずは 30〜60 分のオンライン相談（Zoom 等）から承っています。
+                    <strong>まずは 30〜60 分のオンライン相談（Zoom 等）から承っています。</strong>
                 </p>
 
                 <!-- メール案内 -->
@@ -280,7 +257,7 @@
                 <!-- 安心感の一文（既存の note を少し調整） -->
                 <p class="contact-note">
                     まだ内容が固まっていない段階でも、「ざっくり相談したい」くらいの一文からで大丈夫です。<br>
-                    お預かりした情報は、相談対応の目的以外には使用いたしません。
+                    <span class="contact-privacy">お預かりした情報は、相談対応の目的以外には使用いたしません。</span>
                 </p>
             </div>
         </div>
