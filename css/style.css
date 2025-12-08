@@ -919,17 +919,34 @@ h3 {
 }
 
 .contact-email-pill {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: rgba(0, 180, 255, 0.1);
     color: var(--accent-color);
     padding: 16px 48px;
     border-radius: 99px;
     font-family: var(--font-en);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.email-main {
     font-size: 24px;
     font-weight: 600;
     letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.email-sub {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(0, 180, 255, 0.8);
+    display: block;
 }
 
 .contact-email-pill:hover {
