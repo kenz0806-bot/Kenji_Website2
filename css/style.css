@@ -226,10 +226,7 @@ h3 {
     }
 }
 
-transform: translateY(20px);
-transition: opacity 0.8s ease-out,
-transform 0.8s ease-out;
-}
+
 
 .fade-up.is-visible,
 .section-visible .fade-up {
@@ -722,6 +719,37 @@ transform 0.8s ease-out;
 /* ================================
    Profile
 ================================ */
+
+.profile-image-container {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 25px rgba(0, 180, 255, 0.15);
+    animation: profile-float 6s ease-in-out infinite;
+}
+
+@keyframes profile-float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
 
 .profile-name {
     font-size: 28px;
