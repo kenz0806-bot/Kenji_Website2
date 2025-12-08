@@ -609,6 +609,11 @@ h3 {
     margin-top: 24px;
 }
 
+.contact-tool-note {
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
 /* ================================
    Services Grid
 ================================ */
