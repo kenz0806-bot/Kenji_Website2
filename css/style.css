@@ -270,6 +270,27 @@ h3,
     justify-content: center;
     opacity: 1;
     transition: opacity 0.8s ease-out;
+    /* Safety Failsafe: CSS-only fadeout if JS fails/lags */
+    animation: intro-auto-fadeout 3.5s ease-out 0s forwards;
+    pointer-events: auto;
+}
+
+@keyframes intro-auto-fadeout {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    80% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 
 .intro-overlay.is-hidden {
