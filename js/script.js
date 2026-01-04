@@ -36,21 +36,85 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
-// Cinematic Opening
+// Cinematic Opening (Typewriter & Expand)
 // ================================
 function setupCinematicOpening() {
     const overlay = document.querySelector('.intro-overlay');
-    if (!overlay) return;
+    const textTarget = document.getElementById('intro-text-target');
+    const caret = document.querySelector('.intro-caret');
+    const dot = document.getElementById('intro-dot');
 
-    // 1.0秒後にフェードアウト開始 (かなり短縮)
-    setTimeout(() => {
-        overlay.classList.add('is-hidden');
-    }, 1000);
+    // Robust check
+    if (!overlay || !textTarget || !caret || !dot) return;
 
-    // アニメーション終了後にDOMから削除 (1.6秒後)
+    // Full text to type
+    const fullText = "佐藤健司 公認会計士事務所";
+    const typeSpeed = 100; // ms per char
+
+    // 1. Start Typing after slight delay
     setTimeout(() => {
-        overlay.remove();
-    }, 1600);
+        let charIndex = 0;
+        const typeInterval = setInterval(() => {
+            if (charIndex < fullText.length) {
+                textTarget.textContent += fullText.charAt(charIndex);
+                charIndex++;
+            } else {
+                clearInterval(typeInterval);
+                // Typing Finished -> Proceed to Dot Phase
+                startDotSequence(overlay, caret, dot);
+            }
+        }, typeSpeed);
+    }, 500); // 0.5s initial wait
+}
+
+function startDotSequence(overlay, caret, dot) {
+    // 2. Wait a beat after typing
+    setTimeout(() => {
+        // Hide caret
+        caret.classList.add('is-hidden');
+
+        // 3. Pop the Dot
+        dot.classList.add('intro-dot-visible');
+
+        // 4. Dot Expand (The "Wipe")
+        setTimeout(() => {
+            // Transform dot into the expander
+            // We clone it or just add the class. Adding class is cleaner if CSS handles it.
+            // But we need it to be fixed position to scale correctly without flow issues.
+            dot.classList.add('intro-dot-expand');
+
+            // Force reflow
+            void dot.offsetWidth;
+
+            dot.classList.add('is-active');
+
+            // 5. Fade out Overlay BEHIND the expanding blue dot
+            // The dot fills the screen with Blue (Accent Color).
+            // Then we fade the whole overlay (which is white) + dot (blue) together?
+            // No, the user wants "Dot expands... to reveal main screen".
+            // If dot is blue, we need to fade THE DOT out to reveal content.
+
+            // Current CSS: .intro-dot-expand.is-active fills screen with Blue.
+            // So screen is now Blue. Overlay (White) is behind it.
+
+            // Sequence:
+            // a. Dot expands (Screen becomes Blue).
+            // b. Overlay wrapper (White) is removed visibility-wise immediately? No.
+            // c. We fade out the BLUE screen to reveal the site.
+
+            setTimeout(() => {
+                // 6. Fade out the entire overlay container (which includes the Blue Dot)
+                overlay.classList.add('is-hidden');
+            }, 800); // Wait for expansion to finish
+
+            // 7. Remove DOM
+            setTimeout(() => {
+                overlay.remove();
+            }, 1600); // Fade duration + buffer
+
+        }, 600); // Wait after pop before expanding
+
+    }, 400); // Wait after typing
 }
 
 // ================================
