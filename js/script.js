@@ -74,11 +74,33 @@ function setupCursorDot() {
     const cursorDot = document.querySelector('.cursor-dot');
     if (!cursorDot) return;
 
-    // スマホではCSSでdisplay:noneにしているため、JSはシンプルに
+    let cursorX = window.innerWidth / 2;
+    let cursorY = window.innerHeight / 2;
+    let targetX = cursorX;
+    let targetY = cursorY;
+
+    // マウス位置の追跡
     document.addEventListener('mousemove', (e) => {
-        // 遅延はCSSのtransition: transform 0.15s ease-out で実現
-        cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        targetX = e.clientX;
+        targetY = e.clientY;
     });
+
+    // 線形補間関数
+    const lerp = (start, end, factor) => {
+        return start + (end - start) * factor;
+    };
+
+    // アニメーションループ
+    function animate() {
+        // 0.08の係数でゆっくり追従（波のような上品な遅れ）
+        cursorX = lerp(cursorX, targetX, 0.08);
+        cursorY = lerp(cursorY, targetY, 0.08);
+
+        cursorDot.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 }
 
 // ================================
@@ -184,7 +206,7 @@ function setupNavigation() {
 
             // クリック演出（ポンと光る）
             this.classList.add('is-clicked');
-            setTimeout(() => this.classList.remove('is-clicked'), 300);
+            setTimeout(() => this.classList.remove('is-clicked'), 500);
 
             // ヘッダーフラッシュ (0.12s)
             if (header) {
