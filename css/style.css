@@ -2466,6 +2466,173 @@ h3 {
 }
 
 /* ================================
+   Contact Draft Selector System
+   ================================ */
+
+.contact-draft-system {
+    margin-top: 48px;
+    margin-bottom: 32px;
+}
+
+.contact-draft-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #5a6b76;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.draft-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.draft-btn {
+    appearance: none;
+    border: 1px solid #d0e1ee;
+    background: #ffffff;
+    color: #546e7a;
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-family: var(--font-jp);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+@media (hover: hover) {
+    .draft-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 180, 255, 0.15);
+        border-color: #00b4ff;
+        color: #00b4ff;
+    }
+}
+
+.draft-btn.is-active {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 20px rgba(0, 180, 255, 0.3);
+}
+
+.draft-display-box {
+    background: #fdfdfd;
+    border: 1px solid #e1eaf2;
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+    transition: opacity 0.3s ease;
+}
+
+.draft-row,
+.draft-subject-row,
+.draft-body-row {
+    margin-bottom: 16px;
+}
+
+.draft-label {
+    font-weight: 700;
+    color: #1a2a33;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.draft-content {
+    display: block;
+    color: #4b5a64;
+    font-size: 15px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    /* Respect newlines */
+}
+
+/* Copy Button inside Draft */
+.copy-draft-btn {
+    margin-top: 16px;
+    background: #ffffff;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+    .copy-draft-btn:hover {
+        background: var(--accent-color);
+        color: white;
+    }
+}
+
+.copy-draft-btn .icon {
+    font-size: 16px;
+}
+
+.draft-copy-msg {
+    margin-left: 12px;
+    font-size: 13px;
+    color: var(--accent-color);
+    font-weight: 700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@media (max-width: 640px) {
+    .contact-draft-system {
+        margin-top: 32px;
+    }
+
+    .draft-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* 2 col grid */
+        gap: 10px;
+    }
+
+    .draft-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+        font-size: 13px;
+    }
+
+    .draft-display-box {
+        padding: 20px 16px;
+    }
+
+    .draft-content {
+        font-size: 14px;
+    }
+
+    .copy-draft-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .draft-copy-msg {
+        display: block;
+        margin: 8px 0 0 0;
+        text-align: center;
+    }
+}
+
+/* ================================
    Footer
 ================================ */
 

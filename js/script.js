@@ -305,7 +305,7 @@ function setupNavigation() {
 }
 
 // ================================
-// Contact: メールコピー
+// Contact: メールコピー & ドラフト機能
 // ================================
 
 function setupContactCopy() {
@@ -338,6 +338,78 @@ function setupContactCopy() {
             setTimeout(() => {
                 copyResultEl.style.opacity = 0;
             }, 2500);
+        });
+    });
+
+    // ドラフト機能の初期化もここから呼び出し
+    setupContactDrafts();
+}
+
+function setupContactDrafts() {
+    const buttons = document.querySelectorAll('.draft-btn');
+    const subjectEl = document.getElementById('draft-subject');
+    const bodyEl = document.getElementById('draft-body');
+    const copyDraftBtn = document.getElementById('copy-draft-btn');
+    const displayBox = document.querySelector('.draft-display-box');
+    const msgEl = document.getElementById('draft-copy-msg');
+
+    if (!buttons.length || !subjectEl || !bodyEl || !copyDraftBtn) return;
+
+    // テンプレート定義
+    const templates = {
+        audit: {
+            subject: "監査法人への対応サポートの相談",
+            body: "現在、監査法人からの資料要求や指摘対応に追われており、経理現場が疲弊しています。\n会計士の視点から、指摘事項の整理や、監査法人との交渉・合意形成のサポートをお願いできないでしょうか。\nまずは現状の課題感を聞いていただきたいです。"
+        },
+        ai: {
+            subject: "AI活用や業務効率化についての相談",
+            body: "貴事務所のHPを拝見し、AIを活用した業務効率化に興味を持ちました。\n現在、経理やバックオフィスの業務が属人化しており、効率が悪く困っています。\n具体的なツールなどは決まっていませんが、現状のフローを見ていただき、どこを自動化できるか診断していただくことは可能でしょうか。"
+        },
+        ipo: {
+            subject: "J-SOX（内部統制）構築の進め方について",
+            body: "IPOを目指して準備を進めているのですが、J-SOX対応の文書化やフロー整備が遅れており、監査法人から指摘を受けています。\n社内に詳しい人間がおらず、最短距離でクリアするためのロードマップ作りと実務支援をお願いしたいです。"
+        },
+        cfo: {
+            subject: "社外CFO・経営相談の依頼について",
+            body: "事業拡大に伴い、数字に基づいた経営判断や資金調達の戦略について相談できるパートナーを探しています。\n顧問税理士はいますが、より経営・財務の視点からのアドバイスが欲しいため、一度月次のミーティングやスポット相談が可能かお話ししたいです。"
+        }
+    };
+
+    // ボタン切り替えロジック
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Active切り替え
+            buttons.forEach(b => b.classList.remove('is-active'));
+            btn.classList.add('is-active');
+
+            const type = btn.getAttribute('data-type');
+            const data = templates[type];
+
+            if (data) {
+                // フェードアウト演出
+                displayBox.style.opacity = 0.5;
+                setTimeout(() => {
+                    subjectEl.textContent = data.subject;
+                    bodyEl.innerHTML = data.body.replace(/\n/g, '<br>');
+                    displayBox.style.opacity = 1;
+                }, 150);
+            }
+        });
+    });
+
+    // コピーロジック
+    copyDraftBtn.addEventListener('click', () => {
+        const subject = subjectEl.textContent;
+        // HTMLタグ除去して純粋なテキストを取得（innerText推奨）
+        const body = bodyEl.innerText;
+
+        const textToCopy = `件名：${subject}\n\n${body}`;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            msgEl.style.opacity = 1;
+            setTimeout(() => {
+                msgEl.style.opacity = 0;
+            }, 2000);
         });
     });
 }
