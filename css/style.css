@@ -635,18 +635,7 @@ h3,
     display: inline-block;
 }
 
-/* Subtle line for Big4 professional feel */
-.hero-concept::before {
-    content: "";
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 20px;
-    background-color: var(--accent-color);
-    opacity: 0.3;
-}
+
 
 .youth-dot {
     display: inline-block;
