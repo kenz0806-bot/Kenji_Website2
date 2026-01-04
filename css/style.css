@@ -3,14 +3,32 @@
 ================================ */
 
 :root {
-    --bg-color: #ffffff;
-    --text-color: #2c3e50;
-    --accent-color: #00B4FF;
+    --bg-color: #fcfcfc;
+    /* Pure white -> Very subtle off-white for paper feel */
+    --text-color: #1a2634;
+    /* Darker, sharper text */
+    --accent-color: #009be0;
+    /* Deepened Cyan for maturity */
     --font-jp: 'Noto Sans JP', sans-serif;
     --font-en: 'Inter', sans-serif;
-    --spacing-section: 176px;
-    /* +16px */
-    --spacing-section-mobile: 96px;
+    --font-serif: 'Zen Old Mincho', serif;
+    /* Added Mincho */
+    --spacing-section: 180px;
+    /* Doubled spacing for Majesty */
+    --spacing-section-mobile: 100px;
+}
+
+/* Global Noise Texture */
+.global-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -5;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 /* Global Wave Background */
@@ -102,8 +120,14 @@ body {
 /* Typography */
 h1,
 h2,
-h3 {
-    letter-spacing: 0.06em;
+h3,
+.hero-title,
+.section-title,
+.kg-office-name,
+.service-name {
+    font-family: var(--font-serif);
+    letter-spacing: 0.05em;
+    font-weight: 700;
 }
 
 /* ================================
@@ -2187,6 +2211,7 @@ h3 {
     color: #ffffff;
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
