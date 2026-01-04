@@ -253,6 +253,111 @@ h3,
 }
 
 /* ================================
+   Cinematic Opening (Overlay)
+   ================================ */
+
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    z-index: 9999;
+    /* Highest priority */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.8s ease-out;
+}
+
+.intro-overlay.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-content {
+    text-align: center;
+}
+
+.intro-logo {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a2a33;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: intro-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-text {
+    font-family: var(--font-en);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--accent-color);
+    margin-top: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: intro-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    text-transform: uppercase;
+}
+
+@keyframes intro-reveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================
+   3D Tilt Effect (Tactile Depth)
+   ================================ */
+
+.glass-panel,
+.service-card,
+.consultation-card {
+    will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    /* Prevent blurriness */
+    transition: transform 0.1s ease-out;
+    /* Smooth but responsive */
+}
+
+/* Pop-out elements inside cards */
+.service-icon,
+.service-name,
+.consultation-title,
+.kg-office-name {
+    transform: translateZ(20px);
+    /* Pop out slightly */
+    transform-style: preserve-3d;
+}
+
+/* ================================
+   Scroll Reveal (Staggered Story)
+   ================================ */
+
+.stagger-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Use JS to apply delays, or simple CSS nth-child if static */
+.section-visible .stagger-text span {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================================
    Magnetic Effect (Apple-style)
    ================================ */
 

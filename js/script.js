@@ -30,7 +30,93 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSpotlightEffect();
     setupMagneticButtons();
     setupParallaxEffect();
+    setupCinematicOpening();
+    setup3DTiltEffect();
+    setupScrollReveal();
 });
+
+// ================================
+// Cinematic Opening
+// ================================
+function setupCinematicOpening() {
+    const overlay = document.querySelector('.intro-overlay');
+    if (!overlay) return;
+
+    // 2.5秒後にフェードアウト開始 (ロゴ表示時間)
+    setTimeout(() => {
+        overlay.classList.add('is-hidden');
+    }, 2200);
+
+    // アニメーション終了後にDOMから削除 (3秒後)
+    setTimeout(() => {
+        overlay.remove();
+        // Heroアニメーション開始のトリガーなどをここに書いても良い
+    }, 3200);
+}
+
+// ================================
+// 3D Tilt Effect (Apple TV Style)
+// ================================
+function setup3DTiltEffect() {
+    const cards = document.querySelectorAll('.service-card, .consultation-card, .glass-panel');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // 中心を0とする
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // -1 ~ 1 の範囲に正規化
+            const percentX = (x - centerX) / centerX;
+            const percentY = (y - centerY) / centerY;
+
+            // 回転角度（最大 10deg）
+            // Y軸回転はX成分、X軸回転は-Y成分に依存
+            const rotateX = -percentY * 8;
+            const rotateY = percentX * 8;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            // リセット
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    });
+}
+
+// ================================
+// Scroll Reveal (Staggered Text)
+// ================================
+function setupScrollReveal() {
+    // 対象: Messageセクションのpタグなど
+    const targets = document.querySelectorAll('.message .section-content p, .intro-text-block');
+
+    targets.forEach(p => {
+        p.classList.add('stagger-text');
+        // テキストを行ごと、あるいは文字ごとに分割するロジックは
+        // 簡易的に span で囲う形で実装
+        const text = p.innerHTML;
+        // <br> で分割して、それぞれを span で囲む (簡易実装)
+        // 注: 既にタグが含まれている場合は要注意だが、今回はシンプルテキストと仮定
+        if (!text.includes('<span')) { // 既に処理済みでなければ
+            const lines = text.split('<br>');
+            const wrappedText = lines.map((line, index) => {
+                // 遅延時間をindexでずらす
+                const delay = index * 0.2;
+                return `<span style="transition-delay: ${delay}s">${line}</span>`;
+            }).join('<br>');
+            p.innerHTML = wrappedText;
+        }
+    });
+
+    // IntersectionObserverは既存の setupScrollAnimations で処理されるが
+    // .stagger-text span へのスタイル適用は CSS の .section-visible .stagger-text span で行われる
+}
 
 // ================================
 // News Rendering
