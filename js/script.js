@@ -42,16 +42,15 @@ function setupCinematicOpening() {
     const overlay = document.querySelector('.intro-overlay');
     if (!overlay) return;
 
-    // 2.5秒後にフェードアウト開始 (ロゴ表示時間)
+    // 1.0秒後にフェードアウト開始 (かなり短縮)
     setTimeout(() => {
         overlay.classList.add('is-hidden');
-    }, 2200);
+    }, 1000);
 
-    // アニメーション終了後にDOMから削除 (3秒後)
+    // アニメーション終了後にDOMから削除 (1.6秒後)
     setTimeout(() => {
         overlay.remove();
-        // Heroアニメーション開始のトリガーなどをここに書いても良い
-    }, 3200);
+    }, 1600);
 }
 
 // ================================

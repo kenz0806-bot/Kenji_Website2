@@ -269,9 +269,9 @@ h3,
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transition: opacity 0.8s ease-out;
-    /* Safety Failsafe: CSS-only fadeout if JS fails/lags */
-    animation: intro-auto-fadeout 3.5s ease-out 0s forwards;
+    transition: opacity 0.5s ease-out;
+    /* Safety Failsafe: Shortened to 1.5s */
+    animation: intro-auto-fadeout 1.5s ease-out 0s forwards;
     pointer-events: auto;
 }
 
@@ -281,7 +281,7 @@ h3,
         visibility: visible;
     }
 
-    80% {
+    70% {
         opacity: 1;
         visibility: visible;
     }
@@ -309,7 +309,7 @@ h3,
     color: #1a2a33;
     opacity: 0;
     transform: translateY(20px);
-    animation: intro-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: intro-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .intro-text {
@@ -320,7 +320,7 @@ h3,
     margin-top: 16px;
     opacity: 0;
     transform: translateY(10px);
-    animation: intro-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    animation: intro-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
     text-transform: uppercase;
 }
 
