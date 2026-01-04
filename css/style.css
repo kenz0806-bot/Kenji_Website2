@@ -679,9 +679,9 @@ h3,
     letter-spacing: 0.01em;
     margin-bottom: 16px;
     opacity: 0;
-    transform: translateX(-32px);
-    animation: hero-text-in 0.7s ease-out forwards;
-    animation-delay: 0.35s;
+    transform: translateY(30px);
+    /* Align with Cinematic Intro: Start at 1.4s (Overlap with fadeout) */
+    animation: intro-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.4s forwards;
     display: flex;
     align-items: center;
     justify-content: center;
