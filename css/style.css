@@ -108,9 +108,13 @@ body {
 }
 
 @media (max-width: 768px) {
+    :root {
+        --spacing-section: var(--spacing-section-mobile);
+    }
+
     body {
-        font-size: 17px;
-        /* SP版本文 +1px (16px -> 17px) */
+        font-size: 16px;
+        /* Optimized base size */
     }
 }
 
@@ -230,10 +234,11 @@ h3,
     /* Removed breathing animation for simplicity/power */
 }
 
-.kg-nav-link:hover {
-    color: var(--accent-color);
-    transform: translateY(-1px);
-    /* Slight lift instead of scale */
+@media (hover: hover) {
+    .kg-nav-link:hover {
+        color: var(--accent-color);
+        transform: translateY(-1px);
+    }
 }
 
 .kg-nav-link::after {
@@ -371,9 +376,11 @@ h3,
     box-shadow: 0 0 8px rgba(0, 180, 255, 0.5);
 }
 
-.kg-nav-link:hover .nav-dot {
-    opacity: 1;
-    transform: scale(1);
+@media (hover: hover) {
+    .kg-nav-link:hover .nav-dot {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .kg-nav-link.is-active .nav-dot {
@@ -763,9 +770,11 @@ h3,
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
 }
 
-.glass-panel:hover {
-    box-shadow: 0 16px 56px rgba(0, 180, 255, 0.12);
-    background: rgba(255, 255, 255, 0.95);
+@media (hover: hover) {
+    .glass-panel:hover {
+        box-shadow: 0 16px 56px rgba(0, 180, 255, 0.12);
+        background: rgba(255, 255, 255, 0.95);
+    }
 }
 
 /* Specific adjustments for section contents */
@@ -2707,10 +2716,13 @@ h3 {
 
     /* Heroフォントサイズ縮小 & 折り返し許可 */
     .hero-title {
-        font-size: 32px;
-        /* 48px -> 32px to fit screen */
+        font-size: 36px;
+        /* Slightly larger for impact */
         flex-wrap: wrap;
-        line-height: 1.4;
+        line-height: 1.5;
+        word-break: keep-all;
+        /* Do not split words mid-stream */
+        overflow-wrap: break-word;
     }
 
     /* Fix Aqua Dot Distortion */
