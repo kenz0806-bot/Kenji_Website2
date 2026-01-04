@@ -2480,6 +2480,13 @@ h3 {
     color: #5a6b76;
     margin-bottom: 16px;
     text-align: center;
+    line-height: 1.6;
+}
+
+.draft-note-small {
+    font-size: 13px;
+    font-weight: 400;
+    color: #8fa1b0;
 }
 
 .draft-buttons {
