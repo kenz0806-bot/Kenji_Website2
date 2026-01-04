@@ -271,6 +271,26 @@ h3,
     opacity: 1;
     transition: opacity 0.8s ease-out;
     pointer-events: auto;
+    /* EMERGENCY FAILSAFE: Force remove after 5s even if JS dies */
+    animation: intro-auto-fadeout 5.0s ease-out 0s forwards;
+}
+
+@keyframes intro-auto-fadeout {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    80% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 
 .intro-overlay.is-hidden {
