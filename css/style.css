@@ -490,37 +490,30 @@ h3 {
     font-size: 22px;
     font-weight: 500;
     color: #4b5a64;
-    margin-top: 18px;
+    margin-top: 24px;
+    /* Slightly increased */
     opacity: 0;
     transform: translateX(-32px);
     animation: hero-text-in 0.7s ease-out forwards;
     animation-delay: 0.55s;
 }
 
-.hero-concept-line {
-    font-size: 20px;
-    color: #4b5a64;
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateX(-32px);
-    animation: hero-text-in 0.7s ease-out forwards;
-    animation-delay: 0.75s;
-}
-
-.hero-concept-line:nth-of-type(2) {
-    animation-delay: 0.95s;
-}
-
 .hero-concept {
     font-family: var(--font-en);
-    font-size: 18px;
+    font-size: 16px;
+    /* Slightly smaller for elegance */
     font-weight: 600;
-    color: #9aa4ad;
-    margin-top: 18px;
+    color: #b0bec5;
+    /* Lighter, more subtle */
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    /* Wide letter spacing */
+    margin-top: 48px;
+    /* More breathing room */
     opacity: 0;
     transform: translateX(-32px);
     animation: hero-text-in 0.7s ease-out forwards;
-    animation-delay: 1.15s;
+    animation-delay: 0.8s;
 }
 
 .youth-dot {
