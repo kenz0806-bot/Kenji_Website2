@@ -649,20 +649,22 @@ h3 {
 ================================ */
 
 .glass-panel {
-    background: rgba(255, 255, 255, 0.75);
-    /* Slightly more opaque for readability */
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9);
+    /* More opaque for better readability/Strength */
+    border: 1px solid rgba(255, 255, 255, 1);
+    /* Solid White Border */
     border-radius: 20px;
     padding: 48px;
-    box-shadow: 0 8px 32px rgba(0, 180, 255, 0.04);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 40px rgba(0, 180, 255, 0.08);
+    /* Stronger Shadow */
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
 }
 
 .glass-panel:hover {
-    box-shadow: 0 12px 48px rgba(0, 180, 255, 0.08);
-    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 16px 56px rgba(0, 180, 255, 0.12);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 /* Specific adjustments for section contents */
@@ -686,18 +688,19 @@ h3 {
 }
 
 .service-card {
-    background: rgba(255, 255, 255, 0.85);
-    /* More solid for "Rich" feel */
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92);
+    /* Almost solid for "Strong" feel */
+    border: 1px solid rgba(255, 255, 255, 1);
     border-radius: 20px;
     padding: 48px 32px;
     /* Taller padding */
-    box-shadow: 0 10px 40px rgba(0, 180, 255, 0.06);
+    box-shadow: 0 12px 48px rgba(0, 70, 120, 0.08);
+    /* Deeper shadow color */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     position: relative;
@@ -706,17 +709,16 @@ h3 {
 
 .service-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0, 180, 255, 0.18);
-    border-color: rgba(0, 180, 255, 0.6);
-    /* Defined border color on hover */
-    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 24px 60px rgba(0, 70, 120, 0.15);
+    border-color: rgba(0, 180, 255, 0.8);
+    background: #ffffff;
 }
 
 .service-icon {
     margin-bottom: 24px;
-    color: var(--accent-color);
-    /* Rich Gradient Background */
-    background: linear-gradient(135deg, rgba(0, 180, 255, 0.1) 0%, rgba(0, 180, 255, 0.02) 100%);
+    color: #007bb6;
+    /* Darker Blue for Icon */
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.15) 0%, rgba(0, 180, 255, 0.05) 100%);
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -724,40 +726,126 @@ h3 {
     align-items: center;
     justify-content: center;
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
-    border: 1px solid rgba(0, 180, 255, 0.1);
+    border: 2px solid rgba(0, 180, 255, 0.2);
+    /* Defined border */
 }
 
 .service-card:hover .service-icon {
     transform: scale(1.1) rotate(-5deg);
-    background: linear-gradient(135deg, rgba(0, 180, 255, 0.2) 0%, rgba(0, 180, 255, 0.05) 100%);
-    box-shadow: 0 0 20px rgba(0, 180, 255, 0.2);
-    /* Glow */
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.25) 0%, rgba(0, 180, 255, 0.1) 100%);
+    border-color: rgba(0, 180, 255, 0.5);
+    box-shadow: 0 0 24px rgba(0, 180, 255, 0.3);
 }
 
 .service-icon svg {
     width: 52px;
     height: 52px;
-    /* Larger Icon */
-    stroke-width: 1.8px;
-    filter: drop-shadow(0 2px 4px rgba(0, 180, 255, 0.2));
+    stroke-width: 2px;
+    /* Thicker lines */
+    filter: drop-shadow(0 2px 4px rgba(0, 70, 120, 0.2));
     /* Depth */
 }
 
 .service-name {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 800;
-    /* Bolder */
-    color: #0f1a24;
-    /* Darker */
-    margin-bottom: 16px;
-    letter-spacing: 0.02em;
+    /* Extra Bold */
+    color: #051626;
+    /* Very Dark Blue/Black */
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
 }
 
-.service-desc {
+/* Service Process Flow (Before/After Diagram) */
+.service-process-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+    width: 100%;
+}
+
+.process-step {
+    width: 100%;
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.step-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+/* Before State: Muted but Clear */
+.step-before {
+    background: #f5f7f9;
+    border: 2px dashed #b0bec5;
+    /* Thicker dashed border */
+    color: #546e7a;
+}
+
+.step-before .step-label {
+    color: #90a4ae;
+}
+
+.step-before p {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+/* Arrow: Visual Connector */
+.process-arrow {
+    color: #90a4ae;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1;
+    transform: scaleY(0.85);
+    opacity: 0.8;
+}
+
+/* After State: Strong Blue */
+.step-after {
+    background: #f0fbff;
+    /* Very light blue bg */
+    border: 2px solid #4fc3f7;
+    /* Strong Blue Border */
+    color: #01579b;
+    box-shadow: 0 6px 16px rgba(0, 140, 255, 0.12);
+}
+
+.step-after .step-label {
+    color: #0288d1;
+}
+
+.step-after p {
     font-size: 15px;
-    color: #5c6c78;
-    line-height: 1.8;
+    line-height: 1.5;
+    color: #0d47a1;
     font-weight: 500;
+}
+
+.step-after strong {
+    font-size: 17px;
+    font-weight: 800;
+    display: block;
+    margin-top: 4px;
+    color: #039be5;
+    /* Bright clear blue */
+}
+
+.service-card:hover .step-after {
+    background: #e1f5fe;
+    border-color: #039be5;
+    transform: translateY(2px);
+    box-shadow: 0 8px 20px rgba(0, 140, 255, 0.2);
 }
 
 /* よくあるご相談 (Services内) */
@@ -783,22 +871,62 @@ h3 {
 }
 
 .consultation-card {
-    background: #f9fcff;
-    border: 1px solid #e0f0ff;
-    border-radius: 8px;
-    padding: 24px;
-    width: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 70, 120, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: left;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    display: flex;
-    align-items: center;
+    /* Aligned left for Q&A format */
 }
 
-.consultation-card p {
-    margin: 0;
+.consultation-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 70, 120, 0.1);
+}
+
+.consultation-problem {
     font-size: 16px;
-    color: #4b5a64;
+    font-weight: 700;
+    color: #37474f;
+    margin-bottom: 24px;
+    position: relative;
+    padding-left: 24px;
     line-height: 1.6;
+}
+
+.consultation-problem::before {
+    content: "Q.";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: #b0bec5;
+    font-weight: 900;
+}
+
+.consultation-solution {
+    background: #f0fbff;
+    border-left: 4px solid var(--accent-color);
+    padding: 16px 20px;
+    border-radius: 4px 8px 8px 4px;
+}
+
+.solution-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--accent-color);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+}
+
+.consultation-solution p {
+    font-size: 15px;
+    font-weight: 500;
+    color: #0d47a1;
+    line-height: 1.6;
+    margin: 0;
 }
 
 @media (max-width: 768px) {
