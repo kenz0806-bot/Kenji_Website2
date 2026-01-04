@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTopNews();
     renderNewsArchive();
     setupFloatingBackButton();
+    setupSpotlightEffect();
+    setupMagneticButtons();
+    setupParallaxEffect();
 });
 
 // ================================
@@ -191,6 +194,9 @@ function setupNavigation() {
     }
 
     navLinks.forEach(link => {
+        // Spotlight/Magnetic 用のクラス付与
+        link.classList.add('is-magnetic');
+
         if (!link.querySelector('.nav-dot')) {
             const dot = document.createElement('span');
             dot.classList.add('nav-dot');
@@ -243,6 +249,9 @@ function setupContactCopy() {
 
     if (!copyBtn || !emailTextEl || !copyResultEl) return;
 
+    // コピーボタンもMagneticにする
+    copyBtn.classList.add('is-magnetic');
+
     copyBtn.addEventListener("click", () => {
         const email = emailTextEl.textContent.trim();
         if (!email) return;
@@ -264,5 +273,76 @@ function setupContactCopy() {
                 copyResultEl.style.opacity = 0;
             }, 2500);
         });
+    });
+}
+
+
+// ================================
+// Spotlight Effect (Glass Reflection)
+// ================================
+function setupSpotlightEffect() {
+    // Spotlightを適用したい要素
+    const targets = document.querySelectorAll('.glass-panel, .service-card, .consultation-card');
+
+    targets.forEach(card => {
+        card.classList.add('has-spotlight');
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+            card.style.setProperty('--spotlight-opacity', '1');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--spotlight-opacity', '0');
+        });
+    });
+}
+
+// ================================
+// Magnetic Buttons (Apple-style)
+// ================================
+function setupMagneticButtons() {
+    const magnets = document.querySelectorAll('.is-magnetic');
+
+    magnets.forEach(magnet => {
+        magnet.addEventListener('mousemove', (e) => {
+            const rect = magnet.getBoundingClientRect();
+            // 中心からの距離
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const deltaX = e.clientX - centerX;
+            const deltaY = e.clientY - centerY;
+
+            // 動きの「重さ」 (0.2くらいが上品)
+            const strength = 0.25;
+
+            magnet.style.transform = `translate(${deltaX * strength}px, ${deltaY * strength}px)`;
+        });
+
+        magnet.addEventListener('mouseleave', () => {
+            // 元の位置に戻る (CSS transitionでバネのように戻る)
+            magnet.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// ================================
+// Scroll Parallax (Depth)
+// ================================
+function setupParallaxEffect() {
+    const waveBg = document.querySelector('.global-wave-bg');
+    if (!waveBg) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        // 背景をスクロール量の半分だけで動かす → 奥行きが出る
+        // translate3d でGPU加速
+        waveBg.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
     });
 }
