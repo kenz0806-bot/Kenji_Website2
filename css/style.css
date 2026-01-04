@@ -2444,11 +2444,12 @@ h3 {
 }
 
 .contact-note {
-    text-align: center;
+    text-align: left;
     font-size: 15px;
     color: #666;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
+    margin: 24px auto 16px;
+    max-width: 720px;
+    line-height: 1.8;
 }
 
 .contact-price-note {
@@ -2460,9 +2461,11 @@ h3 {
 }
 
 .contact-privacy {
-    text-align: center;
+    display: block;
+    text-align: left;
     font-size: 13px;
     color: #999;
+    margin-top: 8px;
 }
 
 /* ================================
