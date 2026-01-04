@@ -94,17 +94,19 @@
     <section id="mission" class="mission section">
         <div class="container">
             <h2 class="section-title">Mission</h2>
-            <div class="section-content">
-                <p class="fade-up">
-                    会計は、未来へ向かうための“言語”だと考えています。<br>
-                    数字だけでなく、人の迷いと期待を整理し、輪郭をクリアにする。<br>
-                    社外CFO・内部統制・監査対応を通じて、混沌を判断できる情報へ変換する。<br>
-                    チームと投資家が同じ地図を見て、腹落ちして進める状態をつくる。<br>
-                    経営の伴走者として、決断の質を底上げすることにコミットします。
-                </p>
-                <p class="mission-target fade-up">
-                    中小〜上場準備企業の経営者・管理部門の方を中心にご支援しています。
-                </p>
+            <div class="glass-panel mission-content-wrapper fade-up">
+                <div class="section-content">
+                    <p>
+                        会計は、未来へ向かうための“言語”だと考えています。<br>
+
+                        混沌を判断できる情報へ変換する。<br>
+                        同じ地図を見て、一緒に進める状態をつくる。<br>
+                        経営の伴走者として、決断の質を底上げすることにコミットします。
+                    </p>
+                    <p class="mission-target">
+                        中小〜上場準備企業の経営者・管理部門の方を中心にご支援しています。
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -114,37 +116,78 @@
         <div class="container">
             <h2 class="section-title">Services</h2>
             <div class="services-grid">
-                <div class="service-item fade-up">
-                    <h3>■ 社外CFOサポート</h3>
-                    <ul>
-                        <li>財務・管理体制の整理</li>
-                        <li>経営数値の見える化</li>
-                    </ul>
+                <!-- Service 1: 社外CFO -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3 13H7V21H3V13ZM19 10H23V21H19V10ZM11 6H15V21H11V6ZM1 22H23V24H1V22ZM4 11V3L11 9L21 4V9"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">社外CFOサポート</h3>
+                    <p class="service-desc">財務・管理体制の整理<br>経営数値の見える化</p>
                 </div>
 
-                <div class="service-item fade-up">
-                    <h3>■ 内部統制・J-SOX</h3>
-                    <ul>
-                        <li>統制理解</li>
-                        <li>運用評価</li>
-                        <li>論点整理</li>
-                    </ul>
+                <!-- Service 2: 会計システム移行 (NEW) -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12V7L12 2L3 7V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M7 16.5L12 21.5L17 16.5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 12V21.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">会計システム移行</h3>
+                    <p class="service-desc">freee・マネーフォワード等<br>安全なデータ移行と定着支援</p>
                 </div>
 
-                <div class="service-item fade-up">
-                    <h3>■ 監査対応サポート</h3>
-                    <ul>
-                        <li>監査法人との論点調整</li>
-                        <li>必要資料の整理</li>
-                    </ul>
+                <!-- Service 3: 内部統制・J-SOX -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2L3 7V12C3 16.97 7.5 21 12 22C16.5 21 21 16.97 21 12V7L12 2ZM11 15L7.5 11.5L8.91 10.09L11 12.17L15.09 8.09L16.5 9.5L11 15Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">内部統制・J-SOX</h3>
+                    <p class="service-desc">統制理解・運用評価<br>論点整理・改善提案</p>
                 </div>
 
-                <div class="service-item fade-up">
-                    <h3>■ AIの実務的な使い方の相談</h3>
-                    <ul>
-                        <li>現場で使える範囲のAI活用の検討</li>
-                        <li>業務フローとの相性整理</li>
-                    </ul>
+                <!-- Service 4: 監査対応 -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM17.2 16.8L15.8 18.2L13 15.4C12.4 15.8 11.7 16 11 16C8.2 16 6 13.8 6 11C6 8.2 8.2 6 11 6C13.8 6 16 8.2 16 11C16 11.7 15.8 12.4 15.4 13L18.2 15.8L17.2 16.8Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">監査対応サポート</h3>
+                    <p class="service-desc">監査法人との論点調整<br>必要資料の整理</p>
+                </div>
+
+                <!-- Service 5: AI活用 -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L14.4 7.2L20 8.4L15.6 12.2L17 18L12 14.8L7 18L8.4 12.2L4 8.4L9.6 7.2L12 2Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6 14L4 20L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M18 14L20 20L14 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">AI活用の相談</h3>
+                    <p class="service-desc">実務レベルでのAI実装検討<br>業務フローとの適合性診断</p>
                 </div>
             </div>
 
@@ -170,19 +213,21 @@
     <section id="profile" class="profile section">
         <div class="container">
             <h2 class="section-title">Profile</h2>
-            <div class="section-content fade-up">
-                <div class="profile-image-container">
-                    <img src="img/profile.jpg" alt="佐藤 健司" class="profile-img">
+            <div class="glass-panel profile-content-wrapper fade-up">
+                <div class="section-content">
+                    <div class="profile-image-container">
+                        <img src="img/profile.jpg" alt="佐藤 健司" class="profile-img">
+                    </div>
+                    <h3 class="profile-name">佐藤 健司（さとう けんじ）</h3>
+                    <p class="profile-title">公認会計士 ／ 社外CFO・内部統制支援</p>
+                    <ul class="profile-list">
+                        <li>PwC Japan有限責任監査法人（京都）にて約8年間従事</li>
+                        <li>上場企業監査（製造業・サービス業・IT企業など）に多数関与</li>
+                        <li>内部統制（J-SOX）に深く関与</li>
+                        <li>監査チームのマネジメント経験</li>
+                        <li>AI活用による業務効率化を積極的に提案</li>
+                    </ul>
                 </div>
-                <h3 class="profile-name">佐藤 健司（さとう けんじ）</h3>
-                <p class="profile-title">公認会計士 ／ 社外CFO・内部統制支援</p>
-                <ul class="profile-list">
-                    <li>PwC Japan有限責任監査法人（京都）にて約8年間従事</li>
-                    <li>上場企業監査（製造業・サービス業・IT企業など）に多数関与</li>
-                    <li>内部統制（J-SOX）に深く関与</li>
-                    <li>監査チームのマネジメント経験</li>
-                    <li>AI活用による業務効率化を積極的に提案</li>
-                </ul>
             </div>
         </div>
     </section>
@@ -191,21 +236,23 @@
     <section id="message" class="message section">
         <div class="container">
             <h2 class="section-title">Message</h2>
-            <div class="section-content">
-                <p class="fade-up">
-                    会計士として大切にしているのは、<br>
-                    「数字の向こう側にある、経営者の想いを理解すること」です。
-                </p>
+            <div class="glass-panel message-content-wrapper fade-up">
+                <div class="section-content">
+                    <p>
+                        会計士として大切にしているのは、<br>
+                        「数字の向こう側にある、経営者の想いを理解すること」です。
+                    </p>
 
-                <p class="fade-up">
-                    監査法人で約8年間、様々な企業と向き合ってきました。
-                </p>
+                    <p>
+                        監査法人で約8年間、様々な企業と向き合ってきました。
+                    </p>
 
-                <p class="fade-up">
-                    複雑に見える状況を整理し、<br>
-                    「何をすべきか」を明確にする。<br>
-                    それが、私が提供したいサポートです。
-                </p>
+                    <p>
+                        複雑に見える状況を整理し、<br>
+                        「何をすべきか」を明確にする。<br>
+                        それが、私が提供したいサポートです。
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -214,9 +261,10 @@
     <section id="news" class="news section">
         <div class="container">
             <h2 class="section-title">News</h2>
-
-            <div class="news-list fade-up" id="top-news-list">
-                <!-- JSでレンダリング -->
+            <div class="glass-panel news-content-wrapper fade-up">
+                <div class="news-list" id="top-news-list">
+                    <!-- JSでレンダリング -->
+                </div>
             </div>
         </div>
     </section>
@@ -225,45 +273,47 @@
     <section id="contact" class="contact section">
         <div class="container">
             <h2 class="section-title fade-up">Contact</h2>
-            <div class="section-content">
-                <!-- 誘導コピー -->
-                <p class="contact-intro fade-up">
-                    <strong>まずは 30〜60 分のオンライン相談から承っています。<br>
-                        <span class="contact-tool-note">※ Google Meet、Zoom
-                            等、ご希望のツールで対応可能です。</span></strong>
-                </p>
+            <div class="glass-panel contact-content-wrapper fade-up">
+                <div class="section-content">
+                    <!-- 誘導コピー -->
+                    <p class="contact-intro">
+                        <strong>まずは 30〜60 分のオンライン相談から承っています。<br>
+                            <span class="contact-tool-note">※ Google Meet、Zoom
+                                等、ご希望のツールで対応可能です。</span></strong>
+                    </p>
 
-                <!-- メール案内 -->
-                <p class="contact-email-lead fade-up">
-                    ご相談やお問い合わせは、以下のメールアドレスからお気軽にご連絡ください。
-                </p>
+                    <!-- メール案内 -->
+                    <p class="contact-email-lead">
+                        ご相談やお問い合わせは、以下のメールアドレスからお気軽にご連絡ください。
+                    </p>
 
-                <!-- メールアドレス（コピーして使う想定） -->
-                <div class="contact-email-pill fade-up" id="copy-email">
-                    <span id="email-text" class="email-main">kenji@kenji-sato.jp</span>
-                    <span class="email-sub">📋 クリックでコピー</span>
-                </div>
+                    <!-- メールアドレス（コピーして使う想定） -->
+                    <div class="contact-email-pill" id="copy-email">
+                        <span id="email-text" class="email-main">kenji@kenji-sato.jp</span>
+                        <span class="email-sub">📋 クリックでコピー</span>
+                    </div>
 
-                <!-- コピー結果メッセージ -->
-                <p id="copy-result" class="copy-result">
-                    メールアドレスをコピーしました。
-                </p>
+                    <!-- コピー結果メッセージ -->
+                    <p id="copy-result" class="copy-result">
+                        メールアドレスをコピーしました。
+                    </p>
 
-                <!-- 何を書けばよいか分からない人向けのサンプル -->
-                <div class="contact-sample fade-up">
-                    <p class="contact-sample-title">【メールの書き方例】</p>
-                    <p class="contact-sample-body">
-                        例）売上は伸びてきたのですが、管理体制や内部統制が追いついておらず、
-                        監査法人とのやり取りや決算まわりに不安があります。
-                        一度、現状を整理する相談に乗っていただけませんか。
+                    <!-- 何を書けばよいか分からない人向けのサンプル -->
+                    <div class="contact-sample">
+                        <p class="contact-sample-title">【メールの書き方例】</p>
+                        <p class="contact-sample-body">
+                            例）売上は伸びてきたのですが、管理体制や内部統制が追いついておらず、
+                            監査法人とのやり取りや決算まわりに不安があります。
+                            一度、現状を整理する相談に乗っていただけませんか。
+                        </p>
+                    </div>
+
+                    <!-- 安心感の一文（既存の note を少し調整） -->
+                    <p class="contact-note">
+                        まだ内容が固まっていない段階でも、「ざっくり相談したい」くらいの一文からで大丈夫です。<br>
+                        <span class="contact-privacy">お預かりした情報は、相談対応の目的以外には使用いたしません。</span>
                     </p>
                 </div>
-
-                <!-- 安心感の一文（既存の note を少し調整） -->
-                <p class="contact-note">
-                    まだ内容が固まっていない段階でも、「ざっくり相談したい」くらいの一文からで大丈夫です。<br>
-                    <span class="contact-privacy">お預かりした情報は、相談対応の目的以外には使用いたしません。</span>
-                </p>
             </div>
         </div>
     </section>

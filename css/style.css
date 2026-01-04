@@ -619,28 +619,11 @@ h3 {
     overflow: hidden;
 }
 
+
+/* Remove old sliding backgrounds to use Global Wave + Glass Panels */
 .mission.section::before,
 .services.section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Glassy White Overlay instead of Opaque Gray */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(240, 248, 255, 0.3) 100%);
-    opacity: 0;
-    transform: translateX(-100%);
-    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s;
-    z-index: -1;
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-}
-
-.section-visible.mission.section::before,
-.section-visible.services.section::before {
-    opacity: 1;
-    transform: translateX(0);
+    display: none;
 }
 
 .mission-text {
@@ -662,57 +645,119 @@ h3 {
 }
 
 /* ================================
-   Services Grid
+   Glassmorphism UI System
 ================================ */
 
+.glass-panel {
+    background: rgba(255, 255, 255, 0.75);
+    /* Slightly more opaque for readability */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 8px 32px rgba(0, 180, 255, 0.04);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+.glass-panel:hover {
+    box-shadow: 0 12px 48px rgba(0, 180, 255, 0.08);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+/* Specific adjustments for section contents */
+.mission-content-wrapper,
+.profile-content-wrapper,
+.message-content-wrapper,
+.contact-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Service Card (inherits glass feel but specific layout) */
+/* Service Card (inherits glass feel but specific layout) */
 .services-grid {
     display: grid;
+    /* Optimizing for 5 items: roughly 3 columns on desktop */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 32px;
+    gap: 24px;
     margin-top: 48px;
+    justify-content: center;
 }
 
-.service-item {
-    background: #ffffff;
-    border: 1px solid #eef1f5;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-}
-
-.service-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 180, 255, 0.1);
-}
-
-.service-item h3 {
-    font-size: 20px;
-    margin-bottom: 16px;
-    color: #1a2a33;
-    border-bottom: 2px solid rgba(0, 180, 255, 0.2);
-    padding-bottom: 8px;
-    display: inline-block;
-}
-
-.service-item ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.service-item li {
+.service-card {
+    background: rgba(255, 255, 255, 0.85);
+    /* More solid for "Rich" feel */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 48px 32px;
+    /* Taller padding */
+    box-shadow: 0 10px 40px rgba(0, 180, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     position: relative;
-    padding-left: 1.2em;
-    margin-bottom: 8px;
-    font-size: 16px;
-    color: #4b5a64;
+    overflow: hidden;
 }
 
-.service-item li::before {
-    content: "・";
-    position: absolute;
-    left: 0;
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 180, 255, 0.18);
+    border-color: rgba(0, 180, 255, 0.6);
+    /* Defined border color on hover */
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.service-icon {
+    margin-bottom: 24px;
     color: var(--accent-color);
+    /* Rich Gradient Background */
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.1) 0%, rgba(0, 180, 255, 0.02) 100%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+    border: 1px solid rgba(0, 180, 255, 0.1);
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(-5deg);
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.2) 0%, rgba(0, 180, 255, 0.05) 100%);
+    box-shadow: 0 0 20px rgba(0, 180, 255, 0.2);
+    /* Glow */
+}
+
+.service-icon svg {
+    width: 52px;
+    height: 52px;
+    /* Larger Icon */
+    stroke-width: 1.8px;
+    filter: drop-shadow(0 2px 4px rgba(0, 180, 255, 0.2));
+    /* Depth */
+}
+
+.service-name {
+    font-size: 20px;
+    font-weight: 800;
+    /* Bolder */
+    color: #0f1a24;
+    /* Darker */
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+}
+
+.service-desc {
+    font-size: 15px;
+    color: #5c6c78;
+    line-height: 1.8;
+    font-weight: 500;
 }
 
 /* よくあるご相談 (Services内) */
