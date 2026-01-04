@@ -44,30 +44,60 @@ function setupCinematicOpening() {
     const caret = document.querySelector('.intro-caret');
     const dot = document.getElementById('intro-dot');
 
-    // Robust check
-    if (!overlay || !textTarget || !caret || !dot) return;
+    // Robust check for overlay first
+    if (!overlay) return;
+
+    // Safety Failsafe: Force remove after 6 seconds if anything gets stuck
+    const failsafeTimer = setTimeout(() => {
+        if (document.body.contains(overlay)) {
+            console.warn('Cinematic Opening timed out, forcing removal.');
+            overlay.classList.add('is-hidden');
+            setTimeout(() => overlay.remove(), 1000);
+        }
+    }, 6000);
+
+    // Robust check for other elements
+    if (!textTarget || !caret || !dot) {
+        // If elements missing, clear immediately
+        console.error('Cinematic Opening elements missing.');
+        clearTimeout(failsafeTimer); // Clear the failsafe as we're handling it now
+        overlay.remove();
+        return;
+    }
 
     // Full text to type
+    // Note: spaces might be better handled as &nbsp; or standard space
     const fullText = "佐藤健司 公認会計士事務所";
-    const typeSpeed = 100; // ms per char
+    const typeSpeed = 90; // Slightly faster for responsiveness
+
+    // Clear initial text (Important for reloads or cache)
+    textTarget.textContent = "";
 
     // 1. Start Typing after slight delay
     setTimeout(() => {
-        let charIndex = 0;
-        const typeInterval = setInterval(() => {
-            if (charIndex < fullText.length) {
-                textTarget.textContent += fullText.charAt(charIndex);
-                charIndex++;
-            } else {
-                clearInterval(typeInterval);
-                // Typing Finished -> Proceed to Dot Phase
-                startDotSequence(overlay, caret, dot);
-            }
-        }, typeSpeed);
+        try {
+            let charIndex = 0;
+            const typeInterval = setInterval(() => {
+                if (charIndex < fullText.length) {
+                    textTarget.textContent += fullText.charAt(charIndex);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                    // Typing Finished -> Proceed to Dot Phase
+                    startDotSequence(overlay, caret, dot, failsafeTimer);
+                }
+            }, typeSpeed);
+        } catch (e) {
+            console.error('Typewriter error:', e);
+            overlay.remove(); // Force remove overlay on error
+        }
     }, 500); // 0.5s initial wait
 }
 
-function startDotSequence(overlay, caret, dot) {
+function startDotSequence(overlay, caret, dot, failsafeTimer) {
+    // Robust check
+    if (!overlay || !caret || !dot) return;
+
     // 2. Wait a beat after typing
     setTimeout(() => {
         // Hide caret
@@ -78,6 +108,9 @@ function startDotSequence(overlay, caret, dot) {
 
         // 4. Dot Expand (The "Wipe")
         setTimeout(() => {
+            // Cancel failsafe since we reached the end sequence successfully
+            if (failsafeTimer) clearTimeout(failsafeTimer);
+
             // Transform dot into the expander
             // We clone it or just add the class. Adding class is cleaner if CSS handles it.
             // But we need it to be fixed position to scale correctly without flow issues.
@@ -109,7 +142,9 @@ function startDotSequence(overlay, caret, dot) {
 
             // 7. Remove DOM
             setTimeout(() => {
-                overlay.remove();
+                if (document.body.contains(overlay)) {
+                    overlay.remove();
+                }
             }, 1600); // Fade duration + buffer
 
         }, 600); // Wait after pop before expanding
