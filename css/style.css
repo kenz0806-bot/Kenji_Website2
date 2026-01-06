@@ -2557,7 +2557,7 @@ h3 {
     margin-bottom: 6px;
 }
 
-.draft-content {
+#draft-body.draft-content {
     display: block;
     color: #4b5a64;
     font-size: 15px;
