@@ -379,6 +379,12 @@ function setupContactDrafts() {
         }
     };
 
+    // 【追加】初期表示のレイアウトズレ防止：auditで初期化
+    if (templates.audit) {
+        subjectEl.textContent = templates.audit.subject;
+        bodyEl.innerHTML = templates.audit.body.replace(/\n/g, '<br>');
+    }
+
     // ボタン切り替えロジック
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
