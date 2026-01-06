@@ -2564,6 +2564,7 @@ h3 {
     line-height: 1.7;
     white-space: pre-wrap;
     /* Respect newlines */
+    margin-top: 0;
 }
 
 /* Copy Button inside Draft */
