@@ -29,46 +29,73 @@
             padding-top: 2rem;
         }
     </style>
-    <!-- Google Structured Data (JSON-LD: Person & Organization) -->
+    <!-- Google Structured Data (JSON-LD: Graph with Person & Organization entities linked) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://www.kenji-sato.jp/#kenji-sato",
-      "name": "Kenji Sato",
-      "alternateName": "佐藤 健司",
-      "jobTitle": [
-        "Certified Public Accountant",
-        "公認会計士",
-        "CPA"
-      ],
-      "image": "https://www.kenji-sato.jp/img/profile.jpg",
-      "url": "https://www.kenji-sato.jp/",
-      "sameAs": [
-        "https://www.kenji-sato.jp/",
-        "https://www.linkedin.com/in/健司-佐藤-06a1b8375"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kyoto",
-        "addressCountry": "JP"
-      },
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Kenji Sato CPA Office",
-        "alternateName": "佐藤健司公認会計士事務所",
-        "url": "https://www.kenji-sato.jp/",
-        "logo": "https://www.kenji-sato.jp/img/favicon.png"
-      },
-      "knowsAbout": [
-        "Financial Audit (財務諸表監査)",
-        "J-SOX Internal Control (内部統制)",
-        "IPO Audit Support (IPO監査対応)",
-        "Accounting DX & Generative AI (会計DX・生成AI)",
-        "Financial Reporting (決算・財務報告)",
-        "CFO Support (CFO支援)"
-      ],
-      "description": "Kyoto-based Japanese CPA specializing in J-SOX, IPO preparation, Financial Audits, and Accounting DX. 京都を拠点とする公認会計士・佐藤健司。"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://www.kenji-sato.jp/#kenji-sato",
+          "name": "Kenji Sato",
+          "alternateName": "佐藤 健司",
+          "jobTitle": [
+            "Certified Public Accountant",
+            "公認会計士",
+            "CPA"
+          ],
+          "image": "https://www.kenji-sato.jp/img/profile.jpg",
+          "url": "https://www.kenji-sato.jp/",
+          "sameAs": [
+            "https://www.kenji-sato.jp/",
+            "https://www.linkedin.com/in/健司-佐藤-06a1b8375"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kyoto",
+            "addressCountry": "JP"
+          },
+          "worksFor": {
+            "@id": "https://www.kenji-sato.jp/#office"
+          },
+          "memberOf": {
+            "@id": "https://www.kenji-sato.jp/#office"
+          },
+          "knowsAbout": [
+            "Financial Audit (財務諸表監査)",
+            "J-SOX Internal Control (内部統制)",
+            "IPO Audit Support (IPO監査対応)",
+            "Accounting DX & Generative AI (会計DX・生成AI)",
+            "Financial Reporting (決算・財務報告)",
+            "CFO Support (CFO支援)"
+          ],
+          "description": "Kyoto-based Japanese CPA specializing in J-SOX, IPO audit support, Financial Audits, and Accounting DX. 京都を拠点とする公認会計士・佐藤健司。"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://www.kenji-sato.jp/#office",
+          "name": "Kenji Sato CPA Office",
+          "alternateName": "佐藤健司公認会計士事務所",
+          "url": "https://www.kenji-sato.jp/",
+          "logo": "https://www.kenji-sato.jp/img/favicon.png",
+          "founder": {
+            "@id": "https://www.kenji-sato.jp/#kenji-sato"
+          },
+          "member": {
+            "@id": "https://www.kenji-sato.jp/#kenji-sato"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kyoto",
+            "addressCountry": "JP"
+          },
+          "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "kenji@kenji-sato.jp"
+          }
+        }
+      ]
     }
     </script>
 </head>
