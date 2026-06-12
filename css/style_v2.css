@@ -182,9 +182,10 @@ button { font-family: inherit; cursor: pointer; }
     box-shadow: 0 0 16px rgba(77,159,255,0.7);
 }
 .hero-sub {
-    margin-top: 26px;
+    margin-top: 30px;
     font-size: clamp(14px, 1.6vw, 17px);
     font-weight: 300;
+    line-height: 2.3;
     letter-spacing: 0.22em;
     text-indent: 0.22em;
     color: #c9d6ea;
@@ -193,9 +194,9 @@ button { font-family: inherit; cursor: pointer; }
     animation: hero-reveal 1.1s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
 }
 .hero-concept {
-    margin-top: 54px;
+    margin-top: 38px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.42em;
     text-indent: 0.42em;
