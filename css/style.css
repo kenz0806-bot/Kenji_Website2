@@ -3055,3 +3055,107 @@ h3 {
         margin-top: 16px;
     }
 }
+/* ============================================================
+   Hero Cinema — Veo brand film hero (2026.06)
+   Apple文法：入口は漆黒の映像、以降は白の世界
+   ============================================================ */
+.hero-cinema {
+    height: 94vh;
+    min-height: 560px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #04070f;
+}
+
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* 文字可読性のための薄い帳（中央は素通し、周縁と下部を締める） */
+.hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        radial-gradient(ellipse at 50% 58%, rgba(4, 7, 15, 0) 0%, rgba(4, 7, 15, 0.38) 78%, rgba(4, 7, 15, 0.66) 100%),
+        linear-gradient(to bottom, rgba(4, 7, 15, 0.30) 0%, rgba(4, 7, 15, 0.04) 38%, rgba(4, 7, 15, 0.0) 60%, rgba(4, 7, 15, 0.50) 100%);
+    pointer-events: none;
+}
+
+.hero-cinema .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* タイポを白の世界へ（既存アニメは継承） */
+.hero-cinema .hero-title {
+    color: #f4f7fc;
+    text-shadow: 0 2px 40px rgba(2, 6, 14, 0.55), 0 0 80px rgba(77, 159, 255, 0.10);
+}
+
+.hero-cinema .hero-sub {
+    color: #c9d6ea;
+    text-shadow: 0 1px 24px rgba(2, 6, 14, 0.6);
+}
+
+.hero-cinema .hero-concept {
+    color: #8fb4e8;
+    text-shadow: 0 1px 20px rgba(2, 6, 14, 0.6);
+}
+
+/* スクロールキュー：細い縦線が静かに呼吸する（Apple的） */
+.hero-scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 1px;
+    height: 56px;
+    overflow: hidden;
+    opacity: 0;
+    animation: hero-elegant-reveal 1.2s ease 1.6s forwards;
+}
+
+.hero-scroll-cue span {
+    position: absolute;
+    left: 0;
+    top: -100%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(244, 247, 252, 0) 0%, rgba(244, 247, 252, 0.85) 50%, rgba(244, 247, 252, 0) 100%);
+    animation: scroll-cue-drop 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes scroll-cue-drop {
+    0% { top: -100%; }
+    60% { top: 100%; }
+    100% { top: 100%; }
+}
+
+/* モバイル：縦画面でも映像の中心（線・墨）が活きる */
+@media (max-width: 768px) {
+    .hero-cinema {
+        height: 88vh;
+        min-height: 480px;
+    }
+}
+
+/* アクセシビリティ：動きを抑える設定の人には静止ポスターを */
+@media (prefers-reduced-motion: reduce) {
+    .hero-video {
+        display: none;
+    }
+    .hero-cinema {
+        background: #04070f url('../video/hero_poster.jpg') center / cover no-repeat;
+    }
+    .hero-scroll-cue span {
+        animation: none;
+        top: 0;
+    }
+}
