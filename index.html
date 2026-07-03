@@ -16,7 +16,7 @@
     <meta property="og:title" content="佐藤健司公認会計士事務所 | Kenji Sato CPA Office (Kyoto)">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.kenji-sato.jp/">
-    <meta property="og:image" content="https://www.kenji-sato.jp/img/ogp.png">
+    <meta property="og:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
     <meta property="og:description" content="京都の公認会計士・税理士 佐藤健司。社外CFO、内部統制構築、新リース基準対応、会計DXの専門家。経営の意思決定を支える伴走支援を提供します。">
     <meta property="og:site_name" content="Kenji Sato CPA Office">
     <meta property="og:locale" content="ja_JP">
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="佐藤健司公認会計士事務所 | Kenji Sato CPA Office">
     <meta name="twitter:description" content="京都の公認会計士・税理士。社外CFO、内部統制構築、新リース基準対応、会計DXの専門家。">
-    <meta name="twitter:image" content="https://www.kenji-sato.jp/img/ogp.png">
+    <meta name="twitter:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
 
     <link rel="canonical" href="https://www.kenji-sato.jp/">
 
@@ -34,6 +34,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
+    <link rel="preload" as="image" href="video/hero_poster.jpg" fetchpriority="high">
     <link rel="stylesheet" href="css/style_v2.css?v=20260612b">
     <style>
         /* Hero v3 - Key Structure is to Keep it Simple. */
@@ -117,7 +118,7 @@
           "description": "Kyoto-based Japanese CPA & Licensed Tax Accountant specializing in CFO support, J-SOX internal control, new lease accounting standard, and Accounting DX. Professional support for SMEs, listed and pre-IPO companies in Kyoto and the Kansai region. 京都を拠点に、中小企業から上場・上場準備企業まで、社外CFO・内部統制構築・新リース基準対応・会計DXを提供する公認会計士・税理士 佐藤健司。"
         },
         {
-          "@type": "Organization",
+          "@type": ["Organization", "AccountingService"],
           "@id": "https://www.kenji-sato.jp/#office",
           "name": "Kenji Sato CPA Office",
           "alternateName": "佐藤健司公認会計士事務所",
@@ -161,6 +162,48 @@
               "contactType": "customer support",
               "email": "kenji@kenji-sato.jp"
           }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.kenji-sato.jp/#website",
+          "url": "https://www.kenji-sato.jp/",
+          "name": "佐藤健司公認会計士事務所",
+          "alternateName": "Kenji Sato CPA Office",
+          "inLanguage": "ja",
+          "publisher": { "@id": "https://www.kenji-sato.jp/#office" }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.kenji-sato.jp/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "J-SOX・内部統制まわりの文書整理が追いついていない",
+              "acceptedAnswer": { "@type": "Answer", "text": "現状に合わせた過不足ない文書化を支援し、最短で運用に乗せます。" }
+            },
+            {
+              "@type": "Question",
+              "name": "管理部門に相談できる相手がいない",
+              "acceptedAnswer": { "@type": "Answer", "text": "決算・開示・J-SOX・監査対応まで管理部門の論点に一通り通ってきた会計士が、月1の気軽な壁打ち相手になります。" }
+            },
+            {
+              "@type": "Question",
+              "name": "古い会計ソフトからの移行が不安",
+              "acceptedAnswer": { "@type": "Answer", "text": "業務を止めず、データも消えない安全な移行プランを実行します。" }
+            },
+            {
+              "@type": "Question",
+              "name": "AIを使って業務効率化したいが分からない",
+              "acceptedAnswer": { "@type": "Answer", "text": "貴社の業務フローを診断し、効果の出るAI活用をご提案します。" }
+            }
+          ]
         }
       ]
     }
@@ -397,7 +440,7 @@
             <div class="glass-panel profile-content-wrapper fade-up">
                 <div class="section-content">
                     <div class="profile-image-container">
-                        <img src="img/profile.jpg" alt="佐藤 健司" class="profile-img">
+                        <img src="img/profile.jpg" alt="佐藤 健司（公認会計士・京都）" class="profile-img" loading="lazy" decoding="async">
                     </div>
                     <h3 class="profile-name">佐藤 健司（さとう けんじ）</h3>
                     <p class="profile-title">公認会計士 ／ 社外CFO・内部統制支援</p>
