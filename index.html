@@ -35,6 +35,35 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/style_v2.css?v=20260612b">
+    <style>
+        /* Hero v3 - Key Structure is to Keep it Simple. */
+        .hero-title { font-size: clamp(26px, 4.4vw, 52px); letter-spacing: 0.02em; }
+        .hero-sub { margin-top: 26px; }
+        .hero-desc {
+            margin-top: 24px;
+            font-size: clamp(14px, 1.7vw, 17px);
+            font-weight: 300;
+            line-height: 2.1;
+            color: #dbe5f4;
+            text-shadow: 0 1px 24px rgba(2,6,14,0.6);
+            opacity: 0;
+            animation: hero-reveal 1.1s cubic-bezier(0.16,1,0.3,1) 0.85s forwards;
+        }
+        .hero-services {
+            margin-top: 30px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            letter-spacing: 0.24em;
+            text-indent: 0.24em;
+            color: #8fb4e8;
+            text-shadow: 0 1px 20px rgba(2,6,14,0.6);
+            opacity: 0;
+            animation: hero-reveal 1.1s cubic-bezier(0.16,1,0.3,1) 1.15s forwards;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-desc, .hero-services { animation: none; opacity: 1; }
+        }
+    </style>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
@@ -160,12 +189,12 @@
             </div>
 
             <nav class="kg-nav">
-                <a href="#mission" class="kg-nav-link">Mission</a>
-                <a href="#services" class="kg-nav-link">Services</a>
-                <a href="#profile" class="kg-nav-link">Profile</a>
-                <a href="#message" class="kg-nav-link">Message</a>
-                <a href="#news" class="kg-nav-link">News</a>
-                <a href="#contact" class="kg-nav-link kg-nav-contact">Contact</a>
+                <a href="#mission" class="kg-nav-link">考え方</a>
+                <a href="#services" class="kg-nav-link">サービス</a>
+                <a href="#profile" class="kg-nav-link">プロフィール</a>
+                <a href="#message" class="kg-nav-link">ご挨拶</a>
+                <a href="#news" class="kg-nav-link">お知らせ</a>
+                <a href="#contact" class="kg-nav-link kg-nav-contact">ご相談はこちら</a>
             </nav>
         </div>
     </header>
@@ -180,12 +209,19 @@
         <div class="container">
             <div class="hero-content hero-logo">
                 <h1 class="hero-title">
-                    佐藤健司 公認会計士事務所
+                    Key Structure is to Keep it Simple.
                     <span class="youth-dot"></span>
                 </h1>
 
-                <p class="hero-concept">
-                    Keep it Simple.</p>
+                <p class="hero-sub">
+                    核心の構造とは、シンプルを保つこと。</p>
+
+                <p class="hero-desc">
+                    散らかった数字・業務・ルールを、判断できる構造に組み直す。<br>
+                    京都の公認会計士事務所です。</p>
+
+                <p class="hero-services">
+                    社外CFO ／ 内部統制 ／ 生成AI活用</p>
             </div>
         </div>
         <div class="hero-scroll-cue" aria-hidden="true"><span></span></div>
