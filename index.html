@@ -8,7 +8,7 @@
     <meta name="robots" content="index, follow">
     <title>佐藤健司公認会計士事務所 | Kenji Sato CPA Office (Kyoto)</title>
     <meta name="description"
-        content="公認会計士・税理士 佐藤健司（Kenji Sato）の公式サイト。京都（Kyoto）を拠点に、社外CFO、内部統制構築（J-SOX）、新リース基準対応、決算支援、会計DX（生成AI活用）を専門とするプロフェッショナルファーム。中小企業から上場・上場準備企業まで、経営判断を支える伴走支援を提供。">
+        content="公認会計士・税理士 佐藤健司（Kenji Sato）の公式サイト。京都（Kyoto）を拠点に、社外CFO、内部統制構築（J-SOX）、IPO準備支援、新リース基準対応、決算支援、会計DX（生成AI活用）を専門とするプロフェッショナルファーム。中小企業から上場・上場準備企業まで、経営判断を支える伴走支援を提供。">
     <meta name="keywords"
         content="佐藤健司, 公認会計士, 税理士, 京都, 社外CFO, J-SOX, 内部統制構築, 新リース基準, 決算支援, IPO準備支援, 会計DX, Kenji Sato, CPA, Kyoto, CFO Support, Internal Control">
 
@@ -64,6 +64,15 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-desc, .hero-services { animation: none; opacity: 1; }
         }
+        .svc-more {
+            display: inline-block;
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: var(--blue);
+        }
+        .svc-more:hover { border-bottom: 1px solid var(--blue); }
     </style>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.png">
@@ -202,6 +211,11 @@
               "@type": "Question",
               "name": "AIを使って業務効率化したいが分からない",
               "acceptedAnswer": { "@type": "Answer", "text": "貴社の業務フローを診断し、効果の出るAI活用をご提案します。" }
+            },
+            {
+              "@type": "Question",
+              "name": "IPOを目指すと決めたが、管理部門の体制が追いつかない",
+              "acceptedAnswer": { "@type": "Answer", "text": "上場審査から逆算し、決算・開示・内部統制の整備を優先順位付きの工程表に落とします。" }
             }
           ]
         }
@@ -264,7 +278,7 @@
                     京都の公認会計士事務所です。</p>
 
                 <p class="hero-services">
-                    社外CFO ／ 内部統制 ／ 生成AI活用</p>
+                    社外CFO ／ 内部統制・IPO ／ 生成AI活用</p>
             </div>
         </div>
         <div class="hero-scroll-cue" aria-hidden="true"><span></span></div>
@@ -327,7 +341,8 @@
                                 stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
                         </svg>
                     </div>
-                    <h3 class="service-name">内部統制・J-SOX</h3>
+                    <h3 class="service-name">内部統制・J-SOX<br>
+                        <a href="jsox-ipo.html" class="svc-more">詳しく見る →</a></h3>
                     <div class="service-process-flow">
                         <div class="process-step step-before">
                             <span class="step-label">Before</span>
@@ -337,6 +352,30 @@
                         <div class="process-step step-after">
                             <span class="step-label">After</span>
                             <p>現場を縛らず<br><strong>リスクだけを塞ぐ「最短距離」</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service: IPO準備支援 -->
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 21V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M5 4H19L15.5 8.5L19 13H5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="service-name">IPO準備支援<br>
+                        <a href="jsox-ipo.html" class="svc-more">詳しく見る →</a></h3>
+                    <div class="service-process-flow">
+                        <div class="process-step step-before">
+                            <span class="step-label">Before</span>
+                            <p>上場準備のタスクが多すぎて<br>優先順位がつけられない</p>
+                        </div>
+                        <div class="process-arrow">➜</div>
+                        <div class="process-step step-after">
+                            <span class="step-label">After</span>
+                            <p>審査から逆算した<br><strong>実行可能な「工程表」で進む</strong></p>
                         </div>
                     </div>
                 </div>
@@ -426,6 +465,14 @@
                         <div class="consultation-solution">
                             <span class="solution-label">SOLUTION</span>
                             <p>貴社の業務フローを診断し、<br>効果の出るAI活用をご提案します。</p>
+                        </div>
+                    </div>
+                    <div class="consultation-card">
+                        <p class="consultation-problem">IPOを目指すと決めたが、管理部門の体制が追いつかない</p>
+                        <div class="consultation-solution">
+                            <span class="solution-label">SOLUTION</span>
+                            <p>上場審査から逆算し、決算・開示・内部統制の整備を<br>優先順位付きの工程表に落とします。<br>
+                                <a href="jsox-ipo.html" class="svc-more">詳しく見る →</a></p>
                         </div>
                     </div>
                 </div>
