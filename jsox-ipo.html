@@ -120,6 +120,7 @@
             margin-bottom: 10px;
         }
         .lp-price-main { font-size: 26px; font-weight: 300; letter-spacing: 0.02em; }
+        .lp-price-main + .lp-price-main { margin-top: 6px; }
         .lp-price-main small { font-size: 14px; color: var(--ink-2); margin-left: 8px; }
         .lp-price-note { margin-top: 12px; font-size: 13px; color: var(--ink-2); line-height: 2; }
         .lp-profile { max-width: 820px; display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: start; }
@@ -204,7 +205,7 @@
             {
               "@type": "Question",
               "name": "費用はどのくらいかかりますか。",
-              "acceptedAnswer": { "@type": "Answer", "text": "診断は一律10万円（税別）です。継続支援は診断結果をふまえ、範囲と頻度で設計します。診断だけで終えていただいて構いません。" }
+              "acceptedAnswer": { "@type": "Answer", "text": "診断は一律10万円（税別）、継続支援は10万円／人日（税別）が目安です。支援範囲に応じて月あたりの稼働日数で設計します。診断だけで終えていただいて構いません。" }
             },
             {
               "@type": "Question",
@@ -351,10 +352,12 @@
                 </div>
             </div>
             <div class="lp-price">
-                <p class="lp-price-label">Diagnosis Package</p>
+                <p class="lp-price-label">Fee</p>
                 <p class="lp-price-main">診断パッケージ　一律 10万円<small>（税別）</small></p>
+                <p class="lp-price-main">継続支援　10万円<small>／人日（税別）</small></p>
                 <p class="lp-price-note">
-                    導入価格です。近日、料金の改定を予定しています。<br>
+                    いずれも導入価格です。近日、料金の改定を予定しています。<br>
+                    継続支援は、支援範囲に応じて月あたりの稼働日数で個別に設計します。<br>
                     診断だけで終えていただいて構いません。継続支援に進む場合、診断料は初月報酬に充当します。</p>
             </div>
         </div>
@@ -392,8 +395,8 @@
                     <p class="consultation-problem">費用はどのくらいかかりますか。</p>
                     <div class="consultation-solution">
                         <span class="solution-label">ANSWER</span>
-                        <p>診断は一律10万円（税別）です。継続支援は診断結果をふまえ、範囲と頻度で設計します。<br>
-                            診断だけで終えていただいて構いません。</p>
+                        <p>診断は一律10万円（税別）、継続支援は10万円／人日（税別）が目安です。<br>
+                            支援範囲に応じて月あたりの稼働日数で設計します。診断だけで終えていただいて構いません。</p>
                     </div>
                 </div>
                 <div class="consultation-card">
