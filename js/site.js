@@ -171,8 +171,15 @@
 
     size();
     if (!reduce) {
-      var cancel = whenLive(function () { live = true; act = 'intro'; actAt = performance.now(); kick(); });
-      setTimeout(function () { if (!live) { cancel(); act = ''; draw(); } }, 1400);
+      var begin = function () { if (act !== 'wait') return; act = 'intro'; actAt = performance.now(); kick(); };
+      var cancel = whenLive(function () {
+        live = true;
+        /* 名刺を差し出す場面があるときは、それが済んでから開く */
+        if (doc.classList.contains('card')) { document.addEventListener('ks:go', begin); setTimeout(begin, 6000); }
+        else begin();
+      });
+      /* 1.4秒たっても画面が動いていなければ、動きなしで開いた扇を出す。名刺の場面もやめる */
+      setTimeout(function () { if (!live) { cancel(); act = ''; doc.classList.remove('card'); draw(); } }, 1400);
     }
     var lastW = window.innerWidth;
     window.addEventListener('resize', function () {
@@ -289,10 +296,31 @@
     if (reduce) return;
     whenLive(function () {
       if (!doc.classList.contains('pre')) return;   /* 時間切れで外れていたら、演出なしのまま */
-      doc.classList.remove('pre');
-      doc.classList.add('go');
-      settle(document.querySelector('.hero, .page-hero'), 5200);
-      sections();
+      var went = false;
+      function go() {
+        if (went) return; went = true;
+        doc.classList.remove('pre');
+        doc.classList.add('go');
+        settle(document.querySelector('.hero, .page-hero'), 5200);
+        sections();
+        try { document.dispatchEvent(new Event('ks:go')); } catch (e) { /* 古いブラウザでは扇は時間で開く */ }
+      }
+      if (!doc.classList.contains('card') || !document.querySelector('.meishi')) { go(); return; }
+
+      /* 名刺を差し出す: 顔を見せる → お辞儀をして差し出す → 「はじめまして。」 → 受け取られる → サイトが始まる。
+         触れる・スクロールする・キーを押すと、待たずに先へ進む */
+      var left = false, evs = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+      function leave() {
+        if (left) return; left = true;
+        clearTimeout(timer);
+        evs.forEach(function (ev) { window.removeEventListener(ev, leave); });
+        doc.classList.add('met');
+        setTimeout(go, 420);
+        setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, 1200);
+      }
+      doc.classList.add('meet');
+      var timer = setTimeout(leave, 4000);
+      evs.forEach(function (ev) { window.addEventListener(ev, leave, { passive: true }); });
     });
   }
 

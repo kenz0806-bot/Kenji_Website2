@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/css/site.css?v=20261108a">
+    <link rel="stylesheet" href="/css/site.css?v=20261108c">
 
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
     <link rel="apple-touch-icon" href="/img/favicon.png">
@@ -123,8 +123,9 @@
         </dl>
 
         <div class="print">
-            <a class="pill" href="/office.pdf" download="佐藤健司公認会計士事務所_事務所案内.pdf">PDFをダウンロード</a>
-            <button class="pill" type="button" onclick="window.print()">印刷する</button>
+            <a class="pill" id="pdf" href="/office.pdf" download="佐藤健司公認会計士事務所_事務所案内.pdf">PDFをダウンロード</a>
+            <button class="pill" type="button" id="share" hidden>共有する</button>
+            <button class="pill only-desk" type="button" onclick="window.print()">印刷する</button>
             <span>社内での回覧や稟議に、そのままお使いください。</span>
         </div>
     </main>
@@ -146,7 +147,45 @@
         </div>
     </footer>
 
-    <script src="/js/site.js?v=20261108a" defer></script>
+    <script src="/js/site.js?v=20261108c" defer></script>
+    <script>
+    /* 「共有する」ボタン。
+       スマホ(iPhone・Android)では、PDFそのものを付けて共有の画面を開く。
+       そこから LINE・メール・AirDrop・「ファイルに保存」などを選べる。
+       PDFを付けられない場合はリンクを共有し、共有の画面が無いブラウザではリンクをコピーする。 */
+    (function () {
+      var b = document.getElementById('share'), a = document.getElementById('pdf');
+      if (!b || !a) return;
+      var url = a.href, name = a.getAttribute('download') || 'office.pdf';
+      var title = '佐藤健司公認会計士事務所 事務所案内';
+      var file = null;
+      if (!navigator.share) b.textContent = 'リンクをコピー';
+      var label = b.textContent;
+      b.hidden = false;
+
+      /* 共有の画面は「押した直後」にしか開けないので、PDFを先に読み込んでおく */
+      if (navigator.share && navigator.canShare && window.File && window.fetch) {
+        fetch(a.getAttribute('href')).then(function (r) { return r.ok ? r.blob() : null; }).then(function (bl) {
+          if (!bl) return;
+          var f = new File([bl], name, { type: 'application/pdf' });
+          if (navigator.canShare({ files: [f] })) file = f;
+        }).catch(function () {});
+      }
+      function say(t) { b.textContent = t; setTimeout(function () { b.textContent = label; }, 2400); }
+      function copy() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () { say('リンクをコピーしました'); }, function () { location.href = url; });
+        } else { location.href = url; }
+      }
+      b.addEventListener('click', function () {
+        if (!navigator.share) { copy(); return; }
+        navigator.share(file ? { files: [file] } : { title: title, url: url }).catch(function (err) {
+          if (err && err.name === 'AbortError') return;   /* 共有の画面を閉じただけ */
+          copy();
+        });
+      });
+    })();
+    </script>
 </body>
 
 </html>
