@@ -32,8 +32,14 @@
     return function cancel() { done = true; };
   }
 
+  /* 静かに動き出し、静かに止まる(0〜1) */
+  function ss(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * x * (x * (x * 6 - 15) + 10); }
+  /* 早めに開いて、長く静かに納まる(0〜1) */
+  function unfurl(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return ss(1 - Math.pow(1 - x, 1.5)); }
+
   /* ---------- 冒頭の扇 ----------
-     要(かなめ)の一点から骨が開き、スクロールすると一本の線にたたまれる。
+     要(かなめ)の一点が現れ、藍の一本が立ち、そこから骨が一枚ずつほどけるように開く。
+     スクロールすると一本の線にたたまれる。扇に触れると、静かに閉じて、また開く。
      藍の一本だけは、扇の縁の少し先まで伸ばしてある。 */
   function fan() {
     var cv = document.getElementById('fan');
@@ -45,13 +51,38 @@
     var AI = (getComputedStyle(doc).getPropertyValue('--ai') || '').trim() || '#0a4ea0';
     var N = 25, W = 0, H = 0;
     var g = { x: 0, y: 0, R: 0, a0: 0, span: 0 };
-    var open = 0, live = false, raf = 0, seen = true, px = 0, pxT = 0, snapAt = 0;
+    var open = 1, live = false, raf = 0, seen = true, px = 0, pxT = 0, calm = 0, last = 0;
 
-    function snapping() { return snapAt && performance.now() - snapAt < 420; }
+    /* 所作(ひとまとまりの動き)。'wait'=まだ描かない / 'intro'=最初に開く / 'tap'=触れられて閉じ、また開く / ''=なし */
+    var act = reduce ? '' : 'wait', actAt = 0;
+    var RISE_AT = 260, RISE = 900;                /* 藍の一本が立つ(ミリ秒) */
+    var OPEN_AT = 980, OPEN = 2200, LAG = 500;    /* 骨が開く。外側の骨から動き、内側ほど少し遅れる */
+    var FOLD = 860, FOLD_LAG = 160, HOLD = 300;   /* 触れられたとき: 閉じる→ひと呼吸おく→開く */
+
     function target() {
-      if (snapping()) return 0;   /* 要に触れると、扇がぱちんと閉じて、また開く */
       var p = Math.min(1, Math.max(0, (window.scrollY || 0) / (H * 0.5)));
       return 1 - p * p * (3 - 2 * p);
+    }
+
+    /* いまの所作での、要・藍の一本・各骨の進み具合(どれも0〜1) */
+    function pose(now) {
+      var T = now - actAt, P = { dot: 1, ring: 1, rise: 1, f: null, done: true };
+      if (act === 'wait') {
+        P.dot = P.ring = P.rise = 0; P.done = false;
+        P.f = function () { return 0; };
+      } else if (act === 'intro') {
+        P.dot = ss(T / 520); P.ring = ss((T - 120) / 1000); P.rise = ss((T - RISE_AT) / RISE);
+        P.f = function (i) { return unfurl((T - OPEN_AT - LAG * i / (N - 2)) / OPEN); };
+        P.done = T > OPEN_AT + LAG + OPEN;
+      } else if (act === 'tap') {
+        var U = FOLD + FOLD_LAG + HOLD;
+        P.f = function (i) {
+          return T < U ? 1 - ss((T - FOLD_LAG * i / (N - 2)) / FOLD)
+                       : unfurl((T - U - LAG * i / (N - 2)) / OPEN);
+        };
+        P.done = T > U + LAG + OPEN;
+      }
+      return P;
     }
 
     function size() {
@@ -74,25 +105,32 @@
       draw();
     }
 
+    /* 描く。所作が終わっていれば true を返す */
     function draw(now) {
-      /* 開いたあとも、骨と縁がゆっくり波打ち続ける */
-      var t = (live && !reduce) ? (now || performance.now()) / 1000 : 0;
-      var amp = (live && !reduce) ? 0.012 * open : 0;
+      now = now || performance.now();
+      var P = pose(now);
+      /* 開ききったあとは、骨と縁がゆっくり波打ち続ける(所作のあいだは止めておく) */
+      var t = (live && !reduce) ? now / 1000 : 0;
+      var amp = (live && !reduce) ? 0.012 * open * calm : 0;
       var span = g.span * open * (1 + px * 0.05);
-      var tips = [], i, j;
+      var tips = [], vis = [], i, j;
       for (i = 0; i < N; i++) {
+        var k = i / (N - 1), f = P.f ? P.f(i) : 1;
         tips.push([
-          g.a0 - span * (i / (N - 1)) + amp * 0.35 * Math.sin(t * 0.45 + i * 0.5),
+          /* 藍の一本(いちばん奥)は動かさず、ほかの骨がそこから離れていく */
+          g.a0 - span * k - span * (1 - k) * (1 - f) + amp * 0.35 * Math.sin(t * 0.45 + i * 0.5),
           1 + amp * (Math.sin(t * 0.55 - i * 0.42) + 0.5 * Math.sin(t * 0.33 + i * 0.9))
         ]);
+        vis.push(i === N - 1 ? 1 : Math.min(1, f * 7));   /* 藍の一本に重なっているあいだは見せない */
       }
+      var spread = tips[0][0] - tips[N - 1][0];
       ctx.clearRect(0, 0, W, H);
-      if (span > 0.004) {
-        ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(26,34,56,.24)';
-        [1, 0.34].forEach(function (f) {
+      if (spread > 0.004) {
+        ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(26,34,56,' + (0.24 * Math.min(1, spread / 0.14)).toFixed(3) + ')';
+        [1, 0.34].forEach(function (s) {
           ctx.beginPath();
           for (j = 0; j < N; j++) {
-            var r = g.R * f * (f === 1 ? tips[j][1] : 1 + (tips[j][1] - 1) * 0.4);
+            var r = g.R * s * (s === 1 ? tips[j][1] : 1 + (tips[j][1] - 1) * 0.4);
             var x = g.x + Math.cos(tips[j][0]) * r, y = g.y + Math.sin(tips[j][0]) * r;
             if (j) ctx.lineTo(x, y); else ctx.moveTo(x, y);
           }
@@ -101,32 +139,40 @@
       }
       for (i = 0; i < N; i++) {
         var lead = i === N - 1, strong = i % 6 === 0;
-        var len = (lead ? 1.06 : 1) * g.R * tips[i][1];
+        var len = (lead ? 1.06 * P.rise : 1) * g.R * tips[i][1];
+        if (vis[i] <= 0 || len <= 0) continue;
         ctx.beginPath(); ctx.moveTo(g.x, g.y);
         ctx.lineTo(g.x + Math.cos(tips[i][0]) * len, g.y + Math.sin(tips[i][0]) * len);
         ctx.lineWidth = lead ? 1.5 : (strong ? 1 : 0.7);
-        ctx.strokeStyle = lead ? AI : 'rgba(26,34,56,' + (strong ? 0.36 : 0.17) + ')';
+        ctx.strokeStyle = lead ? AI : 'rgba(26,34,56,' + ((strong ? 0.36 : 0.17) * vis[i]).toFixed(3) + ')';
         ctx.stroke();
       }
       /* 要: 藍の点と、閉じきらない円 */
-      ctx.fillStyle = AI; ctx.beginPath(); ctx.arc(g.x, g.y, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = AI; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(g.x, g.y, 19, -0.22 * Math.PI, 1.66 * Math.PI); ctx.stroke();
+      if (P.dot > 0) { ctx.fillStyle = AI; ctx.beginPath(); ctx.arc(g.x, g.y, 8 * P.dot, 0, Math.PI * 2); ctx.fill(); }
+      if (P.ring > 0) {
+        ctx.strokeStyle = AI; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(g.x, g.y, 19, -0.22 * Math.PI, (-0.22 + 1.88 * P.ring) * Math.PI); ctx.stroke();
+      }
+      return P.done;
     }
 
+    /* 画面の描き直しが毎秒60回でも120回でも同じ速さになるよう、経過時間で進める */
+    function ease(ms, dt) { return 1 - Math.exp(-dt / ms); }
     function loop(now) {
       raf = 0;
-      open += (target() - open) * (snapping() ? 0.18 : 0.055); px += (pxT - px) * 0.08;
-      draw(now);
-      if (seen && !document.hidden) raf = requestAnimationFrame(loop);
+      var dt = last ? Math.min(64, now - last) : 16; last = now;
+      open += (target() - open) * ease(300, dt);
+      px += (pxT - px) * ease(200, dt);
+      calm += ((act ? 0 : 1) - calm) * ease(act ? 220 : 1500, dt);
+      if (draw(now) && act) act = '';
+      if (seen && !document.hidden) raf = requestAnimationFrame(loop); else last = 0;
     }
     function kick() { if (live && !raf && seen) raf = requestAnimationFrame(loop); }
 
     size();
-    if (reduce) { open = 1; draw(); }
-    else {
-      var cancel = whenLive(function () { live = true; open = 0; kick(); });
-      setTimeout(function () { if (!live) { cancel(); open = 1; draw(); } }, 1400);
+    if (!reduce) {
+      var cancel = whenLive(function () { live = true; act = 'intro'; actAt = performance.now(); kick(); });
+      setTimeout(function () { if (!live) { cancel(); act = ''; draw(); } }, 1400);
     }
     var lastW = window.innerWidth;
     window.addEventListener('resize', function () {
@@ -142,47 +188,79 @@
       pxT = ((e.clientX - r.left) / r.width - 0.5) * 2; kick();
     }, { passive: true });
     hero.addEventListener('pointerleave', function () { pxT = 0; kick(); });
-    hero.addEventListener('pointerdown', function (e) {
-      if (!live) return;
+    /* 扇か要に触れると、静かに閉じて、また開く。動いている途中と、たたんだ状態では受けない */
+    hero.addEventListener('click', function (e) {
+      if (!live || act || open < 0.9) return;
+      if (e.target.closest && e.target.closest('a, button')) return;
       var r = hero.getBoundingClientRect(), dx = e.clientX - r.left - g.x, dy = e.clientY - r.top - g.y;
-      if (dx * dx + dy * dy < 46 * 46) { snapAt = performance.now(); kick(); }
-    }, { passive: true });
+      var d = Math.sqrt(dx * dx + dy * dy), a = Math.atan2(dy, dx);
+      var onFan = d < g.R * 1.06 && a < g.a0 + 0.06 && a > g.a0 - g.span - 0.06;
+      if (d < 46 || onFan) { act = 'tap'; actAt = performance.now(); kick(); }
+    });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { seen = es[0].isIntersecting; kick(); }).observe(hero);
     }
   }
 
-  /* ---------- ページの終わりを流れる線 ---------- */
+  /* ---------- ページの終わりを流れる線 ----------
+     波の中を、藍の一本が通っている。藍の一本は、いちばん素直な波だけでできている。
+     ほかの線は、それに細かな揺れと、線ごとのずれが足されている。
+     触れると、そこからうねりが左右へ渡り、通ったあとの線は藍の一本にそろう。しばらくして、また波に戻る。 */
   function flow() {
     var cv = document.getElementById('flow');
     if (!cv || !cv.getContext) return;
     var ctx = cv.getContext('2d');
     var AI = (getComputedStyle(doc).getPropertyValue('--ai') || '').trim() || '#0a4ea0';
-    var N = 14, W = 0, H = 0, raf = 0, seen = false, live = false;
+    var N = 14, KEY = N >> 1, W = 0, H = 0, q = 1, raf = 0, seen = false, live = false;
+    var drops = [];        /* 触れた位置と時刻 */
+    var out = [0, 0];      /* [うねりの高さ, そろい具合] を受け渡す入れ物 */
+
+    /* 触れた点から左右へ進む「うねり」と、その通ったあとに残る「そろい」(どちらも0〜1ほど) */
+    function touch(x, i, now) {
+      var lift = 0, order = 0;
+      var speed = Math.min(260, Math.max(120, W * 0.2)), wide0 = Math.min(120, Math.max(54, W * 0.09));
+      for (var k = 0; k < drops.length; k++) {
+        var age = (now - drops[k].t) / 1000 - Math.abs(i - KEY) * 0.045;   /* 藍の一本が先、ほかは少し遅れて */
+        if (age <= 0) continue;
+        var dist = Math.abs(x - drops[k].x), reach = speed * age, wide = wide0 * (1 + 0.42 * age);
+        var a = (dist - reach) / wide, b = (dist + reach) / wide, on = ss(age / 0.7);
+        lift += on * Math.exp(-age / 2.6) * (Math.exp(-a * a) + Math.exp(-b * b));
+        var o = on * ss((reach - dist) / (wide * 1.6) + 0.5) * (1 - ss((age - 3.2) / 6.5));
+        if (o > order) order = o;
+      }
+      out[0] = lift; out[1] = order;
+    }
 
     function draw(now) {
-      var t = live ? now / 1600 : 5;
-      var amp = H * 0.15, key = N >> 1;
+      var s = live ? now / 1000 : 8;
+      var amp = H * 0.16, rise = H * 0.13;
+      while (drops.length && now - drops[0].t > 11000) drops.shift();
+      var busy = drops.length > 0;
       ctx.clearRect(0, 0, W, H);
       for (var i = 0; i < N; i++) {
-        var u = i / (N - 1) - 0.5, base = H * 0.5 + u * H * 0.36;
+        var u = i / (N - 1) - 0.5, base = H * 0.5 + u * H * 0.34;
+        var fine = i === KEY ? 0.25 : 1;   /* 細かな揺れ。藍の一本にはほとんど足さない */
         ctx.beginPath();
         for (var x = -12; x <= W + 12; x += 12) {
-          var env = 0.6 + 0.4 * Math.sin(x * 0.0021 + t * 0.13 + 1.3);
-          var y = base + amp * env * (
-            0.58 * Math.sin(x * 0.0043 + t * 0.5 + i * 0.2) +
-            0.27 * Math.sin(x * 0.0092 - t * 0.34 + i * 0.11) +
-            0.3 * Math.sin(x * 0.0016 + t * 0.18 + i * 0.05));
+          var X = x * q;   /* 画面が狭くても、波がひとつ見える幅に合わせる */
+          var lift = 0, loose = 1;
+          if (busy) { touch(x, i, now); lift = out[0]; loose = 1 - out[1]; }
+          var env = 0.62 + 0.38 * Math.sin(X * 0.0021 + s * 0.19 + 1.3);
+          var y = base - rise * lift + amp * env * (
+            0.58 * Math.sin(X * 0.0043 - s * 0.5 + i * 0.2 * loose) +                      /* 素直な波(左から右へ) */
+            0.27 * fine * (0.1 + 0.9 * loose) * Math.sin(X * 0.0092 + s * 0.33 + i * 0.11) +   /* 細かな揺れ */
+            0.3 * Math.sin(X * 0.0016 - s * 0.14 + i * 0.05 * loose));                     /* ごくゆっくりした上下 */
           if (x < 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.lineWidth = i === key ? 1.2 : 0.8;
-        ctx.strokeStyle = i === key ? AI : 'rgba(26,34,56,' + (0.12 + 0.2 * (1 - Math.abs(u) * 2)).toFixed(3) + ')';
+        ctx.lineWidth = i === KEY ? 1.2 : 0.8;
+        ctx.strokeStyle = i === KEY ? AI : 'rgba(26,34,56,' + (0.12 + 0.2 * (1 - Math.abs(u) * 2)).toFixed(3) + ')';
         ctx.stroke();
       }
     }
     function size() {
       var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
       W = r.width; H = r.height;
+      q = 1440 / Math.min(1600, Math.max(420, W));
       cv.width = Math.round(W * d); cv.height = Math.round(H * d);
       ctx.setTransform(d, 0, 0, d, 0, 0);
       draw(performance.now());
@@ -195,6 +273,12 @@
     window.addEventListener('resize', function () { if (window.innerWidth === lastW) return; lastW = window.innerWidth; size(); });
     document.addEventListener('visibilitychange', kick);
     if (!reduce) whenLive(function () { live = true; kick(); });
+    cv.addEventListener('click', function (e) {
+      if (!live) return;
+      if (drops.length > 3) drops.shift();
+      drops.push({ x: e.clientX - cv.getBoundingClientRect().left, t: performance.now() });
+      kick();
+    });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { seen = es[0].isIntersecting; kick(); }).observe(cv);
     } else { seen = true; }

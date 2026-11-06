@@ -100,6 +100,7 @@ h1, h2, h3, h4, .rows dt, .faq dt, .qa summary, .prof-name, .creed, .contact-lea
 
 /* ---------- 冒頭(トップ) ---------- */
 .hero {
+  -webkit-tap-highlight-color: transparent;
   position: relative; overflow: hidden; height: clamp(540px, calc(100svh - 210px), 760px); border-bottom: 1px solid var(--ink);
   background: linear-gradient(180deg, var(--paper) 0, var(--mist) 100%);
 }
@@ -329,7 +330,7 @@ h1, h2, h3, h4, .rows dt, .faq dt, .qa summary, .prof-name, .creed, .contact-lea
 .cta p { font-family: var(--mincho); font-size: clamp(18px, 2.4vw, 24px); letter-spacing: .14em; line-height: 2; margin-bottom: 36px; text-wrap: balance; }
 
 /* ---------- ページの終わりを流れる線 ---------- */
-.flow { display: block; width: 100%; height: clamp(120px, 16vw, 200px); border-top: 1px solid var(--ink); background: linear-gradient(180deg, var(--mist) 0, var(--paper) 100%); }
+.flow { -webkit-tap-highlight-color: transparent; display: block; width: 100%; height: clamp(120px, 16vw, 200px); border-top: 1px solid var(--ink); background: linear-gradient(180deg, var(--mist) 0, var(--paper) 100%); }
 .flow + .foot { border-top: 0; padding-top: 24px; }
 
 /* よくあるご質問(たたんで置く) */
