@@ -191,12 +191,22 @@ h1, h2, h3, h4, .rows dt, .faq dt, .qa summary, .prof-name, .creed, .contact-lea
 /* 業務: 一行ずつ、罫で区切って並べる */
 #services { padding-bottom: clamp(56px, 8vw, 104px); }
 .svc { margin-top: clamp(20px, 3vw, 36px); border-bottom: 1px solid var(--line); }
-.svc li { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.9fr); column-gap: clamp(18px, 3vw, 40px); row-gap: 2px; align-items: start; padding-block: 28px; border-top: 1px solid var(--line); }
+.svc li { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.9fr); grid-template-rows: auto 1fr; column-gap: clamp(18px, 3vw, 40px); row-gap: 2px; align-items: start; padding-block: 28px; border-top: 1px solid var(--line); }
 .svc svg { grid-column: 1; grid-row: 1 / span 2; width: 44px; height: 44px; color: var(--ink); stroke-dasharray: 1; }
 .svc h3 { grid-column: 2; grid-row: 1; font-family: var(--mincho); font-weight: 500; font-size: 19px; letter-spacing: .12em; line-height: 1.8; }
 .svc .who { grid-column: 2; grid-row: 2; font-size: 13.5px; color: var(--ink-3); line-height: 1.8; word-break: auto-phrase; }
 .svc .desc { grid-column: 3; grid-row: 1 / span 2; font-size: 16px; color: var(--ink); word-break: auto-phrase; line-break: strict; padding-top: 2px; }
-.svc .more { margin-top: 6px; }
+.svc .more { margin-top: 10px; }
+/* 業務の冒頭に置く一文と、その補足 */
+.svc-lead { margin-top: clamp(22px, 3vw, 34px); font-family: var(--mincho); font-weight: 500; font-size: clamp(21px, 2.6vw, 29px); letter-spacing: .12em; line-height: 1.8; text-wrap: balance; word-break: auto-phrase; line-break: strict; font-feature-settings: "palt" 1; }
+.svc-sub { margin-top: 12px; max-width: 46em; font-size: 16px; color: var(--ink-2); line-height: 2; word-break: auto-phrase; line-break: strict; }
+/* 課題 → 支援 → 目指す状態。小さな見出しを左に、内容を右に置く */
+.csg > div { display: grid; grid-template-columns: 6.2em minmax(0, 1fr); column-gap: 14px; padding-block: 7px; }
+.csg > div + div { border-top: 1px solid var(--line); }
+.csg > div:first-child { padding-top: 0; }
+.csg dt { font-size: 13.5px; color: var(--ink-3); line-height: 1.95; letter-spacing: .06em; padding-top: 2px; }
+.csg dd { font-size: 16px; line-height: 1.95; word-break: auto-phrase; line-break: strict; }
+.csg > div:last-child dd { font-family: var(--mincho); font-weight: 500; letter-spacing: .06em; }
 
 /* ---------- 数字 ---------- */
 .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px clamp(20px, 3vw, 48px); padding-block: clamp(44px, 6vw, 80px); border-top: 1px solid var(--ink); }
@@ -303,6 +313,61 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 .pill:hover { border-color: var(--ai); color: var(--ai); }
 .pill[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .notes { margin-top: 28px; font-size: 13px; color: var(--ink-2); }
+/* ご相談の例。選ぶと、件名の入ったメールの作成画面が開く */
+.contact-lead + .group-h { margin-top: 44px; }
+/* 守秘義務。藍の線を左に立てて、最初に目に入るようにする */
+.pledge { margin-top: 30px; padding: 4px 0 4px 20px; border-left: 2px solid var(--ai); font-size: 15.5px; line-height: 1.9; color: var(--ink); word-break: auto-phrase; line-break: strict; }
+.pledge b { display: block; font-family: var(--mincho); font-weight: 500; font-size: 16px; letter-spacing: .16em; color: var(--ai); margin-bottom: 2px; }
+.rows .key dt { color: var(--ai); }
+.rows .key .what { font-size: 16px; color: var(--ink); }
+.sheet dt.key { color: var(--ai); }
+.asks { border-top: 1px solid var(--line); }
+.asks li { border-bottom: 1px solid var(--line); }
+.asks a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-block: 15px; font-size: 16.5px; line-height: 1.8; color: var(--ink); text-decoration: none; transition: color .3s; }
+.asks a::after { content: "メールで相談"; flex: none; font-size: 12.5px; letter-spacing: .06em; color: var(--ai); }
+.asks a:hover { color: var(--ai); }
+.asks a[aria-current="true"] { color: var(--ai); }
+/* 押した行のすぐ下に出す、宛先と件名 */
+.ask-box { padding: 2px 0 20px; font-size: 14px; color: var(--ink-2); }
+.ask-box dl { margin-top: 10px; }
+.ask-box dl > div { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); column-gap: 12px; padding-block: 4px; }
+.ask-box dt { color: var(--ink-3); }
+.ask-box dd { color: var(--ink); overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+.ask-box .pill { margin-top: 14px; }
+.asks.to-form a::after { content: "フォームに入力"; }
+
+/* ---------- ご相談フォーム ----------
+   文字は16px以上(スマホで拡大されない大きさ)。押す場所は50px以上の高さを取る */
+.ask-form { margin-top: 44px; }
+.ask-form .group-h { margin: 0 0 4px; }
+.field { padding-top: 20px; }
+.field label { display: flex; align-items: baseline; gap: 12px; font-size: 14.5px; letter-spacing: .06em; color: var(--ink); }
+.field .req, .field .opt { font-size: 12px; letter-spacing: .08em; }
+.field .req { color: var(--ai); }
+.field .opt { color: var(--ink-3); }
+.field input, .field textarea {
+  display: block; width: 100%; margin-top: 8px; padding: 12px 14px; min-height: 52px;
+  font: inherit; font-size: 16px; line-height: 1.7; letter-spacing: .04em; color: var(--ink);
+  background: #fff; border: 1px solid var(--ink-3); border-radius: 2px;
+  -webkit-appearance: none; appearance: none;
+  transition: border-color .25s, box-shadow .25s;
+}
+.field textarea { min-height: 190px; resize: vertical; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--ai); box-shadow: 0 0 0 3px rgba(10, 78, 160, .14); }
+.field [aria-invalid="true"] { border-color: #a4321f; }
+.field .hint { margin-top: 6px; font-size: 13px; color: var(--ink-3); }
+.field .err { margin-top: 6px; font-size: 13.5px; color: #a4321f; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.privacy { margin-top: 22px; font-size: 13px; line-height: 1.9; color: var(--ink-2); }
+.ask-send { margin-top: 22px; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.ask-send[disabled] { opacity: .6; cursor: default; }
+.ask-send[disabled]:hover { background: var(--ai); border-color: var(--ai); }
+.form-msg { margin-top: 14px; min-height: 1.9em; font-size: 14px; line-height: 1.9; color: var(--ink-2); }
+.form-msg.ng { color: #a4321f; }
+.ask-done { margin-top: 44px; padding-block: 30px; border-block: 1px solid var(--ink); }
+.ask-done:focus { outline: none; }
+.ask-done p + p { margin-top: 10px; font-size: 15.5px; color: var(--ink-2); }
+.asks-note { margin-top: 12px; font-size: 13px; color: var(--ink-3); }
 .drafts { margin-top: 40px; border-bottom: 1px solid var(--line); }
 .drafts summary { cursor: pointer; padding-block: 14px; font-size: 13px; color: var(--ink-2); list-style: none; display: flex; align-items: center; gap: 12px; }
 .drafts summary::-webkit-details-marker { display: none; }
@@ -376,6 +441,7 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 .sheet h1 { font-family: var(--mincho); font-weight: 500; font-size: clamp(22px, 3.4vw, 28px); letter-spacing: .14em; line-height: 1.6; }
 .sheet .ks { margin-top: 12px; font-family: var(--geo); font-weight: 300; font-size: 20px; letter-spacing: .01em; }
 .sheet .ks b { font-weight: 400; color: var(--ai); }
+.sheet-lead { margin-top: 14px; font-size: 15.5px; line-height: 1.9; color: var(--ink-2); word-break: auto-phrase; line-break: strict; }
 .sheet h2 { margin-top: 36px; padding-bottom: 8px; border-bottom: 1px solid var(--ink); font-family: var(--mincho); font-weight: 500; font-size: 17px; letter-spacing: .16em; }
 .sheet dl { display: grid; grid-template-columns: 9em minmax(0, 1fr); font-size: 15.5px; line-height: 1.9; }
 .sheet dt, .sheet dd { padding-block: 8px; border-bottom: 1px solid var(--line); }
@@ -387,17 +453,18 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 @media (hover: none) and (pointer: coarse) { .sheet .print .only-desk { display: none; } }
 @media print {
   /* A4の1枚に収める(回覧用の1枚) */
-  @page { size: A4; margin: 12mm 15mm; }
+  @page { size: A4; margin: 10mm 15mm; }
   .head, .foot, .flow, .bar, .sheet .print { display: none !important; }
-  body { background: #fff; font-size: 9.6pt; }
+  body { background: #fff; font-size: 9.3pt; }
   .sheet { max-width: none; padding: 0; }
-  .sheet-h .mark { width: 34px; height: 34px; }
-  .sheet h1 { font-size: 17pt; line-height: 1.4; }
-  .sheet .ks { margin-top: 6pt; font-size: 12.5pt; }
-  .sheet h2 { margin-top: 12pt; padding-bottom: 4pt; font-size: 11.5pt; break-after: avoid; }
-  .sheet dl { grid-template-columns: 9em minmax(0, 1fr); }
-  .sheet dl, .sheet li { font-size: 9.6pt; line-height: 1.55; }
-  .sheet dt, .sheet dd, .sheet li { padding-block: 2.6pt; break-inside: avoid; }
+  .sheet-h .mark { width: 32px; height: 32px; }
+  .sheet h1 { font-size: 16.5pt; line-height: 1.35; }
+  .sheet .ks { margin-top: 5pt; font-size: 12pt; }
+  .sheet-lead { margin-top: 4pt; font-size: 9.3pt; line-height: 1.5; color: var(--ink); }
+  .sheet h2 { margin-top: 8.5pt; padding-bottom: 3pt; font-size: 11pt; break-after: avoid; }
+  .sheet dl { grid-template-columns: 10.8em minmax(0, 1fr); }
+  .sheet dl, .sheet li { font-size: 9.3pt; line-height: 1.5; }
+  .sheet dt, .sheet dd, .sheet li { padding-block: 2pt; break-inside: avoid; }
   a { color: inherit; text-decoration: none; }
 }
 
@@ -513,9 +580,18 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
   .hero-act { display: none; }
   .btn { min-height: 56px; }
 
-  .svc li { grid-template-columns: 40px minmax(0, 1fr); column-gap: 18px; padding-block: 24px; }
+  .svc li { grid-template-columns: 40px minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 18px; padding-block: 24px; }
   .svc svg { width: 40px; height: 40px; grid-row: 1 / span 3; }
-  .svc .desc { grid-column: 2; grid-row: 3; padding-top: 8px; font-size: 15.5px; }
+  .svc .desc { grid-column: 1 / -1; grid-row: 3; padding-top: 14px; font-size: 15.5px; }
+  /* スマホでは、小さな見出しを上に、内容をその下に置く(1行を長く取る) */
+  .csg > div { grid-template-columns: minmax(0, 1fr); padding-block: 10px; }
+  .csg dt { line-height: 1.6; padding-top: 0; }
+  .csg dd { font-size: 15.5px; }
+  .svc-sub { font-size: 15.5px; }
+  .asks a { font-size: 15.5px; }
+  .asks a::after { content: none; }
+  .asks.to-form a::after { content: none; }
+  .ask-send { width: 100%; justify-content: center; min-height: 56px; }
   .picts { grid-template-columns: minmax(0, 1fr); }
   .picts li, .picts li:first-child, .picts li:nth-child(3) { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 20px; padding: 26px 0; border-left: 0; border-top: 1px solid var(--line); }
   .picts li:first-child { border-top: 0; }

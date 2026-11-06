@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <circle cx="24" cy="24" r="24" fill="#0a4ea0"/>
-  <path d="M14 12.5V35.5M14 24L24 12.5M14 24L24 35.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M36 15.5C33 11.5 26.5 12.5 27 18C27.5 23 36 24 36.5 29.5C37 35 30 37 26.5 33" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+  <!-- タブの小さな印。白い地に、藍の太い K と S。濃い色のタブでも薄い色のタブでも読める -->
+  <rect x="1" y="1" width="46" height="46" rx="10" fill="#fff" stroke="#0a4ea0" stroke-width="2"/>
+  <path d="M11.5 11.5V36.5M11.5 24.5L22 11.5M14.5 21L22.5 36.5" fill="none" stroke="#0a4ea0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38 16C36 11.5 28.5 11 28 17C27.6 22.5 38 22 38 30C38 37 29.5 37.5 27 33" fill="none" stroke="#0a4ea0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
