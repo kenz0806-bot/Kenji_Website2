@@ -1,48 +1,99 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#fcfdfe">
+    <meta name="format-detection" content="telephone=no">
+    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('pre');setTimeout(function(){d.classList.remove('pre')},1600)})(document.documentElement)</script>
     <meta name="robots" content="noindex, follow">
     <title>ページが見つかりません | 佐藤健司 公認会計士事務所</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/css/site.css?v=20261107x">
+
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #04070f;
-            color: #f4f7fc;
-            font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
-            font-weight: 300;
-            text-align: center;
-        }
-        .box { padding: 24px; }
-        h1 { font-size: 15px; letter-spacing: 0.42em; text-indent: 0.42em; color: #8fb4e8; font-weight: 400; margin: 0 0 18px; text-transform: uppercase; }
-        p.code { font-size: 56px; margin: 0 0 10px; letter-spacing: 0.04em; }
-        p.msg { font-size: 15px; line-height: 2; color: #c9d6ea; margin: 0 0 34px; }
-        a.btn {
-            display: inline-block;
-            padding: 12px 34px;
-            border: 1px solid #4d9fff;
-            color: #f4f7fc;
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 0.18em;
-            text-indent: 0.18em;
-            transition: background 0.3s;
-        }
-        a.btn:hover { background: rgba(77,159,255,0.18); }
-    </style>
+    <link rel="apple-touch-icon" href="/img/favicon.png">
 </head>
+
 <body>
-    <div class="box">
-        <h1>Not Found</h1>
-        <p class="code">404</p>
-        <p class="msg">お探しのページは見つかりませんでした。<br>移動または削除された可能性があります。</p>
-        <a class="btn" href="/">トップページへ戻る</a>
-    </div>
+    <a class="skip" href="#top">本文へ移動</a>
+
+    <!-- 紋とピクトグラム(円と線だけで描く) -->
+    <svg class="sprite" aria-hidden="true" focusable="false">
+        <symbol id="ks-mark" viewBox="0 0 48 48">
+            <path d="M41.24 9.54A22.5 22.5 0 1 0 45.73 18.18" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M14 12.5V35.5M14 24L24 12.5M14 24L24 35.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M36 15.5C33 11.5 26.5 12.5 27 18C27.5 23 36 24 36.5 29.5C37 35 30 37 26.5 33" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="14" cy="24" r="2.7" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-cfo" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M13 32.5H35" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M17 32V27M24 32V21" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M31 32V14" pathLength="1" fill="none" stroke="#0a4ea0" stroke-width="2.2"/>
+        </symbol>
+        <symbol id="p-jsox" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M14.5 24.5l6.5 6.5L34 17" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="miter"/>
+        </symbol>
+        <symbol id="p-ipo" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M12.5 33h6.5v-6h6.5v-6H32v-6" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="35.5" cy="15" r="2.4" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-ai" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M14 18h20M14 24h20M14 30h11" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="30.5" cy="30" r="2.4" fill="#0a4ea0"/>
+        </symbol>
+    </svg>
+
+    <header class="head">
+        <div class="wrap head-in">
+            <a class="brand" href="/" aria-label="佐藤健司公認会計士事務所 トップページ"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
+            <nav class="nav" id="nav" aria-label="サイト内">
+                <a href="/#services">業務</a>
+                <a href="/#profile">略歴</a>
+                <a href="/#principles">原則</a>
+                <a href="/#terms">お取引にあたって</a>
+                <a class="only-menu" href="/#faq">よくあるご質問</a>
+                <a class="only-menu" href="/#news">お知らせ</a>
+                <a class="ask" href="/#contact">相談する</a>
+            </nav>
+            <div class="head-tools">
+                <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><span>目次</span><i aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main id="top" class="wrap lost">
+        <h1>お探しのページは、<br>見つかりませんでした。</h1>
+        <p>移動または削除された可能性があります。</p>
+        <a class="btn" href="/">トップページへ</a>
+    </main>
+
+    <canvas class="flow" id="flow" aria-hidden="true"></canvas>
+
+    <footer class="foot">
+        <div class="wrap foot-in">
+            <div>
+                <a class="brand" href="/"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
+                <dl>
+                    <dt>代表</dt><dd>公認会計士・税理士　<span class="nb">佐藤 健司（さとう けんじ）</span></dd>
+                    <dt>所在地</dt><dd>京都市（詳細はお問い合わせ時にご案内します）</dd>
+                    <dt>メール</dt><dd>kenji@kenji-sato.jp</dd>
+                    <dt>登録</dt><dd>公認会計士登録番号 40449</dd>
+                </dl>
+            </div>
+            <p class="foot-ks"><b>K</b>ey <b>S</b>tructure is to <b>K</b>eep it <b>S</b>imple.<small>&copy; 2026 Kenji Sato CPA Office.</small></p>
+        </div>
+    </footer>
+
+    <script src="/js/site.js?v=20261107x" defer></script>
 </body>
+
 </html>

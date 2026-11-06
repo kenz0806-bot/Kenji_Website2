@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#fcfdfe">
+    <meta name="format-detection" content="telephone=no">
+    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('pre');setTimeout(function(){d.classList.remove('pre')},1600)})(document.documentElement)</script>
     <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
     <meta name="robots" content="index, follow">
     <title>最新情報 | 佐藤健司 公認会計士事務所</title>
@@ -11,17 +14,25 @@
 
     <link rel="canonical" href="https://www.kenji-sato.jp/news.html">
 
-    <!-- Open Graph / OGP -->
     <meta property="og:title" content="最新情報 | 佐藤健司 公認会計士事務所">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.kenji-sato.jp/news.html">
     <meta property="og:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
     <meta property="og:description" content="佐藤健司 公認会計士事務所の最新情報・お知らせ一覧です。">
-    <meta property="og:site_name" content="Kenji Sato CPA Office">
+    <meta property="og:site_name" content="佐藤健司公認会計士事務所">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="最新情報 | 佐藤健司 公認会計士事務所">
     <meta name="twitter:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/css/site.css?v=20261107x">
+
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
 
     <script type="application/ld+json">
     {
@@ -33,192 +44,108 @@
       ]
     }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/style_v2.css?v=20260612b">
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-    <link rel="apple-touch-icon" href="img/favicon.png">
-    <!-- Google Structured Data (JSON-LD: Graph with Person & Organization entities linked) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Person",
-          "@id": "https://www.kenji-sato.jp/#kenji-sato",
-          "name": "Kenji Sato",
-          "alternateName": [
-            "佐藤 健司",
-            "さとう けんじ",
-            "サトウ ケンジ"
-          ],
-          "jobTitle": [
-            "Certified Public Accountant",
-            "公認会計士",
-            "CPA"
-          ],
-          "image": "https://www.kenji-sato.jp/img/profile.jpg",
-          "url": "https://www.kenji-sato.jp/",
-          "sameAs": [
-            "https://www.kenji-sato.jp/",
-            "https://www.linkedin.com/in/健司-佐藤-06a1b8375"
-          ],
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Kyoto",
-            "addressCountry": "JP"
-          },
-          "worksFor": {
-            "@id": "https://www.kenji-sato.jp/#office"
-          },
-          "memberOf": {
-            "@id": "https://www.kenji-sato.jp/#office"
-          },
-          "knowsAbout": [
-            "Financial Audit (財務諸表監査)",
-            "J-SOX Internal Control (J-SOX 内部統制)",
-            "IPO Audit Support (IPO監査支援)",
-            "Accounting DX & Generative AI (会計DX・生成AI)",
-            "Financial Reporting (決算・財務報告)",
-            "CFO Support for Listed & Pre-IPO Companies (上場・上場準備企業CFO支援)",
-            "Kansai Region Business Support (関西圏ビジネス支援)"
-          ],
-          "description": "Kyoto-based Japanese CPA specializing in J-SOX, IPO audit support, Financial Audits, and Accounting DX. Professional support for listed and pre-IPO companies in Kyoto and the Kansai region. 京都を拠点に、関西圏の上場・上場準備企業へJ-SOX、IPO支援、財務諸表監査を提供する公認会計士・佐藤健司。"
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://www.kenji-sato.jp/#office",
-          "name": "Kenji Sato CPA Office",
-          "alternateName": "佐藤健司公認会計士事務所",
-          "url": "https://www.kenji-sato.jp/",
-          "logo": "https://www.kenji-sato.jp/img/favicon.png",
-          "founder": {
-            "@id": "https://www.kenji-sato.jp/#kenji-sato"
-          },
-          "member": {
-            "@id": "https://www.kenji-sato.jp/#kenji-sato"
-          },
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Kyoto",
-            "addressCountry": "JP"
-          },
-          "areaServed": [
-            {
-              "@type": "City",
-              "name": "Kyoto",
-              "alternateName": "京都市"
-            },
-            {
-              "@type": "City",
-              "name": "Osaka",
-              "alternateName": "大阪市"
-            },
-            {
-              "@type": "City",
-              "name": "Kobe",
-              "alternateName": "神戸市"
-            },
-            {
-              "@type": "Place",
-              "name": "Kansai Region",
-              "alternateName": "関西"
-            }
-          ],
-          "contactPoint": {
-              "@type": "ContactPoint",
-              "contactType": "customer support",
-              "email": "kenji@kenji-sato.jp"
-          }
-        }
-      ]
-    }
-    </script>
 </head>
 
-<body class="news-page">
-    <!-- 背景の波 -->
-    <div class="global-wave-bg"></div>
-    <!-- ノイズ質感 -->
-    <div class="global-noise"></div>
+<body>
+    <a class="skip" href="#top">本文へ移動</a>
 
-    <!-- カーソルのアクアドット -->
-    <div class="cursor-dot"></div>
+    <!-- 紋とピクトグラム(円と線だけで描く) -->
+    <svg class="sprite" aria-hidden="true" focusable="false">
+        <symbol id="ks-mark" viewBox="0 0 48 48">
+            <path d="M41.24 9.54A22.5 22.5 0 1 0 45.73 18.18" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M14 12.5V35.5M14 24L24 12.5M14 24L24 35.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M36 15.5C33 11.5 26.5 12.5 27 18C27.5 23 36 24 36.5 29.5C37 35 30 37 26.5 33" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="14" cy="24" r="2.7" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-cfo" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M13 32.5H35" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M17 32V27M24 32V21" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M31 32V14" pathLength="1" fill="none" stroke="#0a4ea0" stroke-width="2.2"/>
+        </symbol>
+        <symbol id="p-jsox" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M14.5 24.5l6.5 6.5L34 17" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="miter"/>
+        </symbol>
+        <symbol id="p-ipo" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M12.5 33h6.5v-6h6.5v-6H32v-6" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="35.5" cy="15" r="2.4" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-ai" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M14 18h20M14 24h20M14 30h11" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="30.5" cy="30" r="2.4" fill="#0a4ea0"/>
+        </symbol>
+    </svg>
 
-    <!-- Header Navigation -->
-    <header class="kg-header">
-        <div class="kg-header-inner">
-            <div class="kg-brand">
-                <span class="kg-office-name">佐藤健司 公認会計士事務所</span>
-            </div>
-
-            <nav class="kg-nav">
-                <a href="index.html#mission" class="kg-nav-link">考え方</a>
-                <a href="index.html#services" class="kg-nav-link">サービス</a>
-                <a href="index.html#profile" class="kg-nav-link">プロフィール</a>
-                <a href="index.html#message" class="kg-nav-link">ご挨拶</a>
-                <a href="index.html#news" class="kg-nav-link">お知らせ</a>
-                <a href="index.html#contact" class="kg-nav-link kg-nav-contact">ご相談はこちら</a>
+    <header class="head">
+        <div class="wrap head-in">
+            <a class="brand" href="/" aria-label="佐藤健司公認会計士事務所 トップページ"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
+            <nav class="nav" id="nav" aria-label="サイト内">
+                <a href="/#services">業務</a>
+                <a href="/#profile">略歴</a>
+                <a href="/#principles">原則</a>
+                <a href="/#terms">お取引にあたって</a>
+                <a class="only-menu" href="/#faq">よくあるご質問</a>
+                <a class="only-menu" href="/#news">お知らせ</a>
+                <a class="ask" href="/#contact">相談する</a>
             </nav>
+            <div class="head-tools">
+                <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><span>目次</span><i aria-hidden="true"></i></button>
+            </div>
         </div>
     </header>
 
-    <!-- Page Hero -->
-    <section class="page-hero page-hero-news">
-        <div class="container">
-            <p class="page-hero-en">News</p>
-            <h1 class="page-hero-title">最新情報</h1>
-            <p class="page-hero-sub">事務所からのお知らせや更新情報をまとめています。</p>
-        </div>
-    </section>
-
-    <!-- 戻るリンク (シンプルテキスト) -->
-    <div class="news-back">
-        <div class="container">
-            <a href="index.html#news" class="news-back-link">
-                <span class="news-back-arrow">←</span>
-                トップページに戻る
-            </a>
-        </div>
-    </div>
-
-    <!-- News Archive -->
-    <main class="news-archive">
-        <div class="container">
-            <div class="news-list news-list-archive fade-up" id="news-archive-list">
-                <!-- JS で NEWS_ITEMS から生成 -->
+    <main id="top">
+        <section class="page-hero">
+            <div class="wrap page-hero-in">
+                <p class="crumb"><a href="/">トップページ</a>　／　最新情報</p>
+                <h1>最新情報</h1>
+                <p class="lead">事務所からのお知らせや更新情報をまとめています。</p>
             </div>
+        </section>
+
+        <div class="wrap">
+            <section class="sec" id="list">
+                <div class="sec-h"><h2>お知らせ</h2></div>
+                <div class="sec-b">
+                    <ul class="news">
+                        <li><time datetime="2026-04-01">2026.04.01</time><h3>税理士登録のお知らせ</h3><p>近畿税理士会に税理士登録を行いました。会計・監査に加え、税務面でもご支援が可能になりました。</p></li>
+                        <li><time datetime="2026-01-04">2026.01.04</time><h3>ウェブサイトを公開しました。</h3><p>「佐藤健司 公認会計士事務所」の公式サイトを公開しました。</p></li>
+                    </ul>
+                </div>
+            </section>
         </div>
+
+        <section class="cta">
+            <div class="wrap">
+                <p>まずは、いまの状況をお聞かせください。</p>
+                <a class="btn" href="/#contact">相談する</a>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-info-wrapper">
-                <div class="office-info">
-                    <h3>【事務所情報】</h3>
-                    <p>佐藤健司 公認会計士事務所</p>
-                    <p>代表：公認会計士 佐藤 健司</p>
-                    <p>所在地：京都市（詳細はお問い合わせ時にご案内します）</p>
-                    <p>メール：kenji@kenji-sato.jp</p>
-                    <p>公認会計士登録番号：40449</p>
-                </div>
+    <canvas class="flow" id="flow" aria-hidden="true"></canvas>
+
+    <footer class="foot">
+        <div class="wrap foot-in">
+            <div>
+                <a class="brand" href="/"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
+                <dl>
+                    <dt>代表</dt><dd>公認会計士・税理士　<span class="nb">佐藤 健司（さとう けんじ）</span></dd>
+                    <dt>所在地</dt><dd>京都市（詳細はお問い合わせ時にご案内します）</dd>
+                    <dt>メール</dt><dd>kenji@kenji-sato.jp</dd>
+                    <dt>登録</dt><dd>公認会計士登録番号 40449</dd>
+                </dl>
             </div>
-            <p class="copyright">&copy; 2026 Kenji Sato CPA Office.</p>
+            <p class="foot-ks"><b>K</b>ey <b>S</b>tructure is to <b>K</b>eep it <b>S</b>imple.<small>&copy; 2026 Kenji Sato CPA Office.</small></p>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <div class="bar" id="bar"><span>初回 30〜60分<br>オンライン・無料</span><a href="/#contact">相談する</a></div>
 
-    <!-- フローティング戻るボタン (テキスト) -->
-    <button class="floating-back-btn" id="floatingBackBtn" aria-label="トップへ戻る">
-        <span class="floating-arrow">↑</span>
-    </button>
+    <script src="/js/site.js?v=20261107x" defer></script>
 </body>
 
 </html>
