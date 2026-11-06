@@ -539,11 +539,14 @@
         topic = subject || '';
         var cur = el.message.value.trim();
         if (!cur || cur === lastFill) { el.message.value = text; lastFill = text; mark('message', ''); }
+        /* 入力欄にはカーソルを移さない(スマホで、キーボードと自動入力の候補がいきなり開いてしまうため)。
+           代わりに見出しへ移し、読み上げでも「フォームに来た」ことが伝わるようにする */
+        var head = form.querySelector('.group-h');
+        if (head) {
+          head.setAttribute('tabindex', '-1');
+          try { head.focus({ preventScroll: true }); } catch (e) { /* 古いブラウザでは移さない */ }
+        }
         form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-        setTimeout(function () {
-          var first = !el.name.value.trim() ? el.name : el.message;
-          try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
-        }, reduce ? 0 : 600);
       }
     };
   }

@@ -340,6 +340,7 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
    文字は16px以上(スマホで拡大されない大きさ)。押す場所は50px以上の高さを取る */
 .ask-form { margin-top: 44px; }
 .ask-form .group-h { margin: 0 0 4px; }
+.ask-form .group-h:focus { outline: none; }
 .field { padding-top: 20px; }
 .field label { display: flex; align-items: baseline; gap: 12px; font-size: 14.5px; letter-spacing: .06em; color: var(--ink); }
 .field .req, .field .opt { font-size: 12px; letter-spacing: .08em; }
