@@ -431,7 +431,7 @@
       name: document.getElementById('f-name'),
       email: document.getElementById('f-email'),
       message: document.getElementById('f-message'),
-      website: form.querySelector('[name="website"]')
+      website: form.querySelector('[name="hp-check"]')
     };
     var btn = form.querySelector('button[type="submit"]');
     var label = btn.textContent;
@@ -447,7 +447,7 @@
     /* メールアドレス: 全角で打たれた英数字や＠は半角に直し、空白を除く */
     function tidyEmail(v) {
       try { v = v.normalize('NFKC'); } catch (e) { /* 古いブラウザではそのまま */ }
-      return v.replace(/\s+/g, '');
+      return v.replace(/^[\s\u3000]+|[\s\u3000]+$/g, '');   /* 前後の空白だけ除く(中の空白は誤りとして知らせる) */
     }
     /* よくある打ち間違い(末尾) */
     var TYPO = {
@@ -492,6 +492,12 @@
       sending = false; btn.disabled = false; btn.textContent = label; form.removeAttribute('aria-busy');
       say(text || '送信できませんでした。通信の状態をご確認のうえ、もう一度「' + label + '」を押してください。入力内容は残っています。うまくいかない場合は、下のメールアドレスへ直接ご連絡ください。', true);
     }
+
+    /* 入力中は、スマホの下の固定ボタンを引っ込める(入力欄や送信ボタンと重ならないように) */
+    form.addEventListener('focusin', function () { document.documentElement.classList.add('typing'); });
+    form.addEventListener('focusout', function () {
+      setTimeout(function () { if (!form.contains(document.activeElement)) document.documentElement.classList.remove('typing'); }, 0);
+    });
 
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();

@@ -607,6 +607,7 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
   .foot-in { align-items: flex-start; }
   .foot-ks { text-align: left; }
 
+  html { scroll-padding-bottom: 96px; }   /* 下の固定ボタンの分 */
   .bar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
     display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -622,7 +623,7 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
     min-height: 48px; padding: 0 30px; border-radius: 2px; background: var(--ai); color: #fff;
     font-family: var(--mincho); font-size: 15px; letter-spacing: .2em; text-decoration: none;
   }
-  .nav-open .bar { transform: translateY(110%); }
+  .nav-open .bar, .typing .bar { transform: translateY(110%); }
   .nav a[aria-current="true"] { box-shadow: none; }
 }
 
