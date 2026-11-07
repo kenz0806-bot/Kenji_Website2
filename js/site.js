@@ -18,14 +18,26 @@
     }, ms);
   }
 
-  /* 画面が続けて描かれている(=人が見ている)ことを確かめる。確かめられたら fn を一度だけ呼ぶ */
+  /* 画面が見えている状態で ms たったら fn を呼ぶ。別のタブで開かれたときは、見えるまで時計を動かさない */
+  function visibleTimeout(fn, ms) {
+    function arm() { setTimeout(fn, ms); }
+    if (document.visibilityState === 'hidden') {
+      document.addEventListener('visibilitychange', function h() {
+        if (document.visibilityState !== 'visible') return;
+        document.removeEventListener('visibilitychange', h); arm();
+      });
+    } else arm();
+  }
+
+  /* 画面が実際に描かれてから始める。見えていない(別のタブなど)あいだは待ち、見えたあとの2フレーム目で始める。
+     以前は「連続2フレームが90ms未満」を条件にしていたが、遅い端末やアプリ内ブラウザでは読み込み直後のフレームが
+     それより遅く、1.6秒の保険にかかって場面が出ないことがあった */
   function whenLive(fn) {
-    var last = 0, run = 0, done = false;
-    function probe(ts) {
+    var n = 0, done = false;
+    function probe() {
       if (done) return;
-      run = (last && ts - last < 90) ? run + 1 : 0;
-      last = ts;
-      if (run < 2) { requestAnimationFrame(probe); return; }
+      if (document.visibilityState === 'hidden') { requestAnimationFrame(probe); return; }
+      if (++n < 2) { requestAnimationFrame(probe); return; }
       done = true; fn();
     }
     requestAnimationFrame(probe);
@@ -178,8 +190,8 @@
         if (doc.classList.contains('card')) { document.addEventListener('ks:go', begin); setTimeout(begin, 6000); }
         else begin();
       });
-      /* 1.4秒たっても画面が動いていなければ、動きなしで開いた扇を出す。名刺の場面もやめる */
-      setTimeout(function () { if (!live) { cancel(); act = ''; doc.classList.remove('card'); draw(); } }, 1400);
+      /* 見えている状態で1.4秒たっても画面が動いていなければ、動きなしで開いた扇を出す。名刺の場面もやめる */
+      visibleTimeout(function () { if (!live) { cancel(); act = ''; doc.classList.remove('card'); draw(); } }, 1400);
     }
     var lastW = window.innerWidth;
     window.addEventListener('resize', function () {
@@ -293,9 +305,9 @@
 
   /* ---------- 冒頭の文字と、各節の罫線 ---------- */
   function reveal() {
-    if (reduce) return;
+    if (reduce) { sections(); return; }
     whenLive(function () {
-      if (!doc.classList.contains('pre')) return;   /* 時間切れで外れていたら、演出なしのまま */
+      if (!doc.classList.contains('pre')) { sections(); return; }   /* 時間切れや #contact への直接の訪問で外れていたら、演出なしのまま */
       var went = false;
       function go() {
         if (went) return; went = true;
@@ -320,6 +332,7 @@
         setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, slow ? 1500 : 1200);
       }
       doc.classList.add('meet');
+      try { if (!/[?&]card=1/.test(location.search)) sessionStorage.setItem('ks-met', '1'); } catch (e) { /* 記録できなくても続ける */ }
       /* 確認用の指定: ?cardms=4600 で「はじめまして。」のあとの間を変える、?cardexit=slow で受け取られる動きをゆっくりに */
       var ms = 4000, qp = /[?&]cardms=(\d{3,5})/.exec(location.search);
       if (qp) ms = +qp[1];

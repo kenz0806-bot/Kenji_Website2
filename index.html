@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#fcfdfe">
     <meta name="format-detection" content="telephone=no">
-    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す。名刺を差し出す場面(card)は、訪問ごとに最初の一度だけ(確認用に ?card=1 で毎回、?card=0 で無し) */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=false;try{var q=/[?&]card=(\d)/.exec(location.search);if(q){c=q[1]==='1'}else if(!sessionStorage.getItem('ks-met')){sessionStorage.setItem('ks-met','1');c=true}}catch(e){}d.classList.add('pre');if(c)d.classList.add('card');setTimeout(function(){if(d.classList.contains('meet')||d.classList.contains('go'))return;d.classList.remove('pre');d.classList.remove('card')},1600);setTimeout(function(){d.classList.remove('pre');d.classList.remove('card')},7000)})(document.documentElement)</script>
+    <script>/* 冒頭の演出の準備。名刺を差し出す場面(card)は、訪問ごとに最初の一度だけ(確認用に ?card=1 で毎回、?card=0 で無し)。「見た」の記録は、場面が実際に始まったときに site.js が付ける(始まらなかったときは次の訪問で見せる)。ページ内の場所(#contact など)への直接の訪問では場面を出さない。保険の時計は画面が見えてから動かす: 1.6秒たっても始まらなければ演出なしで文字を出し、7秒で必ず文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=false;try{var q=/[?&]card=(\d)/.exec(location.search);if(q){c=q[1]==='1'}else if(location.hash&&location.hash!=='#top'){c=false}else if(!sessionStorage.getItem('ks-met')){c=true}}catch(e){}if(!c&&location.hash&&location.hash!=='#top')return;d.classList.add('pre');if(c)d.classList.add('card');var armed=false;function off(){d.classList.remove('pre');d.classList.remove('card')}function arm(){if(armed)return;armed=true;setTimeout(function(){if(d.classList.contains('meet')||d.classList.contains('go'))return;off()},1600);setTimeout(off,7000)}if(document.visibilityState==='hidden'){document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')arm()})}else{arm()}})(document.documentElement)</script>
     <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
     <meta name="robots" content="index, follow">
     <title>佐藤健司公認会計士事務所（さとうけんじ）｜京都の公認会計士・税理士</title>
@@ -35,7 +35,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/css/site.css?v=20261108u">
+    <link rel="stylesheet" href="/css/site.css?v=20261108v">
 
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
@@ -127,7 +127,7 @@
               "name": "社外監査役・社外取締役の就任について相談できますか。",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社法の要件、取引所の独立性の基準、既存の取引関係などを会社ごとに確認したうえでお答えします。"
+                "text": "はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社との関係や期待される役割を確認したうえで判断します。会社法の要件（就任前10年間の経歴など）、取引所が定める独立役員の基準、既存の取引・顧問関係との利益相反、期待される稼働と報酬、責任限定契約・役員等賠償責任保険の有無を、会社ごとに確認します。確認する事項の一覧は、役員候補者プロフィールのページに載せています。"
               }
             },
             {
@@ -307,28 +307,26 @@
                 <div class="sec-h"><h2>社外役員として</h2></div>
                 <div class="sec-b">
                     <p class="svc-lead">会計と内部統制の経験を、取締役会・監査役会で。</p>
-                    <p class="svc-sub">上場企業・上場準備企業の社外監査役・社外取締役として、監査法人で培った会計・監査・内部統制の経験をもとに関わります。役員としての関与は、社外CFOや実務支援とは別のものとしてご相談いただけます。</p>
+                    <p class="svc-sub">上場企業・上場準備企業の社外監査役・社外取締役について、就任のご相談を承ります。監査法人で培った会計・監査・内部統制の経験をもとに関わります。役員としての関与は、社外CFOや実務支援とは別のものとしてご相談いただけます。</p>
                     <div class="roles">
                         <article class="role">
                             <h3>社外監査役</h3>
                             <dl class="rows">
-                                <div><dt>想定する会社の状況</dt><dd class="what">監査役会を置く会社で、会計・内部統制に通じた社外監査役を求めている。上場準備で、監査役会の構成を整える。会社法では、監査役会設置会社の監査役は3人以上、その半数以上が社外監査役です。</dd></div>
-                                <div><dt>期待される関与</dt><dd class="what">取締役の職務執行の監査。会計監査人（監査法人）との連携、内部統制の整備・運用の確認、取締役会・監査役会での発言。</dd></div>
+                                <div><dt>想定する会社</dt><dd class="what">監査役会を置く上場企業で、会計・内部統制に通じた社外監査役を求めている会社。上場準備で、監査役会の構成を整える会社。</dd></div>
+                                <div><dt>相談できる関与</dt><dd class="what">取締役の職務執行の監査。会計監査人（監査法人）との連携、内部統制の整備・運用の確認、取締役会・監査役会での発言。</dd></div>
                                 <div><dt>経験が役立つ点</dt><dd class="what">監査法人で上場企業の監査の主査を務め、監査法人側の論点と判断の根拠を知っています。内部統制（J-SOX）の評価にも深く関与しました。会計監査人との対話を、専門家として担えます。</dd></div>
-                                <div><dt>就任前に確認する事項</dt><dd class="what">会社法の社外監査役の要件（過去10年の役員・使用人歴など）、取引所の独立役員の基準、既存の取引・顧問関係との利益相反、期待される稼働と報酬、責任限定契約・役員賠償責任保険。</dd></div>
                             </dl>
                         </article>
                         <article class="role">
                             <h3>社外取締役</h3>
                             <dl class="rows">
-                                <div><dt>想定する会社の状況</dt><dd class="what">社外取締役を置く義務がある会社（監査役会設置会社のうち、公開会社かつ大会社で有価証券報告書を提出する会社）、監査等委員会設置会社（監査等委員である取締役は3人以上、その過半数が社外取締役）、上場準備で取締役会の構成を整える会社。</dd></div>
-                                <div><dt>期待される関与</dt><dd class="what">取締役会の一員として、業務執行の決定に参加し、監督する。数字と統制の観点から、判断の根拠を確かめる。</dd></div>
+                                <div><dt>想定する会社</dt><dd class="what">社外取締役を置く上場企業・上場準備企業で、数字と統制に通じた社外取締役を求めている会社。監査等委員会設置会社で、監査等委員となる社外取締役を探している会社。</dd></div>
+                                <div><dt>相談できる関与</dt><dd class="what">取締役会の一員として、業務執行の決定に参加し、監督する。数字と統制の観点から、判断の根拠を確かめる。</dd></div>
                                 <div><dt>経験が役立つ点</dt><dd class="what">売上10億〜300億円規模の上場企業、IPO準備企業・上場直後の企業で、経営陣・管理部門と向き合ってきました。決算・開示・内部統制が経営の判断とどうつながるかを知っています。</dd></div>
-                                <div><dt>就任前に確認する事項</dt><dd class="what">会社法の社外取締役の要件（業務執行取締役等でないこと、過去10年の経歴など）、取引所の独立役員の基準、利益相反、期待される稼働と報酬、責任限定契約・役員賠償責任保険。</dd></div>
                             </dl>
                         </article>
                     </div>
-                    <p class="role-note">資格や監査の経験があることと、個別の会社で社外役員の要件や独立性を満たすことは、別のことです。就任の可否は、会社ごとに確認したうえでお答えします。同じ会社で社外役員の就任と実務支援を同時にお引き受けするかどうかも、独立性・利益相反・責任の分担を確認したうえで判断します。</p>
+                    <p class="role-note">就任の可否は、会社との関係や期待される役割を確認したうえで判断します。会社法の要件、独立性、利益相反、責任限定契約・保険など、就任前に確認する事項は<a href="/candidate.html#check">役員候補者プロフィール</a>と<a href="#faq">FAQ</a>にまとめています。</p>
                     <h3 class="group-h">関わり方</h3>
                     <dl class="stance">
                         <div><dt>重要な論点を見極める</dt><dd>数字・業務・ルールの中から、判断に効く構造を見つけます。論点を並べるのではなく、優先順位をつけます。</dd></div>
@@ -338,7 +336,7 @@
                     </dl>
                     <div class="role-acts">
                         <a class="btn" href="#contact" data-kind="director">就任のご相談</a>
-                        <a class="more" href="/candidate.html">役員候補者プロフィール（1枚・PDF保存可）</a>
+                        <a class="more" href="/candidate.html">役員候補者プロフィール（PDF保存可）</a>
                     </div>
                 </div>
             </section>
@@ -557,7 +555,7 @@
                 <div class="sec-b">
                     <div class="qa">
                         <details><summary>どんな相談を受けていますか。</summary><p>社外監査役・社外取締役の就任のご相談と、実務支援（内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務）です。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。</p></details>
-                        <details><summary>社外監査役・社外取締役の就任について相談できますか。</summary><p>はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社法の要件、取引所の独立性の基準、既存の取引関係などを会社ごとに確認したうえでお答えします。</p></details>
+                        <details><summary>社外監査役・社外取締役の就任について相談できますか。</summary><p>はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社との関係や期待される役割を確認したうえで判断します。会社法の要件（就任前10年間の経歴など）、取引所が定める独立役員の基準、既存の取引・顧問関係との利益相反、期待される稼働と報酬、責任限定契約・役員等賠償責任保険の有無を、会社ごとに確認します。確認する事項の一覧は、<a href="/candidate.html#check">役員候補者プロフィール</a>に載せています。</p></details>
                         <details><summary>社外役員の就任と、実務支援を同時に依頼できますか。</summary><p>同じ会社で同時にお引き受けするかどうかは、独立性、利益相反、責任の分担を個別に確認したうえで判断します。当然に一括してお引き受けするものではありません。</p></details>
                         <details><summary>費用は、どのくらいですか。</summary><p>初回のご相談（30〜60分・オンライン）は無料です。内部統制・J-SOXとIPO準備支援は、診断パッケージが10万円〜（税別）、継続支援が10万円〜／人日（税別）です。2026年1月1日からの料金です。そのほかの業務は、内容に応じて、初回相談のあとにお見積りします。</p></details>
                         <details><summary>電話で相談できますか。</summary><p>お電話でのお問い合わせは受け付けておりません。フォームまたはメールでご連絡ください。通常、3営業日以内にご返信いたします。</p></details>
@@ -582,7 +580,7 @@
                         <li><button class="ask" type="button" data-ask="auditor">社外監査役の候補として検討したい</button></li>
                         <li><button class="ask" type="button" data-ask="director">社外取締役の候補として検討したい</button></li>
                     </ul>
-                    <p class="asks-note">就任のご相談で、有償の診断をお勧めすることはありません。</p>
+                    <p class="asks-note">候補として検討したい段階のご相談も承ります。</p>
                     <h4 class="asks-h" id="asksHead">実務支援</h4>
                     <ul class="asks">
                         <li><button class="ask" type="button" data-ask="jsox">J-SOXの構築・運用を見直したい</button></li>
@@ -666,7 +664,7 @@
 
     <div class="bar" id="bar"><span>初回 30〜60分<br>オンライン・無料</span><a href="#contact">相談する</a></div>
 
-    <script src="/js/site.js?v=20261108u" defer></script>
+    <script src="/js/site.js?v=20261108v" defer></script>
 </body>
 
 </html>
