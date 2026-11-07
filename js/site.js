@@ -409,15 +409,22 @@
 
   /* ---------- ご相談フォーム ----------
      入力を確かめ、受け口(data-endpoint)へ送る。メールは受け口の側で送られる。
-     受け口が未設定のときは null を返し、フォームは出さない(いままでのメールでのご連絡のまま)。 */
+     受け口が未設定のときや、通信の仕組みが無い古いブラウザでは、メールでの連絡を案内する。 */
   function askForm() {
     var form = document.getElementById('askForm');
     var done = document.getElementById('askDone');
     var msg = document.getElementById('askMsg');
-    if (!form || !done || !msg || !window.fetch) return null;
+    if (!form || !done || !msg) return null;
     var endpoint = (form.getAttribute('data-endpoint') || '').trim();
-    if (!endpoint) return null;
     var preview = endpoint === 'preview';   /* 確認用の表示: 入力の確認までを行い、送信はしない */
+    var TO_MAIL = 'お手数ですが、下のメールアドレスへ直接ご連絡ください。';
+    if (!window.fetch) {
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        msg.textContent = 'お使いのブラウザではフォームを送信できません。' + TO_MAIL; msg.className = 'form-msg ng';
+      });
+      return null;
+    }
 
     var el = {
       company: document.getElementById('f-company'),
@@ -497,6 +504,7 @@
         return;
       }
       if (preview) { say('これは確認用の表示です。入力の確認までを行い、実際には送信しません。'); return; }
+      if (!endpoint) { fail('送信先が設定されていないため、送れませんでした。' + TO_MAIL); return; }
 
       sending = true; btn.disabled = true; btn.textContent = '送信しています'; form.setAttribute('aria-busy', 'true');
       if (!token) token = newToken();            /* やり直しでも同じ番号を使い、受け口の側で重複を捨てる */
@@ -532,7 +540,6 @@
       }).catch(function () { clearTimeout(timer); fail(); });
     });
 
-    form.hidden = false;
     return {
       /* ご相談の例を選んだとき: 内容を入れて、フォームへ静かに移る */
       fill: function (text, subject) {
@@ -551,8 +558,7 @@
     };
   }
 
-  /* ご相談の文例。画面の「ご相談の例」と同じ件数・同じ並び。
-     フォームの自動入力、メールの下書き、「文面の例」は、すべてこの表を使う(直すときは、ここだけ直す) */
+  /* ご相談の文例。画面の「ご相談の例」と同じ件数・同じ並び(直すときは、ここと index.html の両方) */
   var ASK = {
     jsox: {
       s: "ご相談：J-SOXの構築・運用の見直しについて",
@@ -583,9 +589,6 @@
       b: "社外CFOについてご相談したく、ご連絡しました。\n顧問税理士とは別に、経営・財務の視点から、継続して相談できる相手を探しています。\n\n一度、Web面談などで、お話を伺えれば幸いです。"
     }
   };
-  /* メールで送るときだけ、先頭に付ける挨拶(フォームには、会社名とお名前の欄があるので付けない) */
-  var HELLO = "はじめまして。【会社名】の【氏名】と申します。\n\n";
-
   function contact() {
     var addr = document.getElementById('addr');
     var copy = document.getElementById('copyAddr');
@@ -593,88 +596,19 @@
       copy.addEventListener('click', function () { copyText(addr.textContent.trim(), copy, 'コピーしました', 'アドレスをコピー'); });
     }
 
-    /* ご相談の例。
-       フォームがあるとき: 押すと、その文例を「ご相談内容」に入れる(メールアプリは開かない)。
-       フォームが無いとき: 押すと、件名と文例の入ったメールの作成画面を開く。
-       アプリの中のブラウザなどでは開かないことがあるので、押した行のすぐ下に宛先と件名を出し、コピーできるようにする */
-    var asks = document.querySelectorAll('.asks a[data-ask]');
+    /* ご相談の例: 押すと、その文例を「ご相談内容」に入れて、フォームへ移る */
+    var asks = document.querySelectorAll('.asks button[data-ask]');
     var F = askForm();
-    var showDraft = drafts(F);
-    function pick(a) {
-      for (var k = 0; k < asks.length; k++) asks[k].removeAttribute('aria-current');
-      a.setAttribute('aria-current', 'true');
-      showDraft(a.getAttribute('data-ask'));
-    }
-    if (asks.length && F) {
-      var list = asks[0].parentNode.parentNode, note = document.getElementById('asksNote');
-      list.className += ' to-form';
-      if (note) note.textContent = '項目を選ぶと、下のフォームの「ご相談内容」に文例が入ります。ご状況に合わせて、書き換えてお使いください。';
-      for (var f = 0; f < asks.length; f++) {
-        asks[f].addEventListener('click', function (ev) {
-          ev.preventDefault();
-          var d = ASK[this.getAttribute('data-ask')];
-          if (!d) return;
-          pick(this);
-          F.fill(d.b, d.s);
-        });
-      }
-    } else if (asks.length) {
-      var box = document.createElement('div');
-      box.className = 'ask-box';
-      box.setAttribute('aria-live', 'polite');
-      box.innerHTML = '<p>メールの作成画面が開かない場合は、下の宛先と件名をコピーしてお使いください。文面は、下の「文面の例を見る」からコピーできます。</p>' +
-        '<dl><div><dt>宛先</dt><dd class="ask-to"></dd></div><div><dt>件名</dt><dd class="ask-sub"></dd></div></dl>' +
-        '<button class="pill" type="button">宛先と件名をコピー</button>';
-      var to = box.querySelector('.ask-to'), sub = box.querySelector('.ask-sub'), askCopy = box.querySelector('button');
-      askCopy.addEventListener('click', function () {
-        copyText('宛先：' + to.textContent + '\n件名：' + sub.textContent, askCopy, 'コピーしました', '宛先と件名をコピー');
+    if (!asks.length || !F) return;
+    for (var i = 0; i < asks.length; i++) {
+      asks[i].addEventListener('click', function () {
+        var d = ASK[this.getAttribute('data-ask')];
+        if (!d) return;
+        for (var k = 0; k < asks.length; k++) asks[k].setAttribute('aria-pressed', 'false');
+        this.setAttribute('aria-pressed', 'true');
+        F.fill(d.b, d.s);
       });
-      for (var a = 0; a < asks.length; a++) {
-        (function (link) {
-          var d = ASK[link.getAttribute('data-ask')];
-          var m = /^mailto:([^?]+)/.exec(link.getAttribute('href'));
-          if (!d || !m) return;
-          /* メールの本文に、文例を入れておく(改行は、メールの決まりに合わせて CRLF にする) */
-          link.setAttribute('href', 'mailto:' + m[1] + '?subject=' + encodeURIComponent(d.s) +
-            '&body=' + encodeURIComponent((HELLO + d.b).replace(/\n/g, '\r\n')));
-          link.addEventListener('click', function () {
-            to.textContent = m[1];
-            sub.textContent = d.s;
-            pick(link);
-            link.parentNode.appendChild(box);
-          });
-        })(asks[a]);
-      }
     }
-  }
-
-  /* 文面の例(メールで送る方のための下書き)。上の「ご相談の例」と同じ5件を、同じ並びで見せる。
-     選んだ文例を見せる関数を返す */
-  function drafts(F) {
-    var none = function () {};
-    var tabs = document.querySelectorAll('[data-draft]');
-    var subj = document.getElementById('draftSubject');
-    var body = document.getElementById('draftBody');
-    var copyDraft = document.getElementById('copyDraft');
-    if (!tabs.length || !subj || !body || !copyDraft) return none;
-    if (F) {
-      var sm = document.querySelector('.drafts summary');
-      if (sm) sm.textContent = 'メールで送る場合の、文面の例を見る';
-    }
-
-    function show(k) {
-      var d = ASK[k]; if (!d) return;
-      subj.textContent = d.s; body.textContent = HELLO + d.b;
-      for (var i = 0; i < tabs.length; i++) tabs[i].setAttribute('aria-pressed', tabs[i].getAttribute('data-draft') === k ? 'true' : 'false');
-    }
-    for (var i = 0; i < tabs.length; i++) {
-      tabs[i].addEventListener('click', function () { show(this.getAttribute('data-draft')); });
-    }
-    copyDraft.addEventListener('click', function () {
-      copyText('件名：' + subj.textContent + '\n\n' + body.textContent, copyDraft, 'コピーしました', '文面をコピー');
-    });
-    show(tabs[0].getAttribute('data-draft'));
-    return show;
   }
 
   function start() { fan(); flow(); reveal(); menu(); bar(); spy(); contact(); }

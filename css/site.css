@@ -323,18 +323,11 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 .sheet dt.key { color: var(--ai); }
 .asks { border-top: 1px solid var(--line); }
 .asks li { border-bottom: 1px solid var(--line); }
-.asks a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-block: 15px; font-size: 16.5px; line-height: 1.8; color: var(--ink); text-decoration: none; transition: color .3s; }
-.asks a::after { content: "メールで相談"; flex: none; font-size: 12.5px; letter-spacing: .06em; color: var(--ai); }
-.asks a:hover { color: var(--ai); }
-.asks a[aria-current="true"] { color: var(--ai); }
-/* 押した行のすぐ下に出す、宛先と件名 */
-.ask-box { padding: 2px 0 20px; font-size: 14px; color: var(--ink-2); }
-.ask-box dl { margin-top: 10px; }
-.ask-box dl > div { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); column-gap: 12px; padding-block: 4px; }
-.ask-box dt { color: var(--ink-3); }
-.ask-box dd { color: var(--ink); overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
-.ask-box .pill { margin-top: 14px; }
-.asks.to-form a::after { content: "フォームに入力"; }
+.asks button { display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: 16px; padding: 15px 0; font: inherit; font-size: 16.5px; line-height: 1.8; letter-spacing: inherit; text-align: left; color: var(--ink); background: none; border: 0; border-radius: 0; cursor: pointer; -webkit-appearance: none; appearance: none; transition: color .3s; }
+.asks button::after { content: "フォームに入力"; flex: none; font-size: 12.5px; letter-spacing: .06em; color: var(--ai); }
+.asks button:hover { color: var(--ai); }
+.asks button[aria-pressed="true"] { color: var(--ai); }
+.asks button:focus-visible { outline: 2px solid var(--ai); outline-offset: -2px; }
 
 /* ---------- ご相談フォーム ----------
    文字は16px以上(スマホで拡大されない大きさ)。押す場所は50px以上の高さを取る */
@@ -369,16 +362,14 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 .ask-done:focus { outline: none; }
 .ask-done p + p { margin-top: 10px; font-size: 15.5px; color: var(--ink-2); }
 .asks-note { margin-top: 12px; font-size: 13px; color: var(--ink-3); }
-.drafts { margin-top: 40px; border-bottom: 1px solid var(--line); }
-.drafts summary { cursor: pointer; padding-block: 14px; font-size: 13px; color: var(--ink-2); list-style: none; display: flex; align-items: center; gap: 12px; }
-.drafts summary::-webkit-details-marker { display: none; }
-.drafts summary::before { content: ""; width: 14px; height: 1px; background: var(--ink); }
-.drafts[open] summary::before { background: var(--ai); }
-.drafts-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-.draft-box { margin: 18px 0 28px; padding: 24px clamp(18px, 3vw, 32px); background: var(--mist); font-size: 13.5px; color: var(--ink-2); }
-.draft-box b { font-weight: 500; color: var(--ink); }
-.draft-body { margin-top: 10px; white-space: pre-wrap; line-height: 2.1; }
-.draft-box .pill { margin-top: 18px; background: var(--paper); }
+.mail-lead { margin-top: 40px; font-size: 13px; color: var(--ink-3); }
+/* ご相談にあたっての3点(初回無料・返信の目安・電話非対応)。線だけで区切り、見出しは立てない */
+.terms { margin-top: 36px; border-top: 1px solid var(--line); }
+.terms > div { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); column-gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.9; }
+.terms dt { padding-top: 1px; font-size: 13.5px; letter-spacing: .08em; color: var(--ai); }
+.terms dd { color: var(--ink); word-break: auto-phrase; line-break: strict; }
+.terms dd b { font-weight: 500; }
+.mail-lead + .mail { margin-top: 12px; }
 
 /* ---------- 下層ページ ---------- */
 .page-hero { border-bottom: 1px solid var(--ink); background: linear-gradient(180deg, var(--paper) 0, var(--mist) 100%); }
@@ -431,8 +422,8 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 /* 開閉を滑らかに(対応ブラウザのみ。非対応でもそのまま開閉できる) */
 @supports (interpolate-size: allow-keywords) {
   :root { interpolate-size: allow-keywords; }
-  .qa details::details-content, .drafts::details-content { block-size: 0; overflow: hidden; transition: block-size .5s var(--ease), content-visibility .5s allow-discrete; }
-  .qa details[open]::details-content, .drafts[open]::details-content { block-size: auto; }
+  .qa details::details-content { block-size: 0; overflow: hidden; transition: block-size .5s var(--ease), content-visibility .5s allow-discrete; }
+  .qa details[open]::details-content { block-size: auto; }
 }
 
 /* ---------- 回覧用の1枚(印刷・PDF保存) ---------- */
@@ -516,8 +507,6 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
 .news p { font-size: 15.5px; }
 .notes { font-size: 14.5px; }
 .pill { font-size: 14px; min-height: 44px; }
-.drafts summary { font-size: 14.5px; }
-.draft-box { font-size: 15px; }
 .crumb { font-size: 13.5px; }
 .page-hero .lead { font-size: 16.5px; color: var(--ink); }
 .fee-row span { font-size: 15px; }
@@ -589,9 +578,9 @@ a.pill { display: inline-flex; align-items: center; text-decoration: none; }
   .csg dt { line-height: 1.6; padding-top: 0; }
   .csg dd { font-size: 15.5px; }
   .svc-sub { font-size: 15.5px; }
-  .asks a { font-size: 15.5px; }
-  .asks a::after { content: none; }
-  .asks.to-form a::after { content: none; }
+  .asks button { font-size: 15.5px; }
+  .terms > div { grid-template-columns: minmax(0, 1fr); row-gap: 2px; padding: 11px 0; }
+  .asks button::after { content: none; }
   .ask-send { width: 100%; justify-content: center; min-height: 56px; }
   .picts { grid-template-columns: minmax(0, 1fr); }
   .picts li, .picts li:first-child, .picts li:nth-child(3) { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 20px; padding: 26px 0; border-left: 0; border-top: 1px solid var(--line); }
