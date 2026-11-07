@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#fcfdfe">
     <meta name="format-detection" content="telephone=no">
-    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す。名刺を差し出す場面(card)は、訪問ごとに最初の一度だけ */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=false;try{if(!sessionStorage.getItem('ks-met')){sessionStorage.setItem('ks-met','1');c=true}}catch(e){}d.classList.add('pre');if(c)d.classList.add('card');setTimeout(function(){if(d.classList.contains('meet')||d.classList.contains('go'))return;d.classList.remove('pre');d.classList.remove('card')},1600);setTimeout(function(){d.classList.remove('pre');d.classList.remove('card')},7000)})(document.documentElement)</script>
+    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す。名刺を差し出す場面(card)は、訪問ごとに最初の一度だけ(確認用に ?card=1 で毎回、?card=0 で無し) */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=false;try{var q=/[?&]card=(\d)/.exec(location.search);if(q){c=q[1]==='1'}else if(!sessionStorage.getItem('ks-met')){sessionStorage.setItem('ks-met','1');c=true}}catch(e){}d.classList.add('pre');if(c)d.classList.add('card');setTimeout(function(){if(d.classList.contains('meet')||d.classList.contains('go'))return;d.classList.remove('pre');d.classList.remove('card')},1600);setTimeout(function(){d.classList.remove('pre');d.classList.remove('card')},7000)})(document.documentElement)</script>
     <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
     <meta name="robots" content="index, follow">
     <title>佐藤健司公認会計士事務所（さとうけんじ）｜京都の公認会計士・税理士</title>
     <meta name="description"
-        content="京都市の公認会計士・税理士 佐藤健司（さとう けんじ）の事務所です。内部統制（J-SOX）、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO。PwC Japan有限責任監査法人で約8年、上場企業監査の主査を務めた経験をもとに、複雑な業務を整理し、実務で機能する仕組みへ、設計から運用まで支援します。">
+        content="京都市の公認会計士・税理士 佐藤健司（さとう けんじ）の事務所です。上場企業・上場準備企業の社外監査役・社外取締役と、内部統制（J-SOX）、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務。PwC Japan有限責任監査法人で約8年、上場企業監査の主査を務めた経験をもとに、複雑な業務を整理し、実務で機能する仕組みへ、設計から運用まで支援します。">
 
     <!-- Open Graph -->
     <meta property="og:title" content="佐藤健司公認会計士事務所（さとうけんじ）｜京都の公認会計士・税理士">
@@ -21,7 +21,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="佐藤健司公認会計士事務所 Key Structure is to Keep it Simple.">
-    <meta property="og:description" content="京都市の公認会計士・税理士 佐藤健司の事務所。内部統制（J-SOX）、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO。Key Structure is to Keep it Simple.">
+    <meta property="og:description" content="京都市の公認会計士・税理士 佐藤健司の事務所。上場企業・上場準備企業の社外監査役・社外取締役と、内部統制（J-SOX）・決算の実務支援。Key Structure is to Keep it Simple.">
     <meta property="og:site_name" content="佐藤健司公認会計士事務所">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
@@ -35,7 +35,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/css/site.css?v=20261108n">
+    <link rel="stylesheet" href="/css/site.css?v=20261108u">
 
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
@@ -72,10 +72,12 @@
             "Accounting & Closing Process Improvement (経理・決算業務の標準化と効率化)",
             "Business Process Improvement with Excel, SharePoint and Microsoft 365 (Excel・SharePoint・Microsoft 365 を活用した業務改善)",
             "Audit Readiness & Evidence Collection (監査対応・資料収集・進捗管理の改善)",
+            "Outside Director / Outside Corporate Auditor Advisory (社外取締役・社外監査役としての助言)",
+            "Agreed-Upon Procedures (AUP業務・合意された手続)",
             "Financial Reporting (決算・財務報告)",
             "CFO Support for Listed & Pre-IPO Companies (上場・上場準備企業CFO支援)"
           ],
-          "description": "京都市を拠点とする公認会計士・税理士。PwC Japan有限責任監査法人で約8年、上場企業監査に従事。内部統制（J-SOX）、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFOを提供する。Kyoto-based Japanese CPA and licensed tax accountant."
+          "description": "京都市を拠点とする公認会計士・税理士。PwC Japan有限責任監査法人で約8年、上場企業監査に従事。上場企業・上場準備企業の社外監査役・社外取締役として関わるほか、内部統制（J-SOX）、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務（合意された手続）を提供する。Kyoto-based Japanese CPA and licensed tax accountant."
         },
         {
           "@type": ["Organization", "AccountingService"],
@@ -117,7 +119,23 @@
               "name": "どんな相談を受けていますか。",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFOの五つです。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。"
+                "text": "社外監査役・社外取締役の就任のご相談と、実務支援（内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務）です。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "社外監査役・社外取締役の就任について相談できますか。",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社法の要件、取引所の独立性の基準、既存の取引関係などを会社ごとに確認したうえでお答えします。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "社外役員の就任と、実務支援を同時に依頼できますか。",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "同じ会社で同時にお引き受けするかどうかは、独立性、利益相反、責任の分担を個別に確認したうえで判断します。当然に一括してお引き受けするものではありません。"
               }
             },
             {
@@ -192,6 +210,23 @@
             <path d="M17 32V27M24 32V21" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
             <path d="M31 32V14" pathLength="1" fill="none" stroke="#0a4ea0" stroke-width="2.2"/>
         </symbol>
+        <symbol id="p-board" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M12 29.5H36" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <circle cx="16.5" cy="21" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="24" cy="21" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="31.5" cy="21" r="2.6" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-gov" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <circle cx="24" cy="24" r="9.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="24" cy="24" r="2.6" fill="#0a4ea0"/>
+        </symbol>
+        <symbol id="p-aup" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M14 17.5h20M14 24h14" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <path d="M24.5 31l3.5 3.5L35 28" pathLength="1" fill="none" stroke="#0a4ea0" stroke-width="2.2"/>
+        </symbol>
         <symbol id="p-jsox" viewBox="0 0 48 48">
             <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
             <path d="M14.5 24.5l6.5 6.5L34 17" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="miter"/>
@@ -217,7 +252,8 @@
         <div class="wrap head-in">
             <a class="brand" href="/" aria-label="佐藤健司公認会計士事務所 トップページ"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
             <nav class="nav" id="nav" aria-label="ページ内">
-                <a href="#services">業務</a>
+                <a href="#director">社外役員</a>
+                <a href="#services">実務支援</a>
                 <a href="#profile">略歴</a>
                 <a href="#principles">原則</a>
                 <a href="#terms">お取引にあたって</a>
@@ -243,7 +279,7 @@
                 <p class="meishi-hello">はじめまして。</p>
             </div>
             <div class="wrap hero-in">
-                <p class="eyebrow"><span class="eb-a">京都の公認会計士事務所　</span>内部統制・J-SOX ／ IPO準備支援 ／ 社外CFO</p>
+                <p class="eyebrow"><span class="eb-a">京都の公認会計士事務所　</span>社外役員 ／ 内部統制・J-SOX ／ IPO準備支援</p>
                 <h1>
                     <span class="h1-main"><span class="ln name"><ruby>佐藤健司<rt>さとうけんじ</rt></ruby></span><span class="ln office">公認会計士事務所</span></span>
                     <span class="h1-sign">京都　公認会計士・税理士</span>
@@ -253,7 +289,7 @@
                     <div class="promise" id="promise">
                         <p class="ks"><b>K</b>ey <b>S</b>tructure is to <b>K</b>eep it <b>S</b>imple.</p>
                         <p class="jp">核心の構造とは、シンプルを保つこと。</p>
-                        <p class="hero-lead">上場企業・上場準備企業の内部統制と決算を、京都の公認会計士が直接支援します。</p>
+                        <p class="hero-lead">上場企業・上場準備企業の社外監査役・社外取締役として。内部統制と決算の実務支援も。</p>
                     </div>
                     <div class="hero-act">
                         <a class="btn" href="#contact">相談する</a>
@@ -265,9 +301,50 @@
 
         <div class="wrap">
 
+
+            <!-- 社外役員として -->
+            <section class="sec" id="director">
+                <div class="sec-h"><h2>社外役員として</h2></div>
+                <div class="sec-b">
+                    <p class="svc-lead">会計と内部統制の経験を、取締役会・監査役会で。</p>
+                    <p class="svc-sub">上場企業・上場準備企業の社外監査役・社外取締役として、監査法人で培った会計・監査・内部統制の経験をもとに関わります。役員としての関与は、社外CFOや実務支援とは別のものとしてご相談いただけます。</p>
+                    <div class="roles">
+                        <article class="role">
+                            <h3>社外監査役</h3>
+                            <dl class="rows">
+                                <div><dt>想定する会社の状況</dt><dd class="what">監査役会を置く会社で、会計・内部統制に通じた社外監査役を求めている。上場準備で、監査役会の構成を整える。会社法では、監査役会設置会社の監査役は3人以上、その半数以上が社外監査役です。</dd></div>
+                                <div><dt>期待される関与</dt><dd class="what">取締役の職務執行の監査。会計監査人（監査法人）との連携、内部統制の整備・運用の確認、取締役会・監査役会での発言。</dd></div>
+                                <div><dt>経験が役立つ点</dt><dd class="what">監査法人で上場企業の監査の主査を務め、監査法人側の論点と判断の根拠を知っています。内部統制（J-SOX）の評価にも深く関与しました。会計監査人との対話を、専門家として担えます。</dd></div>
+                                <div><dt>就任前に確認する事項</dt><dd class="what">会社法の社外監査役の要件（過去10年の役員・使用人歴など）、取引所の独立役員の基準、既存の取引・顧問関係との利益相反、期待される稼働と報酬、責任限定契約・役員賠償責任保険。</dd></div>
+                            </dl>
+                        </article>
+                        <article class="role">
+                            <h3>社外取締役</h3>
+                            <dl class="rows">
+                                <div><dt>想定する会社の状況</dt><dd class="what">社外取締役を置く義務がある会社（監査役会設置会社のうち、公開会社かつ大会社で有価証券報告書を提出する会社）、監査等委員会設置会社（監査等委員である取締役は3人以上、その過半数が社外取締役）、上場準備で取締役会の構成を整える会社。</dd></div>
+                                <div><dt>期待される関与</dt><dd class="what">取締役会の一員として、業務執行の決定に参加し、監督する。数字と統制の観点から、判断の根拠を確かめる。</dd></div>
+                                <div><dt>経験が役立つ点</dt><dd class="what">売上10億〜300億円規模の上場企業、IPO準備企業・上場直後の企業で、経営陣・管理部門と向き合ってきました。決算・開示・内部統制が経営の判断とどうつながるかを知っています。</dd></div>
+                                <div><dt>就任前に確認する事項</dt><dd class="what">会社法の社外取締役の要件（業務執行取締役等でないこと、過去10年の経歴など）、取引所の独立役員の基準、利益相反、期待される稼働と報酬、責任限定契約・役員賠償責任保険。</dd></div>
+                            </dl>
+                        </article>
+                    </div>
+                    <p class="role-note">資格や監査の経験があることと、個別の会社で社外役員の要件や独立性を満たすことは、別のことです。就任の可否は、会社ごとに確認したうえでお答えします。同じ会社で社外役員の就任と実務支援を同時にお引き受けするかどうかも、独立性・利益相反・責任の分担を確認したうえで判断します。</p>
+                    <h3 class="group-h">関わり方</h3>
+                    <dl class="stance">
+                        <div><dt>重要な論点を見極める</dt><dd>数字・業務・ルールの中から、判断に効く構造を見つけます。論点を並べるのではなく、優先順位をつけます。</dd></div>
+                        <div><dt>事業と現場を理解する</dt><dd>文書より先に、実際の業務の流れを確かめます。現場の実態に合わない統制は機能しません。</dd></div>
+                        <div><dt>根拠をもって問いかける</dt><dd>監査法人側の判断を知っているからこそ、「なぜそう言えるか」を確かめます。</dd></div>
+                        <div><dt>経営陣と建設的に対話する</dt><dd>指摘で終わらせず、現在の体制で何ができるかを一緒に考えます。</dd></div>
+                    </dl>
+                    <div class="role-acts">
+                        <a class="btn" href="#contact" data-kind="director">就任のご相談</a>
+                        <a class="more" href="/candidate.html">役員候補者プロフィール（1枚・PDF保存可）</a>
+                    </div>
+                </div>
+            </section>
             <!-- 業務 -->
             <section id="services">
-                <div class="block-h"><h2>業務</h2></div>
+                <div class="block-h"><h2>実務支援</h2></div>
                 <p class="svc-lead">複雑な業務を整理し、実務で機能する仕組みへ。</p>
                 <p class="svc-sub">会計・監査の専門性とテクノロジーを組み合わせ、内部統制、経理業務、監査対応の課題を、設計から運用まで一貫して支援します。</p>
                 <ul class="svc">
@@ -294,6 +371,7 @@
                                 <div><dt>支援</dt><dd>業務フローの整理、標準化、自動化、進捗管理の仕組みづくり。Excel、SharePoint、Microsoft 365 など、いまお使いの環境を活かします。監査対応の資料収集と進捗管理も対象です。</dd></div>
                                 <div><dt>目指す状態</dt><dd>正確さと効率を両立した業務運営。</dd></div>
                             </dl>
+                            <a class="more" href="/services.html#close">対象・成果物・進め方・対象外</a>
                         </div>
                     </li>
                     <li>
@@ -306,6 +384,7 @@
                                 <div><dt>支援</dt><dd>業務要件の整理、適切なツールの選定、運用の設計。生成AIは、情報の整理、文書化、日々の業務支援に組み込みます。</dd></div>
                                 <div><dt>目指す状態</dt><dd>安全に、継続して使える業務基盤。</dd></div>
                             </dl>
+                            <a class="more" href="/services.html#ai">対象・成果物・進め方・対象外</a>
                         </div>
                     </li>
                     <li>
@@ -331,9 +410,35 @@
                                 <div><dt>支援</dt><dd>月次の数字を、経営判断に使える形に整えます。財務の視点から、継続してご相談に応じます。</dd></div>
                                 <div><dt>目指す状態</dt><dd>数字にもとづいて判断できる経営。</dd></div>
                             </dl>
+                            <a class="more" href="/services.html#cfo">対象・成果物・進め方・対象外</a>
+                        </div>
+                    </li>
+                    <li>
+                        <svg aria-hidden="true"><use href="#p-aup"/></svg>
+                        <h3>AUP業務（合意された手続）</h3>
+                        <p class="who">資金調達、M&amp;A、内部統制の確認が必要な会社</p>
+                        <div class="desc">
+                            <dl class="csg">
+                                <div><dt>課題</dt><dd>監査までは要らないが、特定の数字や手続について、第三者の確認がほしい。</dd></div>
+                                <div><dt>支援</dt><dd>依頼者と合意した手続を公認会計士が実施し、結果を報告書にします。目的に応じて手続を設計します。資金調達、M&amp;A、内部統制の確認などに使われます。</dd></div>
+                                <div><dt>目指す状態</dt><dd>必要な範囲だけを、第三者の確認で裏づけた状態。</dd></div>
+                            </dl>
+                            <a class="more" href="/services.html#aup">対象・成果物・進め方・対象外</a>
                         </div>
                     </li>
                 </ul>
+                <div class="sheet-card">
+                    <a class="sheet-thumb" href="/office.html" aria-label="事務所案内（回覧用の1枚）を開く"><img src="/img/sheet.jpg" width="320" height="453" alt="" loading="lazy" decoding="async"></a>
+                    <div class="sheet-body">
+                        <p class="sheet-kicker">事務所案内　回覧用の1枚</p>
+                        <h3>ここまでを、A4の1枚にまとめています。</h3>
+                        <p>業務、経歴、進め方と料金、お取引の条件を1枚に。社内での回覧や稟議に、そのままお使いいただけます。</p>
+                        <div class="sheet-acts">
+                            <a class="pill" href="/office.html">ページで見る</a>
+                            <a class="pill" href="/office.pdf" download="佐藤健司公認会計士事務所_事務所案内.pdf">PDFをダウンロード</a>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- 略歴 -->
@@ -345,14 +450,28 @@
                         <p class="prof-name">佐藤 健司<span class="yomi">さとう けんじ</span></p>
                         <p class="prof-role"><span>公認会計士・税理士</span><span>佐藤健司公認会計士事務所 代表</span></p>
                         <p class="prof-quote">複雑に見える状況を整理し、何をすべきかを明確にする。それが、私が提供したいサポートです。</p>
-                        <ul class="cv">
-                            <li>PwC Japan有限責任監査法人にて約8年間従事</li>
-                            <li>上場企業監査（製造業・サービス業・IT企業など）に多数関与</li>
-                            <li>売上10億〜300億円規模の会社を現場責任者（主査）として担当。売上1兆円規模の監査にも従事</li>
-                            <li>IPO準備企業、上場直後の企業の現場責任者も多数経験</li>
-                            <li>内部統制（J-SOX）に深く関与。監査チームのマネジメントを経験</li>
-                            <li>2026年4月、近畿税理士会に税理士登録</li>
-                        </ul>
+                        <dl class="cv2">
+                            <div>
+                                <dt>監査法人時代</dt>
+                                <dd>
+                                    <p class="cv-org">PwC Japan有限責任監査法人　約8年間</p>
+                                    <dl class="csg">
+                                        <div><dt>会社の状況・課題</dt><dd>製造業・サービス業・IT企業の上場企業（売上10億〜300億円規模）。IPO準備企業と上場直後の企業。売上1兆円規模の会社の監査にも従事。</dd></div>
+                                        <div><dt>立場と担当</dt><dd>現場責任者（主査）として、監査の計画と現場の指揮、監査チームのマネジメント。</dd></div>
+                                        <div><dt>扱った論点</dt><dd>内部統制（J-SOX）の評価、決算・開示の検討、監査法人としての指摘と会社側の対応。</dd></div>
+                                        <div><dt>現在につながる経験</dt><dd>監査法人側の判断の根拠を知ったうえで、会社側の体制を整える。</dd></div>
+                                    </dl>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>独立後</dt>
+                                <dd><p>京都市に佐藤健司公認会計士事務所を開設。内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務。2026年4月、近畿税理士会に税理士登録。</p></dd>
+                            </div>
+                            <div>
+                                <dt>資格</dt>
+                                <dd><p>公認会計士（登録番号 40449）、税理士（近畿税理士会）。</p></dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
             </section>
@@ -404,7 +523,7 @@
                         <div><dt>担当</dt><dd class="what">最初から最後まで、代表の佐藤が担当します。途中で担当者が変わることはありません。</dd></div>
                         <div><dt>支援の範囲</dt><dd class="what">課題の整理から、設計、実装、運用の定着まで支援します。助言で終わらず、実務まで踏み込みます。</dd></div>
                         <div><dt>既存の環境</dt><dd class="what">いまお使いの仕組みやツールを前提に、現実的な改善を組み立てます。</dd></div>
-                        <div><dt>成果物</dt><dd class="what">課題リスト、対応方針、工程表などを文書で納品します。口頭の助言だけで終わらせません。</dd></div>
+                        <div><dt>成果物</dt><dd class="what">課題リスト、対応方針、工程表などを文書で納品します。口頭の助言だけで終わらせません。<br><a class="more" href="/sample-jsox.html">成果物の見本（説明用サンプル）</a></dd></div>
                         <div><dt>範囲と費用</dt><dd class="what">支援の範囲、成果物、稼働日数を、着手前にお示しします。当事務所が担う範囲を明確にしたうえで始めます。診断だけで終えていただいて構いません。</dd></div>
                         <div><dt>進め方</dt><dd class="what">フォームまたはメールでご連絡ののち、初回は30〜60分のオンライン相談（無料）で現状を伺います。そのうえで、何から手をつけるかをご提案します。</dd></div>
                     </dl>
@@ -437,7 +556,9 @@
                 <div class="sec-h"><h2>よくあるご質問</h2></div>
                 <div class="sec-b">
                     <div class="qa">
-                        <details><summary>どんな相談を受けていますか。</summary><p>内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFOの五つです。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。</p></details>
+                        <details><summary>どんな相談を受けていますか。</summary><p>社外監査役・社外取締役の就任のご相談と、実務支援（内部統制・J-SOX、経理・決算業務の改善、AI・ITの活用、IPO準備支援、社外CFO、AUP業務）です。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。</p></details>
+                        <details><summary>社外監査役・社外取締役の就任について相談できますか。</summary><p>はい。上場企業・上場準備企業の社外監査役・社外取締役の就任について、ご相談を承っています。就任の可否は、会社法の要件、取引所の独立性の基準、既存の取引関係などを会社ごとに確認したうえでお答えします。</p></details>
+                        <details><summary>社外役員の就任と、実務支援を同時に依頼できますか。</summary><p>同じ会社で同時にお引き受けするかどうかは、独立性、利益相反、責任の分担を個別に確認したうえで判断します。当然に一括してお引き受けするものではありません。</p></details>
                         <details><summary>費用は、どのくらいですか。</summary><p>初回のご相談（30〜60分・オンライン）は無料です。内部統制・J-SOXとIPO準備支援は、診断パッケージが10万円〜（税別）、継続支援が10万円〜／人日（税別）です。2026年1月1日からの料金です。そのほかの業務は、内容に応じて、初回相談のあとにお見積りします。</p></details>
                         <details><summary>電話で相談できますか。</summary><p>お電話でのお問い合わせは受け付けておりません。フォームまたはメールでご連絡ください。通常、3営業日以内にご返信いたします。</p></details>
                         <details><summary>相談した内容の秘密は、守られますか。</summary><p>はい。公認会計士法および税理士法により、守秘義務を負っています。お預かりした情報は、ご相談への対応以外には使いません。</p></details>
@@ -455,6 +576,14 @@
                     <p class="contact-lead">まずはご相談ください。</p>
                     <p class="pledge"><b>守秘義務</b><span>公認会計士法および税理士法により、守秘義務を負っています。お預かりした情報は、ご相談への対応以外には使いません。</span></p>
                     <h3 class="group-h">ご相談の例</h3>
+                    <p class="asks-note">項目を選ぶと、下のフォームの「ご相談内容」に文例が入ります。ご状況に合わせて、書き換えてお使いください。</p>
+                    <h4 class="asks-h" id="asksBoard">社外役員の就任</h4>
+                    <ul class="asks">
+                        <li><button class="ask" type="button" data-ask="auditor">社外監査役の候補として検討したい</button></li>
+                        <li><button class="ask" type="button" data-ask="director">社外取締役の候補として検討したい</button></li>
+                    </ul>
+                    <p class="asks-note">就任のご相談で、有償の診断をお勧めすることはありません。</p>
+                    <h4 class="asks-h" id="asksHead">実務支援</h4>
                     <ul class="asks">
                         <li><button class="ask" type="button" data-ask="jsox">J-SOXの構築・運用を見直したい</button></li>
                         <li><button class="ask" type="button" data-ask="close">経理・決算の業務負荷を減らしたい</button></li>
@@ -464,7 +593,6 @@
                         <li><button class="ask" type="button" data-ask="ipo">IPO準備の進め方を整理したい</button></li>
                         <li><button class="ask" type="button" data-ask="cfo">社外CFOに継続して相談したい</button></li>
                     </ul>
-                    <p class="asks-note" id="asksNote">項目を選ぶと、下のフォームの「ご相談内容」に文例が入ります。ご状況に合わせて、書き換えてお使いください。</p>
 
                     <dl class="terms">
                         <div><dt>初回相談</dt><dd>30〜60分のオンライン相談は、<b>無料</b>です。</dd></div>
@@ -538,7 +666,7 @@
 
     <div class="bar" id="bar"><span>初回 30〜60分<br>オンライン・無料</span><a href="#contact">相談する</a></div>
 
-    <script src="/js/site.js?v=20261108n" defer></script>
+    <script src="/js/site.js?v=20261108u" defer></script>
 </body>
 
 </html>

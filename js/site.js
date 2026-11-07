@@ -315,11 +315,16 @@
         clearTimeout(timer);
         evs.forEach(function (ev) { window.removeEventListener(ev, leave); });
         doc.classList.add('met');
-        setTimeout(go, 420);
-        setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, 1200);
+        var slow = doc.classList.contains('exit-slow');
+        setTimeout(go, slow ? 560 : 420);
+        setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, slow ? 1500 : 1200);
       }
       doc.classList.add('meet');
-      var timer = setTimeout(leave, 4000);
+      /* 確認用の指定: ?cardms=4600 で「はじめまして。」のあとの間を変える、?cardexit=slow で受け取られる動きをゆっくりに */
+      var ms = 4000, qp = /[?&]cardms=(\d{3,5})/.exec(location.search);
+      if (qp) ms = +qp[1];
+      if (/[?&]cardexit=slow/.test(location.search)) doc.classList.add('exit-slow');
+      var timer = setTimeout(leave, ms);
       evs.forEach(function (ev) { window.addEventListener(ev, leave, { passive: true }); });
     });
   }
@@ -593,6 +598,14 @@
     cfo: {
       s: "ご相談：社外CFOについて",
       b: "社外CFOについてご相談したく、ご連絡しました。\n顧問税理士とは別に、経営・財務の視点から、継続して相談できる相手を探しています。\n\n一度、Web面談などで、お話を伺えれば幸いです。"
+    },
+    auditor: {
+      s: "ご相談：社外監査役の候補について",
+      b: "社外監査役の候補として、ご相談したく、ご連絡しました。\n会社の状況：（上場・上場準備、監査役会の構成、想定する時期など）\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
+    },
+    director: {
+      s: "ご相談：社外取締役の候補について",
+      b: "社外取締役の候補として、ご相談したく、ご連絡しました。\n会社の状況：（上場・上場準備、機関設計、想定する時期など）\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
     }
   };
   function contact() {
@@ -606,6 +619,19 @@
     var asks = document.querySelectorAll('.asks button[data-ask]');
     var F = askForm();
     if (!asks.length || !F) return;
+
+    /* 「就任のご相談」の案内(上の節)からは、社外役員の例の見出しへ */
+    var jump = document.querySelectorAll('a[data-kind="director"]');
+    for (var d = 0; d < jump.length; d++) {
+      jump[d].addEventListener('click', function (ev) {
+        var h = document.getElementById('asksBoard');
+        if (!h) return;
+        ev.preventDefault();
+        h.setAttribute('tabindex', '-1');
+        try { h.focus({ preventScroll: true }); } catch (e) { /* 古いブラウザでは移さない */ }
+        h.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
+    }
     for (var i = 0; i < asks.length; i++) {
       asks[i].addEventListener('click', function () {
         var d = ASK[this.getAttribute('data-ask')];
