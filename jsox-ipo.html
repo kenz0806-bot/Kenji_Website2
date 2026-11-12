@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="on-ink">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#fcfdfe">
+    <meta name="theme-color" content="#f7fafc">
     <meta name="format-detection" content="telephone=no">
     <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('pre');setTimeout(function(){d.classList.remove('pre')},1600)})(document.documentElement)</script>
     <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/css/site.css?v=20261108v">
+    <link rel="stylesheet" href="/css/site.css?v=20261115b">
 
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
@@ -103,6 +103,7 @@
       ]
     }
     </script>
+    <script>/* ページを移る演出の準備: 前のページで触れた場所を受け取る(そこから、このページが丸く開く)。切り替えが省かれたときの知らせは、黙って受け流す */(function(d){try{var v=sessionStorage.getItem('ks-vt');if(v){sessionStorage.removeItem('ks-vt');v=v.split(',');d.style.setProperty('--vx',v[0]+'%');d.style.setProperty('--vy',v[1]+'%')}}catch(e){}function q(e){var t=e.viewTransition;if(t){try{t.ready.catch(function(){});t.finished.catch(function(){})}catch(x){}}}window.addEventListener('pagereveal',q);window.addEventListener('pageswap',q)})(document.documentElement)</script>
 </head>
 
 <body>
@@ -156,7 +157,7 @@
         </div>
     </header>
 
-    <main id="top">
+    <main id="top" class="home">
 
         <section class="page-hero">
             <div class="wrap page-hero-in">
@@ -171,6 +172,14 @@
 
         <div class="wrap">
 
+            <!-- 考え方(ご本人の言葉) -->
+            <section class="sec" id="view">
+                <div class="sec-h"><h2>考え方</h2></div>
+                <div class="sec-b msg">
+                    <p>内部統制やJ-SOXは、高く跳ぶためのセーフティーネットです。整えることが、安心につながります。</p><p>内部統制は、複雑にしすぎると機能しません。一方で、会計基準やコーポレートガバナンス・コードなど、守るべきものがあります。実態に合わせることと、透明性や健全性といった、あるべき姿を保つこと。そのバランスを取ることが、基本です。</p><p>要点を押さえて、シンプルかつ的確に整えます。時代とともに、最適なやり方は変わります。見直しと更新を続けられる形にします。</p>
+                </div>
+            </section>
+
             <!-- 課題 -->
             <section class="sec" id="issues">
                 <div class="sec-h"><h2>こんなときに</h2></div>
@@ -181,6 +190,7 @@
                         <li>評価範囲（重要な事業拠点・プロセス）の根拠を、自分の言葉で説明できない</li>
                         <li>監査法人からの指摘が毎年ほぼ同じ。是正が翌期に持ち越されている</li>
                         <li>統制を増やした結果、現場の業務スピードが落ちている</li>
+                        <li>2024年4月以後に始まる事業年度から適用された改訂に、評価範囲や不正リスクの扱いが追いついていない</li>
                     </ul>
                     <h3 class="group-h">IPO準備</h3>
                     <ul class="issues">
@@ -222,7 +232,30 @@
                         </div>
                     </div>
 
+                    <h3 class="group-h" id="revision">J-SOX改訂への対応</h3>
+                    <p class="what">内部統制の基準と実施基準は改訂され、2024年4月1日以後に始まる事業年度から適用されています（3月決算の会社は2025年3月期から）。改訂で求められる点を、御社の評価と文書に反映します。</p>
+                    <div class="rows two">
+                        <div>
+                            <h4>評価範囲の決め方</h4>
+                            <p class="what">「売上高等のおおむね3分の2」「売上・売掛金・棚卸資産の3勘定」を機械的に当てはめず、財務報告への影響の重要性から評価範囲を決めることが求められます。判断の根拠を整理し、内部統制報告書に書ける形にします。</p>
+                        </div>
+                        <div>
+                            <h4>不正リスクと、内部統制の無効化</h4>
+                            <p class="what">リスクの評価に不正のリスクを織り込み、経営者などが内部統制を無視・無効にする行為に備える統制を見直します。</p>
+                        </div>
+                        <div>
+                            <h4>ITを利用した統制の評価</h4>
+                            <p class="what">何年ごとに評価するかを機械的に決めず、IT環境の変化から判断した根拠を残します。</p>
+                        </div>
+                        <div>
+                            <h4>内部監査と報告の流れ</h4>
+                            <p class="what">内部監査から取締役会・監査役等への報告経路を確認し、必要な整備を支援します。</p>
+                        </div>
+                    </div>
+                    <p class="notes">出典：金融庁・企業会計審議会「財務報告に係る内部統制の評価及び監査の基準並びに財務報告に係る内部統制の評価及び監査に関する実施基準の改訂について（意見書）」（2023年4月7日）<br><a class="more" href="https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html" rel="noopener">金融庁の公表ページ</a></p>
+
                     <h3 class="group-h">IPO準備支援</h3>
+                    <div class="msg msg-in"><p>上場を目指すうえで大切なのは、なぜ上場するのかを掘り下げることです。資金調達か、信用の向上か、人材の確保か。目的に照らして、何をすべきかを明確にしたうえで、目標の達成まで伴走します。</p></div>
                     <div class="rows two">
                         <div>
                             <h4>上場準備ロードマップ</h4>
@@ -359,7 +392,9 @@
 
     <div class="bar" id="bar"><span>初回 30〜60分<br>オンライン・無料</span><a href="/#contact">相談する</a></div>
 
-    <script src="/js/site.js?v=20261108v" defer></script>
+    <script src="/js/site.js?v=20261115b" defer></script>
+    <script src="/js/thread.js?v=20261115b" defer></script>
+    <script src="/js/dim.js?v=20261115b" defer></script>
 </body>
 
 </html>

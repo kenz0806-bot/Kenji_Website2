@@ -18,17 +18,6 @@
     }, ms);
   }
 
-  /* 画面が見えている状態で ms たったら fn を呼ぶ。別のタブで開かれたときは、見えるまで時計を動かさない */
-  function visibleTimeout(fn, ms) {
-    function arm() { setTimeout(fn, ms); }
-    if (document.visibilityState === 'hidden') {
-      document.addEventListener('visibilitychange', function h() {
-        if (document.visibilityState !== 'visible') return;
-        document.removeEventListener('visibilitychange', h); arm();
-      });
-    } else arm();
-  }
-
   /* 画面が実際に描かれてから始める。見えていない(別のタブなど)あいだは待ち、見えたあとの2フレーム目で始める。
      以前は「連続2フレームが90ms未満」を条件にしていたが、遅い端末やアプリ内ブラウザでは読み込み直後のフレームが
      それより遅く、1.6秒の保険にかかって場面が出ないことがあった */
@@ -44,182 +33,9 @@
     return function cancel() { done = true; };
   }
 
-  /* 静かに動き出し、静かに止まる(0〜1) */
+  /* 静かに動き出し、静かに止まる(0〜1)。ページの終わりの波が、触れたあとのうねりの計算に使う。
+     次元の図形(dim.js)にも同じ名前の関数があるが、あちらは引数が3つの別物。ここから消さないこと */
   function ss(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * x * (x * (x * 6 - 15) + 10); }
-  /* 早めに開いて、長く静かに納まる(0〜1) */
-  function unfurl(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return ss(1 - Math.pow(1 - x, 1.5)); }
-
-  /* ---------- 冒頭の扇 ----------
-     要(かなめ)の一点が現れ、藍の一本が立ち、そこから骨が一枚ずつほどけるように開く。
-     スクロールすると一本の線にたたまれる。扇に触れると、静かに閉じて、また開く。
-     藍の一本だけは、扇の縁の少し先まで伸ばしてある。 */
-  function fan() {
-    var cv = document.getElementById('fan');
-    var pr = document.getElementById('promise');
-    if (!cv || !cv.getContext || !pr) return;
-
-    var hero = cv.parentNode;
-    var ctx = cv.getContext('2d');
-    var AI = (getComputedStyle(doc).getPropertyValue('--ai') || '').trim() || '#0a4ea0';
-    var N = 25, W = 0, H = 0;
-    var g = { x: 0, y: 0, R: 0, a0: 0, span: 0 };
-    var open = 1, live = false, raf = 0, seen = true, px = 0, pxT = 0, calm = 0, last = 0;
-
-    /* 所作(ひとまとまりの動き)。'wait'=まだ描かない / 'intro'=最初に開く / 'tap'=触れられて閉じ、また開く / ''=なし */
-    var act = reduce ? '' : 'wait', actAt = 0;
-    var RISE_AT = 260, RISE = 900;                /* 藍の一本が立つ(ミリ秒) */
-    var OPEN_AT = 980, OPEN = 2200, LAG = 500;    /* 骨が開く。外側の骨から動き、内側ほど少し遅れる */
-    var FOLD = 860, FOLD_LAG = 160, HOLD = 300;   /* 触れられたとき: 閉じる→ひと呼吸おく→開く */
-
-    function target() {
-      var p = Math.min(1, Math.max(0, (window.scrollY || 0) / (H * 0.5)));
-      return 1 - p * p * (3 - 2 * p);
-    }
-
-    /* いまの所作での、要・藍の一本・各骨の進み具合(どれも0〜1) */
-    function pose(now) {
-      var T = now - actAt, P = { dot: 1, ring: 1, rise: 1, f: null, done: true };
-      if (act === 'wait') {
-        P.dot = P.ring = P.rise = 0; P.done = false;
-        P.f = function () { return 0; };
-      } else if (act === 'intro') {
-        P.dot = ss(T / 520); P.ring = ss((T - 120) / 1000); P.rise = ss((T - RISE_AT) / RISE);
-        P.f = function (i) { return unfurl((T - OPEN_AT - LAG * i / (N - 2)) / OPEN); };
-        P.done = T > OPEN_AT + LAG + OPEN;
-      } else if (act === 'tap') {
-        var U = FOLD + FOLD_LAG + HOLD;
-        P.f = function (i) {
-          return T < U ? 1 - ss((T - FOLD_LAG * i / (N - 2)) / FOLD)
-                       : unfurl((T - U - LAG * i / (N - 2)) / OPEN);
-        };
-        P.done = T > U + LAG + OPEN;
-      }
-      return P;
-    }
-
-    function size() {
-      var r = hero.getBoundingClientRect();
-      var q = pr.getBoundingClientRect();
-      var d = Math.min(window.devicePixelRatio || 1, 2);
-      var narrow = r.width < 760;
-      W = r.width; H = r.height;
-      g.x = q.left - r.left + 12;
-      g.y = q.top - r.top - 30;
-      /* スマホでは枠に収め、広い画面では枠からはみ出す大きさにする */
-      var fs = hero.querySelector('.fan-space');
-      var fh = fs ? fs.getBoundingClientRect().height : 0;   /* スマホでは扇を専用の空きに収め、名前に重ねない */
-      g.R = narrow ? Math.max(120, Math.min((W - g.x) * 0.9, (fh || g.y) - 54))
-                   : Math.max(260, Math.min((W - g.x) * 0.6, 720));
-      g.a0 = -3 * Math.PI / 180;
-      g.span = (narrow ? 82 : 76) * Math.PI / 180;
-      cv.width = Math.round(W * d); cv.height = Math.round(H * d);
-      ctx.setTransform(d, 0, 0, d, 0, 0);
-      draw();
-    }
-
-    /* 描く。所作が終わっていれば true を返す */
-    function draw(now) {
-      now = now || performance.now();
-      var P = pose(now);
-      /* 開ききったあとは、骨と縁がゆっくり波打ち続ける(所作のあいだは止めておく) */
-      var t = (live && !reduce) ? now / 1000 : 0;
-      var amp = (live && !reduce) ? 0.012 * open * calm : 0;
-      var span = g.span * open * (1 + px * 0.05);
-      var tips = [], vis = [], i, j;
-      for (i = 0; i < N; i++) {
-        var k = i / (N - 1), f = P.f ? P.f(i) : 1;
-        tips.push([
-          /* 藍の一本(いちばん奥)は動かさず、ほかの骨がそこから離れていく */
-          g.a0 - span * k - span * (1 - k) * (1 - f) + amp * 0.35 * Math.sin(t * 0.45 + i * 0.5),
-          1 + amp * (Math.sin(t * 0.55 - i * 0.42) + 0.5 * Math.sin(t * 0.33 + i * 0.9))
-        ]);
-        vis.push(i === N - 1 ? 1 : Math.min(1, f * 7));   /* 藍の一本に重なっているあいだは見せない */
-      }
-      var spread = tips[0][0] - tips[N - 1][0];
-      ctx.clearRect(0, 0, W, H);
-      if (spread > 0.004) {
-        ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(26,34,56,' + (0.24 * Math.min(1, spread / 0.14)).toFixed(3) + ')';
-        [1, 0.34].forEach(function (s) {
-          ctx.beginPath();
-          for (j = 0; j < N; j++) {
-            var r = g.R * s * (s === 1 ? tips[j][1] : 1 + (tips[j][1] - 1) * 0.4);
-            var x = g.x + Math.cos(tips[j][0]) * r, y = g.y + Math.sin(tips[j][0]) * r;
-            if (j) ctx.lineTo(x, y); else ctx.moveTo(x, y);
-          }
-          ctx.stroke();
-        });
-      }
-      for (i = 0; i < N; i++) {
-        var lead = i === N - 1, strong = i % 6 === 0;
-        var len = (lead ? 1.06 * P.rise : 1) * g.R * tips[i][1];
-        if (vis[i] <= 0 || len <= 0) continue;
-        ctx.beginPath(); ctx.moveTo(g.x, g.y);
-        ctx.lineTo(g.x + Math.cos(tips[i][0]) * len, g.y + Math.sin(tips[i][0]) * len);
-        ctx.lineWidth = lead ? 1.5 : (strong ? 1 : 0.7);
-        ctx.strokeStyle = lead ? AI : 'rgba(26,34,56,' + ((strong ? 0.36 : 0.17) * vis[i]).toFixed(3) + ')';
-        ctx.stroke();
-      }
-      /* 要: 藍の点と、閉じきらない円 */
-      if (P.dot > 0) { ctx.fillStyle = AI; ctx.beginPath(); ctx.arc(g.x, g.y, 8 * P.dot, 0, Math.PI * 2); ctx.fill(); }
-      if (P.ring > 0) {
-        ctx.strokeStyle = AI; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.arc(g.x, g.y, 19, -0.22 * Math.PI, (-0.22 + 1.88 * P.ring) * Math.PI); ctx.stroke();
-      }
-      return P.done;
-    }
-
-    /* 画面の描き直しが毎秒60回でも120回でも同じ速さになるよう、経過時間で進める */
-    function ease(ms, dt) { return 1 - Math.exp(-dt / ms); }
-    function loop(now) {
-      raf = 0;
-      var dt = last ? Math.min(64, now - last) : 16; last = now;
-      open += (target() - open) * ease(300, dt);
-      px += (pxT - px) * ease(200, dt);
-      calm += ((act ? 0 : 1) - calm) * ease(act ? 220 : 1500, dt);
-      if (draw(now) && act) act = '';
-      if (seen && !document.hidden) raf = requestAnimationFrame(loop); else last = 0;
-    }
-    function kick() { if (live && !raf && seen) raf = requestAnimationFrame(loop); }
-
-    size();
-    if (!reduce) {
-      var begin = function () { if (act !== 'wait') return; act = 'intro'; actAt = performance.now(); kick(); };
-      var cancel = whenLive(function () {
-        live = true;
-        /* 名刺を差し出す場面があるときは、それが済んでから開く */
-        if (doc.classList.contains('card')) { document.addEventListener('ks:go', begin); setTimeout(begin, 6000); }
-        else begin();
-      });
-      /* 見えている状態で1.4秒たっても画面が動いていなければ、動きなしで開いた扇を出す。名刺の場面もやめる */
-      visibleTimeout(function () { if (!live) { cancel(); act = ''; doc.classList.remove('card'); draw(); } }, 1400);
-    }
-    var lastW = window.innerWidth;
-    window.addEventListener('resize', function () {
-      if (window.innerWidth === lastW && window.innerWidth < 760) return;   /* 高さだけの変化は無視(スクロール中のかくつき防止) */
-      lastW = window.innerWidth; size(); kick();
-    });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(size);
-    window.addEventListener('scroll', kick, { passive: true });
-    document.addEventListener('visibilitychange', kick);
-    hero.addEventListener('pointermove', function (e) {
-      if (!live) return;
-      var r = hero.getBoundingClientRect();
-      pxT = ((e.clientX - r.left) / r.width - 0.5) * 2; kick();
-    }, { passive: true });
-    hero.addEventListener('pointerleave', function () { pxT = 0; kick(); });
-    /* 扇か要に触れると、静かに閉じて、また開く。動いている途中と、たたんだ状態では受けない */
-    hero.addEventListener('click', function (e) {
-      if (!live || act || open < 0.9) return;
-      if (e.target.closest && e.target.closest('a, button')) return;
-      var r = hero.getBoundingClientRect(), dx = e.clientX - r.left - g.x, dy = e.clientY - r.top - g.y;
-      var d = Math.sqrt(dx * dx + dy * dy), a = Math.atan2(dy, dx);
-      var onFan = d < g.R * 1.06 && a < g.a0 + 0.06 && a > g.a0 - g.span - 0.06;
-      if (d < 46 || onFan) { act = 'tap'; actAt = performance.now(); kick(); }
-    });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { seen = es[0].isIntersecting; kick(); }).observe(hero);
-    }
-  }
 
   /* ---------- ページの終わりを流れる線 ----------
      波の中を、藍の一本が通っている。藍の一本は、いちばん素直な波だけでできている。
@@ -229,7 +45,8 @@
     var cv = document.getElementById('flow');
     if (!cv || !cv.getContext) return;
     var ctx = cv.getContext('2d');
-    var AI = (getComputedStyle(doc).getPropertyValue('--ai') || '').trim() || '#0a4ea0';
+    /* 色は、この絵が置かれた場所の指定に従う(墨の地では明るい線になる) */
+    var CS = getComputedStyle(cv), AI = (CS.getPropertyValue('--ai') || '').trim() || '#0a4ea0', LINE = (CS.getPropertyValue('--flow-line') || '').trim() || '26,34,56';
     var N = 14, KEY = N >> 1, W = 0, H = 0, q = 1, raf = 0, seen = false, live = false;
     var drops = [];        /* 触れた位置と時刻 */
     var out = [0, 0];      /* [うねりの高さ, そろい具合] を受け渡す入れ物 */
@@ -272,7 +89,7 @@
           if (x < 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.lineWidth = i === KEY ? 1.2 : 0.8;
-        ctx.strokeStyle = i === KEY ? AI : 'rgba(26,34,56,' + (0.12 + 0.2 * (1 - Math.abs(u) * 2)).toFixed(3) + ')';
+        ctx.strokeStyle = i === KEY ? AI : 'rgba(' + LINE + ',' + (0.12 + 0.2 * (1 - Math.abs(u) * 2)).toFixed(3) + ')';
         ctx.stroke();
       }
     }
@@ -315,11 +132,10 @@
         doc.classList.add('go');
         settle(document.querySelector('.hero, .page-hero'), 5200);
         sections();
-        try { document.dispatchEvent(new Event('ks:go')); } catch (e) { /* 古いブラウザでは扇は時間で開く */ }
       }
-      if (!doc.classList.contains('card') || !document.querySelector('.meishi')) { go(); return; }
+      if (!doc.classList.contains('card') || !document.querySelector('.mc')) { go(); return; }
 
-      /* 名刺を差し出す: 顔を見せる → お辞儀をして差し出す → 「はじめまして。」 → 受け取られる → サイトが始まる。
+      /* 名刺の挨拶: 点が転がってきて、丸い窓に開き、ご本人が現れる → 窓が点に閉じ、線が立ち、名刺になる → 小さくお辞儀 → 「はじめまして。」 → 言葉は退き、名刺は残って、サイトが始まる。
          触れる・スクロールする・キーを押すと、待たずに先へ進む */
       var left = false, evs = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
       function leave() {
@@ -327,16 +143,16 @@
         clearTimeout(timer);
         evs.forEach(function (ev) { window.removeEventListener(ev, leave); });
         doc.classList.add('met');
-        var slow = doc.classList.contains('exit-slow');
-        setTimeout(go, slow ? 560 : 420);
-        setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, slow ? 1500 : 1200);
+        setTimeout(go, 420);
+        setTimeout(function () { doc.classList.remove('card'); doc.classList.remove('meet'); doc.classList.remove('met'); }, 1300);
       }
+      doc.classList.add('greeted');   /* 挨拶をした印。名刺を、あとからもう一度登場させないため */
+      window.__ksMeet = performance.now();   /* 挨拶の始まりの時刻(冒頭の図形 dim.js が、同じ時計で動くため) */
       doc.classList.add('meet');
       try { if (!/[?&]card=1/.test(location.search)) sessionStorage.setItem('ks-met', '1'); } catch (e) { /* 記録できなくても続ける */ }
-      /* 確認用の指定: ?cardms=4600 で「はじめまして。」のあとの間を変える、?cardexit=slow で受け取られる動きをゆっくりに */
-      var ms = 4000, qp = /[?&]cardms=(\d{3,5})/.exec(location.search);
+      /* 確認用の指定: ?cardms=4600 で「はじめまして。」のあとの間を変える */
+      var ms = doc.classList.contains('o7') ? 7800 : 6300, qp = /[?&]cardms=(\d{3,5})/.exec(location.search);   /* 点が構造になり、球になって、ご本人になる挨拶(o7)は、1.5秒長い */
       if (qp) ms = +qp[1];
-      if (/[?&]cardexit=slow/.test(location.search)) doc.classList.add('exit-slow');
       var timer = setTimeout(leave, ms);
       evs.forEach(function (ev) { window.addEventListener(ev, leave, { passive: true }); });
     });
@@ -586,19 +402,23 @@
   var ASK = {
     jsox: {
       s: "ご相談：J-SOXの構築・運用の見直しについて",
-      b: "J-SOXの構築・運用を見直したく、ご連絡しました。\n文書化や評価の作業に手間がかかっており、進め方を整理したいと考えています。\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
+      b: "J-SOXの構築・運用を見直したく、ご連絡しました。\n文書化や評価の進め方について、あらためて整理したいと考えています。\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
+    },
+    fraud: {
+      s: "ご相談：不正の調査と再発防止について",
+      b: "不正の調査と再発防止について、ご連絡しました。\n事実関係の確認と、今後の進め方について、ご相談したいと考えています。\n\n一度、状況をお伝えしたうえで、ご相談できれば幸いです。"
     },
     close: {
       s: "ご相談：経理・決算業務の負荷の軽減について",
-      b: "経理・決算の業務負荷を減らしたく、ご連絡しました。\n業務が特定の担当者に偏っており、決算のたびに作業が集中しています。\n\n現状の業務の流れを見ていただき、改善の余地についてご相談できれば幸いです。"
+      b: "経理・決算の業務負荷を減らしたく、ご連絡しました。\n決算期に業務が重なりやすく、進め方を見直したいと考えています。\n\n現状の業務の流れを見ていただき、改善の余地についてご相談できれば幸いです。"
     },
     audit: {
       s: "ご相談：監査対応の資料収集の効率化について",
-      b: "監査対応の資料収集を効率化したく、ご連絡しました。\n監査法人から依頼される資料の準備に時間がかかり、通常の業務を圧迫しています。\n\n資料の集め方や管理の方法について、ご相談できれば幸いです。"
+      b: "監査対応の資料収集を効率化したく、ご連絡しました。\n監査法人からのご依頼資料について、準備の進め方を見直したいと考えています。\n\n資料の集め方や管理の方法について、ご相談できれば幸いです。"
     },
     m365: {
       s: "ご相談：ExcelやMicrosoft 365の活用について",
-      b: "ExcelやMicrosoft 365を活用したく、ご連絡しました。\n手作業の集計や転記が多く、いまある環境のままで効率化できないかと考えています。\n\n現状の作業を見ていただき、できることをご相談できれば幸いです。"
+      b: "ExcelやMicrosoft 365を活用したく、ご連絡しました。\n集計や転記の作業について、いまある環境を活かして効率化できないかと考えています。\n\n現状の作業を見ていただき、できることをご相談できれば幸いです。"
     },
     ai: {
       s: "ご相談：AIの実務への導入について",
@@ -606,7 +426,7 @@
     },
     ipo: {
       s: "ご相談：IPO準備の進め方について",
-      b: "IPO準備の進め方を整理したく、ご連絡しました。\n上場準備のタスクが多く、何から手をつけるかの優先順位がつけられていません。\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
+      b: "IPO準備の進め方を整理したく、ご連絡しました。\n上場準備の課題について、優先順位と進め方を整理したいと考えています。\n\n一度、現状をお伝えしたうえで、ご相談できれば幸いです。"
     },
     cfo: {
       s: "ご相談：社外CFOについて",
@@ -656,6 +476,27 @@
     }
   }
 
-  function start() { fan(); flow(); reveal(); menu(); bar(); spy(); contact(); }
+  /* ページを移るとき、触れた場所を次のページへ渡す(次のページが、そこから丸く開く)。キーボードで選んだときは、その項目のまん中 */
+  function handoff() {
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null, r, x, y;
+      if (!a || a.target === '_blank' || a.hasAttribute('download') || a.origin !== location.origin || (a.pathname === location.pathname && a.hash)) return;
+      r = a.getBoundingClientRect();
+      x = e.clientX || r.left + r.width / 2; y = e.clientY || r.top + r.height / 2;
+      try { sessionStorage.setItem('ks-vt', (x / window.innerWidth * 100).toFixed(1) + ',' + (y / window.innerHeight * 100).toFixed(1)); } catch (err) { /* 渡せなくても、まん中から開く */ }
+    }, true);
+  }
+
+  /* ボタンに触れた位置を覚える(そこから、丸く色が開く。マウスのときだけ) */
+  function iris() {
+    document.addEventListener('pointerover', function (e) {
+      var b = e.pointerType !== 'touch' && e.target && e.target.closest ? e.target.closest('.btn, .nav .ask') : null, r;
+      if (!b) return;
+      r = b.getBoundingClientRect(); if (!r.width || !r.height) return;
+      b.style.setProperty('--px', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      b.style.setProperty('--py', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    }, true);
+  }
+  function start() { flow(); reveal(); menu(); bar(); spy(); contact(); handoff(); iris(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
