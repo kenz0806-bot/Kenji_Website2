@@ -8,6 +8,7 @@
     <meta name="format-detection" content="telephone=no">
     <script>/* 冒頭の演出の準備。名刺を差し出す場面(card)は、訪問ごとに最初の一度だけ(確認用に ?card=1 で毎回、?card=0 で無し)。「見た」の記録は、場面が実際に始まったときに site.js が付ける(始まらなかったときは次の訪問で見せる)。ページ内の場所(#contact など)への直接の訪問では場面を出さない。保険の時計は画面が見えてから動かす: 1.6秒たっても始まらなければ演出なしで文字を出し、7秒で必ず文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=false;try{var q=/[?&]card=(\d)/.exec(location.search);if(q){c=q[1]==='1'}else if(location.hash&&location.hash!=='#top'){c=false}else if(!sessionStorage.getItem('ks-met')){c=true}}catch(e){}if(!c&&location.hash&&location.hash!=='#top')return;d.classList.add('pre');if(c)d.classList.add('card');var armed=false;function off(){d.classList.remove('pre');d.classList.remove('card')}function arm(){if(armed)return;armed=true;setTimeout(function(){if(d.classList.contains('meet')||d.classList.contains('go'))return;off()},1600);setTimeout(off,7000)}if(document.visibilityState==='hidden'){document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')arm()})}else{arm()}})(document.documentElement)</script>
     <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
+    <meta name="msvalidate.01" content="4B15ACD290692B2874C04E7D4D511344" />
     <meta name="robots" content="index, follow">
     <title>佐藤健司公認会計士事務所（さとうけんじ）｜京都の公認会計士・税理士</title>
     <meta name="description"
