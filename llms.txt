@@ -140,5 +140,8 @@
 - [社外役員候補者プロフィール](https://www.kenji-sato.jp/candidate.html): 社外監査役・社外取締役の候補としての資格、職歴、専門領域、担当経験、就任前に確認する事項
 - [実務支援](https://www.kenji-sato.jp/services.html): 業務ごとの対象、相談例、支援内容、成果物、進め方、対象外、費用
 - [内部監査の外部委託](https://www.kenji-sato.jp/internal-audit.html): 対象、支援内容、成果物、進め方と費用、よくあるご質問
+- [不正調査・不正対応](https://www.kenji-sato.jp/fraud-investigation.html): 考え方、対象、支援内容、成果物、進め方と費用、よくあるご質問
+- [社外CFO](https://www.kenji-sato.jp/outside-cfo.html): 対象、支援内容、成果物、進め方と費用、よくあるご質問
+- [経理・決算業務の改善](https://www.kenji-sato.jp/closing-improvement.html): 考え方、対象、支援内容、成果物、進め方と費用、よくあるご質問
 - [内部統制・J-SOX/IPO準備支援](https://www.kenji-sato.jp/jsox-ipo.html): 支援内容、進め方、料金、よくあるご質問
 - [最新情報](https://www.kenji-sato.jp/news.html): お知らせ
