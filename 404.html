@@ -4,98 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#f7fafc">
+    <meta name="theme-color" content="#0b1226">
     <meta name="format-detection" content="telephone=no">
-    <script>/* 冒頭の演出の準備。1.6秒たっても始まらなければ、演出なしで文字を出す */(function(d){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('pre');setTimeout(function(){d.classList.remove('pre')},1600)})(document.documentElement)</script>
     <meta name="robots" content="noindex, follow">
     <title>ページが見つかりません | 佐藤健司公認会計士事務所</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=Shippori+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/css/site.css?v=20261115d">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Syuku&display=swap">
+    <link rel="stylesheet" href="/css/c2.css?v=m65">
 
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
     <link rel="apple-touch-icon" href="/img/favicon.png?v=2">
-    <script>/* ページを移る演出の準備: 前のページで触れた場所を受け取る(そこから、このページが丸く開く)。切り替えが省かれたときの知らせは、黙って受け流す */(function(d){try{var v=sessionStorage.getItem('ks-vt');if(v){sessionStorage.removeItem('ks-vt');v=v.split(',');d.style.setProperty('--vx',v[0]+'%');d.style.setProperty('--vy',v[1]+'%')}}catch(e){}function q(e){var t=e.viewTransition;if(t){try{t.ready.catch(function(){});t.finished.catch(function(){})}catch(x){}}}window.addEventListener('pagereveal',q);window.addEventListener('pageswap',q)})(document.documentElement)</script>
+    <script>/* ほかのページから幕で移ってきたときは、最初の一瞬から幕を閉じておく(開けるのは app.js) */try{var t=sessionStorage.getItem('ks2-tr');sessionStorage.removeItem('ks2-tr');if(t!==null&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('trin');document.documentElement.setAttribute('data-trt',t)}}catch(e){}</script>
 </head>
-
 <body>
-    <a class="skip" href="#top">本文へ移動</a>
+<div class="bg" aria-hidden="true"></div>
+<canvas id="fig" aria-hidden="true"></canvas>
+<div class="rail" aria-hidden="true"><span class="rnm">佐藤健司公認会計士事務所</span><i></i><span class="cnt"><b>01</b> / 12</span></div>
 
-    <!-- 紋とピクトグラム(円と線だけで描く) -->
-    <svg class="sprite" aria-hidden="true" focusable="false">
-        <symbol id="ks-mark" viewBox="0 0 48 48">
-            <path d="M41.24 9.54A22.5 22.5 0 1 0 45.73 18.18" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-            <path d="M14 12.5V35.5M14 24L24 12.5M14 24L24 35.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M36 15.5C33 11.5 26.5 12.5 27 18C27.5 23 36 24 36.5 29.5C37 35 30 37 26.5 33" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="14" cy="24" r="2.7" fill="#0a4ea0"/>
-        </symbol>
-        <symbol id="p-cfo" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M13 32.5H35" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M17 32V27M24 32V21" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
-            <path d="M31 32V14" pathLength="1" fill="none" stroke="#0a4ea0" stroke-width="2.2"/>
-        </symbol>
-        <symbol id="p-jsox" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M14.5 24.5l6.5 6.5L34 17" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="miter"/>
-        </symbol>
-        <symbol id="p-ipo" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M12.5 33h6.5v-6h6.5v-6H32v-6" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
-            <circle cx="35.5" cy="15" r="2.4" fill="#0a4ea0"/>
-        </symbol>
-        <symbol id="p-ai" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22.5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M14 18h20M14 24h20M14 30h11" pathLength="1" fill="none" stroke="currentColor" stroke-width="2.2"/>
-            <circle cx="30.5" cy="30" r="2.4" fill="#0a4ea0"/>
-        </symbol>
-    </svg>
+<article class="dv" id="dv" data-slug="lost" data-k="lost" data-back="top"><header class="sc dvh dvh-q" data-th="d" data-fig="dust"><div class="w"><div class="bar">
+      <a class="mark" href="/" aria-label="佐藤健司公認会計士事務所 このページの先頭へ"><b>KS</b><span>佐藤健司公認会計士事務所</span></a>
+      <nav aria-label="このページの中"><a href="/#director">社外監査役</a><a href="/#work">実務支援</a><a class="x" href="/#profile">略歴</a><a href="/#principles">原則</a><a class="x" href="/#terms">お取引にあたって</a><a class="ask" href="/#contact">お問い合わせ</a></nav>
+    </div><p class="bk"><span class="lb" aria-hidden="true"></span></p><h1 class="hd doc"><span class="nb" style="--n:0"><span>お探しのページは、</span></span><span class="nb" style="--n:1"><span>見つかりませんでした。</span></span></h1><div class="lead2"><p>移動または削除された可能性があります。</p></div><p class="act"><a class="btn" href="/">トップページへ</a></p></div></header><footer class="sc ft" data-th="d" data-fig="dust"><div class="w"><p class="foot hl"><span>佐藤健司公認会計士事務所</span><span>京都　公認会計士・税理士</span></p></div></footer></article>
+<div class="grain" aria-hidden="true"></div>
+<div class="tr" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="tr-t"></b><u class="tr-l"></u><s class="tr-d"></s></div>
 
-    <header class="head">
-        <div class="wrap head-in">
-            <a class="brand" href="/" aria-label="佐藤健司公認会計士事務所 トップページ"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
-            <nav class="nav" id="nav" aria-label="サイト内">
-                <a href="/#services">業務</a>
-                <a href="/#profile">略歴</a>
-                <a href="/#principles">原則</a>
-                <a href="/#terms">お取引にあたって</a>
-                <a class="only-menu" href="/#faq">よくあるご質問</a>
-                <a class="only-menu" href="/#news">お知らせ</a>
-                <a class="ask" href="/#contact">相談する</a>
-            </nav>
-            <div class="head-tools">
-                <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav"><span>目次</span><i aria-hidden="true"></i></button>
-            </div>
-        </div>
-    </header>
-
-    <main id="top" class="wrap lost">
-        <h1>お探しのページは、<br>見つかりませんでした。</h1>
-        <p>移動または削除された可能性があります。</p>
-        <a class="btn" href="/">トップページへ</a>
-    </main>
-
-    <canvas class="flow" id="flow" aria-hidden="true"></canvas>
-
-    <footer class="foot">
-        <div class="wrap foot-in">
-            <div>
-                <a class="brand" href="/"><svg class="mark" aria-hidden="true"><use href="#ks-mark"/></svg><span>佐藤健司公認会計士事務所</span></a>
-                <dl>
-                    <dt>代表</dt><dd>公認会計士・税理士　<span class="nb">佐藤 健司（さとう けんじ）</span></dd>
-                    <dt>所在地</dt><dd>京都市（詳細はお問い合わせ時にご案内します）</dd>
-                    <dt>メール</dt><dd>kenji@kenji-sato.jp</dd>
-                    <dt>登録</dt><dd>公認会計士登録番号 40449</dd>
-                </dl>
-            </div>
-            <p class="foot-ks"><b>K</b>ey <b>S</b>tructure is to <b>K</b>eep it <b>S</b>imple.<small>&copy; 2026 Kenji Sato CPA Office.</small></p>
-        </div>
-    </footer>
-
-    <script src="/js/site.js?v=20261115b" defer></script>
+<script src="/js/c2/nav.js?v=m65"></script>
+<script src="/js/c2/fig.js?v=m65"></script>
+<script src="/js/c2/app.js?v=m65"></script>
 </body>
-
 </html>
