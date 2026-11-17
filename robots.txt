@@ -16,5 +16,19 @@ User-agent: PerplexityBot
 Allow: /
 User-agent: Google-Extended
 Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: Amazonbot
+Allow: /
 
 Sitemap: https://www.kenji-sato.jp/sitemap.xml

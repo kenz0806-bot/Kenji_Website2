@@ -967,7 +967,7 @@
       /* 読む位置(画面の上から 62%)までは、スクロールに付いて浮かび上がる。その先は、読む速さより少し速く、自分で進む(止まって読んでいても、先の文が待っている) */
       target = count(H * 0.58); lim = Math.max(target, count(H * 0.9));
       /* 速さ: 読む位置までは、1秒に約36字(ひと息で1行ほど)。その先は、読む速さ(1秒に約9字)。一度に大きく進んだときだけ、遅れた分に応じて少し急ぐ(待たせない) */
-      to = Math.max(n, Math.min(lim, n + (n < target ? 36 + Math.max(0, target - n - 140) * 0.45 : 9) * dt + 0.0001));
+      to = Math.max(n, Math.min(lim, n + (n < target ? 56 + Math.max(0, target - n - 140) * 0.45 : 16) * dt + 0.0001));
       for (i = Math.floor(n); i < Math.floor(to); i++) C[i].el.classList.add('lit');
       n = to; raf = requestAnimationFrame(tick);
     }

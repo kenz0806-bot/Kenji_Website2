@@ -35,7 +35,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" id="gf" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Syuku&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Syuku&display=swap"></noscript>
-    <link rel="stylesheet" href="css/c2.css?v=m66">
+    <link rel="stylesheet" href="css/c2.css?v=m67">
 
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
     <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
@@ -54,7 +54,7 @@
       "inLanguage": "ja",
       "isPartOf": { "@id": "https://www.kenji-sato.jp/#website" },
       "about": { "@id": "https://www.kenji-sato.jp/#office" },
-      "dateModified": "2026-11-17T17:09:00+09:00"
+      "dateModified": "2026-11-17T22:45:00+09:00"
     },
     {
       "@type": "Person",
@@ -392,7 +392,7 @@ try{if(!sessionStorage.getItem('ks2-in')&&!(window.matchMedia&&matchMedia('(pref
       <div class="c-12">
         <p class="sub" lang="en">is to Keep it Simple.</p>
         <p class="jp"><span class="nb">核心の構造とは、</span><span class="nb">シンプルを保つこと。</span></p>
-        <p class="lead">上場企業・上場準備企業の社外監査役として。内部統制と決算の実務支援も。</p>
+        <div class="lead duo"><a class="duo-a" href="#director" data-go><b class="duo-t">社外監査役</b><span class="duo-s"><span class="nb">上場企業・</span><span class="nb">上場準備企業</span></span></a><a class="duo-a" href="#work" data-go><b class="duo-t">実務支援</b><span class="duo-s"><span class="nb">内部統制・J-SOX／</span><span class="nb">IPO準備支援／</span><span class="nb">不正調査</span></span></a></div>
         <p class="act"><a class="btn" href="#contact" data-go>お問い合わせ</a><span class="note">初回 30〜60分・オンライン・無料</span></p>
       </div>
       <div class="c-34 rt">
@@ -560,7 +560,8 @@ try{if(!sessionStorage.getItem('ks2-in')&&!(window.matchMedia&&matchMedia('(pref
   <div class="w">
     <div class="g blk hx"><p class="lb c-1">ご相談の例</p><div class="c-234 bd"><dl class="rw2"><div><dt>守秘義務</dt><dd>公認会計士法および税理士法により、守秘義務を負っています。お預かりした情報は、ご相談への対応以外には使いません。</dd></div></dl><div class="asks-w"><p class="asks-note">項目を選ぶと、下のフォームの「ご相談内容」に文例が入ります。ご状況に合わせて、書き換えてお使いください。</p><h3 class="asks-h" id="asksBoard">社外監査役の就任</h3><ul class="asks"><li><button class="ask" type="button" data-ask="auditor">社外監査役の候補として検討したい</button></li></ul><p class="asks-note">候補として検討したい段階のご相談も承ります。</p><h3 class="asks-h" id="asksHead">実務支援</h3><ul class="asks"><li><button class="ask" type="button" data-ask="jsox">J-SOXの構築・運用を見直したい</button></li><li><button class="ask" type="button" data-ask="fraud">不正の調査と再発防止を相談したい</button></li><li><button class="ask" type="button" data-ask="close">経理・決算の業務負荷を減らしたい</button></li><li><button class="ask" type="button" data-ask="audit">監査対応の資料収集を効率化したい</button></li><li><button class="ask" type="button" data-ask="m365">ExcelやMicrosoft 365、Google Workspaceを活用したい</button></li><li><button class="ask" type="button" data-ask="ipo">IPO準備の進め方を整理したい</button></li><li><button class="ask" type="button" data-ask="cfo">社外CFOに継続して相談したい</button></li><li><button class="ask" type="button" data-ask="ai">AIを実務に導入したい</button></li></ul></div></div></div>
     <div class="g blk hx"><p class="lb c-1">ご相談フォーム</p><div class="c-234 bd"><form class="ask-form" id="askForm" data-endpoint="https://script.google.com/macros/s/AKfycbxhN5mmeSPGeb-eJ46xUw9rRWeJAPwJBcZFC7G3qaVtqyNJlnkUx_mfWuZyxtcqkGFfkA/exec" novalidate><div class="field"><label for="f-company">会社名<span class="opt">任意</span></label><input id="f-company" name="company" type="text" autocomplete="organization" maxlength="120"></div><div class="field"><label for="f-name">お名前<span class="req">必須</span></label><input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="e-name"><p class="err" id="e-name" hidden></p></div><div class="field"><label for="f-email">メールアドレス<span class="req">必須</span></label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required aria-describedby="e-email"><p class="hint">ご返信に使います。お間違いのないよう、ご確認ください。</p><p class="err" id="e-email" hidden></p></div><div class="field"><label for="f-message">ご相談内容<span class="req">必須</span></label><textarea id="f-message" name="message" rows="7" maxlength="4000" required aria-describedby="e-message"></textarea><p class="err" id="e-message" hidden></p></div><div class="hp" aria-hidden="true"><label>この欄は空のままにしてください<input type="text" name="hp-check" tabindex="-1" autocomplete="off"></label></div><p class="privacy">ご入力いただいた内容は、ご相談への対応にのみ使い、広告や解析には使いません。送信内容は当事務所のメールに届き、このサイト上には保存しません。</p><button class="btn ask-send" type="submit">相談内容を送信する</button><p class="form-msg" id="askMsg" role="status" aria-live="polite"></p></form><noscript><p class="form-msg ng">お使いの環境ではフォームを送信できません。お手数ですが、下のメールアドレスへご連絡ください。</p></noscript><div class="ask-done" id="askDone" tabindex="-1" hidden><p class="contact-lead">送信しました。</p><p>ありがとうございます。内容を確認のうえ、通常3営業日以内に、ご入力いただいたメールアドレスへご返信いたします。</p><p>3営業日を過ぎても返信が届かない場合は、迷惑メールフォルダをご確認のうえ、下のメールアドレスへ直接ご連絡ください。</p></div></div></div>
-    <div class="g blk hx"><span class="c-1"></span><div class="c-234 bd"><p class="mail-lead">フォームが使えない場合は、メールでも承ります。</p><div class="mail"><a class="mail-addr" id="addr" href="mailto:kenji@kenji-sato.jp">kenji@kenji-sato.jp</a><button class="pill" id="copyAddr" type="button">アドレスをコピー</button></div><p class="notes">まだ内容が固まっていない段階でも、「一度、話を聞いてほしい」という一文からで構いません。<br>Google Meet、Zoom など、ご希望のツールで対応可能です。</p></div></div>
+    <div class="g blk hx"><span class="c-1"></span><div class="c-234 bd"><p class="mail-lead">フォームが使えない場合は、メールでも承ります。</p><div class="mail"><a class="mail-addr" id="addr" href="mailto:kenji@kenji-sato.jp">kenji@kenji-sato.jp</a><button class="pill" id="copyAddr" type="button">アドレスをコピー</button></div><p class="notes">まだ内容が固まっていない段階でも、「一度、話を聞いてほしい」という一文からで構いません。<br>Google Meet、Zoom、Microsoft Teams など、ご希望のツールで対応可能です。</p></div></div>
+    <nav class="fnav" aria-label="このページの中の行き先"><a href="#director" data-go>社外監査役</a><a href="#work" data-go>実務支援</a><a href="#profile" data-go>略歴</a><a href="#terms" data-go>お取引にあたって</a><a href="#contact" data-go>お問い合わせ</a></nav>
     <p class="foot hl"><span>佐藤健司公認会計士事務所</span><span>京都　公認会計士・税理士</span></p>
   </div>
 </section>
@@ -572,10 +573,10 @@ try{if(!sessionStorage.getItem('ks2-in')&&!(window.matchMedia&&matchMedia('(pref
 <div class="grain" aria-hidden="true"></div>
 <div class="tr" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="tr-t"></b><u class="tr-l"></u><s class="tr-d"></s></div>
 
-<script src="js/c2/nav.js?v=m66"></script>
-<script src="js/c2/card.js?v=m66"></script>
-<script src="js/c2/fig.js?v=m66"></script>
-<script src="js/c2/form.js?v=m66"></script>
-<script src="js/c2/app.js?v=m66"></script>
+<script src="js/c2/nav.js?v=m67"></script>
+<script src="js/c2/card.js?v=m67"></script>
+<script src="js/c2/fig.js?v=m67"></script>
+<script src="js/c2/form.js?v=m67"></script>
+<script src="js/c2/app.js?v=m67"></script>
 </body>
 </html>
