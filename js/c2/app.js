@@ -16,6 +16,24 @@
   function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function two(n) { return (n < 10 ? '0' : '') + n; }
+  /* 書体の指定(Google Fonts の CSS)は、画面を止めないよう、あとから読み込む(head の link#gf)。
+     その指定が入り、いま使う書体が届くのを待つ。指定は長くても4秒、書体は、そこから長くても cap ミリ秒まで(cap を省くと、届くまで) */
+  var gfCss = new Promise(function (res) {
+    var l = document.getElementById('gf');
+    function ok() { return !l || (l.rel === 'stylesheet' && !!l.sheet); }
+    if (ok()) { res(); return; }
+    l.addEventListener('load', function () { if (ok()) res(); else setTimeout(function () { if (ok()) res(); }, 80); });
+    l.addEventListener('error', res); setTimeout(function () { if (l.rel !== 'stylesheet') l.rel = 'stylesheet'; res(); }, 4000);      /* 先読みの合図が来ない古いブラウザーでも、指定は必ず入れる */
+  });
+  function fontsIn(cap) {
+    return gfCss.then(function () {
+      return new Promise(function (res) {
+        if (!(document.fonts && document.fonts.ready)) { res(); return; }
+        if (cap) setTimeout(res, cap);
+        setTimeout(function () { void document.body.offsetHeight; document.fonts.ready.then(res); }, 0);      /* いちど寸法を測らせて、書体の読み込みを始めさせてから待つ */
+      });
+    });
+  }
   var home = $('#home'), dv = $('#dv'), tr = $('.tr'), cnt = $('.cnt b'), cntBox = $('.cnt'), rail = $('.rail');
   var ORDER = ['jsox-ipo', 'internal-audit', 'fraud-investigation', 'closing-improvement', 'outside-cfo', 'aup', 'ai'];
   var HOME = home ? $$('.sc[id]', home).map(function (s) { return s.id; }) : [];      /* トップページの場面(並びの順。先頭は top) */
@@ -274,7 +292,7 @@
     if (w > 0 && m > w) h.style.fontSize = Math.floor(parseFloat(cs.fontSize) * w / m * 98) / 100 + 'px';
   }
   window.addEventListener('resize', fit);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fontsIn().then(fit);
   function titleOf(name) {
     var el;
     if (D.pages[name]) return D.pages[name].t.join(D.pages[name].k ? ' ' : '');
@@ -777,7 +795,7 @@
     });
     railPos(); railDots();
     window.addEventListener('resize', railPos); document.addEventListener('ks:shown', function () { setTimeout(function () { railPos(); railDots(); }, 60); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(railPos);
+    fontsIn().then(railPos);
     setTimeout(railPos, 1500);
   })();
   /* マウスを乗せた行: 金の点がその行を指し、行がうすく金に照らされる(いま読んでいる所が分かる) */
@@ -954,7 +972,7 @@
       n = to; raf = requestAnimationFrame(tick);
     }
     function kick() { if (!raf && seen && n < C.length) { last = performance.now(); raf = requestAnimationFrame(tick); } }
-    measure(); window.addEventListener('resize', measure); if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure(); window.addEventListener('resize', measure); fontsIn().then(measure);
     new IntersectionObserver(function (es) { seen = es[es.length - 1].isIntersecting; if (seen) setTimeout(measure, 1200); kick(); }, { threshold: 0 }).observe(msg);
     document.addEventListener('ks:shown', function () { setTimeout(function () { measure(); kick(); }, 80); });
   })();
@@ -1066,7 +1084,7 @@
   else {
     watch(true);
     var started = false, kickoff = function () { if (started) return; started = true; if (fig && scene === $('#top')) fig.anchor(anchorOf($('#top')), true); intro(begin); };      /* 冒頭にいるときだけ、冒頭の場所へ(開き直して途中の場面から始まるときは、その場面のまま) */
-    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(kickoff); setTimeout(kickoff, 1500); } else kickoff();   /* 文字の読み込みを待つのは、長くても1.5秒まで */
+    fontsIn(1500).then(kickoff); setTimeout(kickoff, 5600);   /* 文字の読み込みを待つのは、書体の指定が入ってから、長くても1.5秒まで(指定が届かないときも、5.6秒で始める) */
   }
   if (home && arrive !== null) uncover(arrive);                                                       /* ほかのページから幕で移ってきたときは、ここで開ける */
 })();

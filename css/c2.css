@@ -1,16 +1,11 @@
-/* 佐藤健司公認会計士事務所 — 新コンセプトの試作(版3)
-   考え方はひとつ: 散らかったものが、金の点(起点)のまわりで、整った構造になる。散らかりは冒頭の一度だけ。あとは、整ったまま。
-   骨組み: 割り付けの線(4列)をあえて見せ、すべてをその線に乗せる。地は、場面ごとの帯(紺・白)。境目は、スクロールと一緒に上がってくる。
-   粒の図は、冒頭と代表あいさつの銀河、業務の選択画面の構造、ご連絡の KS だけ。太く大きな文字が主役。
-   見た目はひとつに決めてある(見る人の明暗の設定では変えない)。 */
 :root {
-  --ink: #0b1226;        /* 深い紺(青みを少し残して、目に優しく) */
-  --paper: #e8e5dc;      /* 生成りの地(明るさを落とした、上質な紙の色。真っ白にしない) */
+  --ink: #0b1226;
+  --paper: #e8e5dc;
   --paper-hi: #efece5; --paper-lo: #dfdbd1;
-  --blue: #1a4fe6;       /* 藍を、鮮やかに(少しだけ和らげる) */
-  --sky: #93b6ff;        /* 濃い地の上の藍 */
-  --gold: #d3ad5a;       /* 起点の点と、細い線 */
-  --gold-d: #a87a1e;     /* 白い地の上の金 */
+  --blue: #1a4fe6;
+  --sky: #93b6ff;
+  --gold: #d3ad5a;
+  --gold-d: #a87a1e;
   --text-d: #e9eef8; --mute-d: #adb9d3; --line-d: rgba(147, 182, 255, .22);
   --text-l: #10172b; --mute-l: #474f63; --line-l: rgba(16, 23, 43, .15);
   --line-b: rgba(255, 255, 255, .34);
@@ -35,29 +30,19 @@ ul, ol { list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 .nb { display: inline-block; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-
-/* 重なりの順: 地(場面ごとの帯) → 粒の図 → 中身 → 背表紙 → 切り替えの幕 → 寄り添う星
-   帯は場面の ::before(0)、粒の図は 1、中身(.w)は 2。main と .dv には重なりの順をつけない(つけると、帯が粒の図の上に来てしまう) */
 .bg { position: fixed; inset: 0; z-index: 0; background: var(--ink); }
 #fig { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
 main, .dv { position: relative; }
 .grain { display: none; position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
 body.t-l .grain { opacity: .04; }
-
-/* 場面 */
 .sc { position: relative; color: var(--fg); padding-left: max(calc(var(--gut) + var(--rail)), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); }
-/* 地の色は、場面ごと。画面全体の色を一斉に替えることはしない */
 .sc { --bg: var(--ink); --fg: var(--text-d); --mute: var(--mute-d); --line: var(--line-d); --ac: var(--sky); --dot: var(--gold); }
 .sc[data-th="l"] { --bg: var(--paper); --fg: var(--text-l); --mute: var(--mute-l); --line: var(--line-l); --ac: var(--blue); --dot: var(--gold-d); }
-/* 帯: 紺には、やわらかい光の陰影。生成りには、陰影と、紙の細かな質感 */
 .sc::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(92% 62% at 80% 44%, #131d3e 0, var(--ink) 72%); }
 .sc[data-th="l"]::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .17 0 0 0 0 .12 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(96% 72% at 22% 40%, var(--paper-hi) 0, var(--paper) 62%, var(--paper-lo) 100%); }
-/* 帯の境目は、ゆるい曲線。速くスクロールすると大きくふくらみ、止まると弾んで戻る(--arc は js/app.js が動かす) */
 .sc[data-th="d"] + .sc[data-th="l"]::before, .sc[data-th="l"] + .sc[data-th="d"]::before { top: calc(-1 * var(--arc, 36px)); border-radius: 50% 50% 0 0 / var(--arc, 36px) var(--arc, 36px) 0 0; }
 .w { position: relative; z-index: 2; max-width: 1560px; margin-inline: auto; padding-block: clamp(72px, 11vh, 132px); }
-/* 割り付けの線(縦4列)と、線の上下の端の印(金の短い線) */
 .w::before { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / 25% 100%, linear-gradient(to left, var(--line) 1px, transparent 1px) 100% 0 / 100% 100% no-repeat; }
 .w::after { content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -73,13 +58,10 @@ body.t-l .grain { opacity: .04; }
 .lb { display: flex; align-items: center; gap: 12px; font-size: 13.5px; font-weight: 700; letter-spacing: .16em; color: var(--ac); line-height: 1.6; text-decoration: none; }
 .lb::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
 .hd { font-family: var(--min); font-weight: 900; font-size: clamp(31px, 6vw, 100px); line-height: 1.24; letter-spacing: .01em; font-feature-settings: "palt" 1; }
-/* 見出しは、行ごとに下から現れる(行は窓、中の文字が上がる) */
 .hd > .nb { overflow: hidden; vertical-align: top; padding-bottom: .08em; }
 .hd > .nb > span { display: inline-block; }
 .hd > .nb.free { overflow: visible; }
 .tx { font-size: clamp(15.5px, 1.25vw, 18px); line-height: 2.1; color: var(--mute); }
-
-/* ボタン: 触れた場所から、金が広がる。近づくと、少し寄ってくる */
 .btn { position: relative; white-space: nowrap; display: inline-flex; align-items: center; gap: 18px; min-height: 60px; padding: 0 30px 0 34px; overflow: hidden; border: 1px solid var(--blue); background: var(--blue); color: #fff; text-decoration: none; font-family: var(--min); font-weight: 700; font-size: 17px; letter-spacing: .2em; isolation: isolate; transition: color .35s, border-color .35s, transform .5s var(--e); }
 .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--gold); clip-path: circle(0 at var(--px, 50%) var(--py, 50%)); transition: clip-path .55s cubic-bezier(.3, 0, .1, 1); }
 .btn::after { content: ""; width: 30px; height: 1px; background: currentColor; transition: width .35s; }
@@ -88,8 +70,6 @@ body.t-l .grain { opacity: .04; }
 .btn:hover::after { width: 46px; }
 .note { font-size: 14px; color: var(--mute); letter-spacing: .04em; }
 .act { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
-
-/* ============ 01 冒頭 ============ */
 .hero { min-height: 100vh; min-height: 100svh; overflow: hidden; }
 .hero .w { padding-block: 0 clamp(40px, 6vh, 72px); display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; padding-inline: var(--cell); border-bottom: 1px solid var(--line); }
@@ -104,10 +84,8 @@ body.t-l .grain { opacity: .04; }
 .bar nav .ask { padding: 9px 20px; border: 1px solid var(--line); white-space: nowrap; transition: border-color .3s, background-color .3s, color .3s, transform .5s var(--e); }
 .bar nav .ask:hover { border-color: var(--gold); background: var(--gold); color: var(--ink); }
 .eb { margin-top: clamp(26px, 5vh, 56px); padding-inline: var(--cell); font-size: 13.5px; letter-spacing: .16em; color: var(--mute); line-height: 1.9; }
-/* 巨大な標語。一字ずつが、マウスの近さで太さと幅を変える */
 .big { margin-top: clamp(8px, 2vh, 22px); padding-inline: var(--cell); font-family: var(--disp); font-weight: 800; font-size: clamp(60px, 11.4vw, 190px); line-height: .92; letter-spacing: -.035em; user-select: none; }
 .big > span { display: block; width: -moz-fit-content; width: fit-content; white-space: nowrap; }
-/* 一字ずつの、散らかっているときの向きとずれ(冒頭で、ここから揃う) */
 .big i { --jx: .12em; --jy: -.14em; --jr: 11deg; }
 .big i:nth-child(2n) { --jx: -.16em; --jy: .18em; --jr: -15deg; }
 .big i:nth-child(3n) { --jx: .22em; --jy: .1em; --jr: 19deg; }
@@ -124,22 +102,17 @@ body.t-l .grain { opacity: .04; }
 .hero h1 .sg { display: block; margin-top: 8px; font-family: var(--goth); font-weight: 500; font-size: 13px; letter-spacing: .2em; color: var(--mute); }
 .lead { margin-top: 16px; font-size: 15.5px; line-height: 2; color: var(--mute); }
 .hero .act { margin-top: 22px; }
-/* 冒頭の下の段: 言葉は左、名刺と事務所名は右 */
 .rt { display: flex; flex-direction: column; align-items: flex-end; gap: clamp(16px, 2.4vh, 26px); }
 .rt h1 { text-align: right; }
 .hero-g .lead { max-width: 30em; }
-/* ============ 02 実務支援(言い切り) ============ */
 .demo { position: relative; width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--line); background: #f6f4ee; cursor: pointer; }
 .demo svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .demo path { fill: none; stroke: var(--blue); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .9s var(--e) .55s; }
 .demo i { position: absolute; left: var(--ax); top: var(--ay); display: grid; place-items: center; width: 20%; height: 16%; margin: -6% 0 0 -10%; border: 1.5px solid var(--blue); background: #f6f4ee; color: var(--blue); font-style: normal; font-weight: 700; font-size: clamp(11px, 1.05vw, 15px); letter-spacing: .1em; transition: transform .85s var(--e); transition-delay: calc(var(--n) * 45ms); }
-/* 起点の点は、散らからない */
 .demo b { position: absolute; left: 10%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--gold-d); box-shadow: 0 0 0 6px rgba(214, 171, 76, .2); }
 .cap { margin-top: 14px; font-size: 13.5px; line-height: 1.9; color: var(--mute); }
 .demo.mess i { transform: translate(var(--sx), var(--sy)) rotate(var(--sr)); }
 .demo.mess path { stroke-dashoffset: 1; transition-delay: 0s; transition-duration: .25s; }
-
-/* ============ 03 業務の一覧 ============ */
 .list .w { padding-top: 0; }
 .grp { padding: clamp(26px, 4vh, 44px) var(--cell) 14px; }
 .rows > li { border-top: 1px solid var(--line); }
@@ -160,41 +133,31 @@ body.t-l .grain { opacity: .04; }
   .row:hover .rw, .row:focus-visible .rw { color: rgba(255, 255, 255, .88); }
   .row:hover .rx i, .row:focus-visible .rx i { color: var(--gold); }
 }
-/* ============ 04 社外監査役 ============ */
 .cols3 > div { padding-block: clamp(22px, 3vh, 34px); }
 .cols3 h3 { font-family: var(--min); font-weight: 700; font-size: 18px; letter-spacing: .12em; line-height: 1.7; color: var(--ac); }
 .cols3 p { margin-top: 10px; font-size: 15.5px; line-height: 2.05; color: var(--mute); }
-
-/* ============ 代表あいさつ: 銀河が主役。言葉は右に ============ */
 .ms p { font-family: var(--min); font-weight: 500; font-size: clamp(16.5px, 1.36vw, 20px); line-height: 2.25; letter-spacing: .03em; }
 .ms p + p { margin-top: 1.25em; }
 .ms .sg2 { margin-top: 2.2em; font-size: 14px; letter-spacing: .2em; color: var(--mute); }
 .ms .sg2 b { display: block; margin-top: 6px; font-weight: 700; font-size: clamp(21px, 1.9vw, 28px); letter-spacing: .3em; color: var(--fg); }
-/* ============ 略歴 ============ */
 .qt { font-family: var(--min); font-weight: 900; font-size: clamp(21px, 2.7vw, 42px); line-height: 1.6; letter-spacing: .02em; max-width: 24em; }
 .who { display: flex; align-items: center; gap: 20px; padding-top: 8px; }
 .who img { flex: none; width: 76px; height: 76px; aspect-ratio: 1; object-fit: cover; object-position: 50% 16%; border-radius: 50%; border: 1px solid var(--dot); padding: 3px; }
 .who b { font-family: var(--min); font-weight: 700; font-size: 20px; letter-spacing: .26em; }
 .who span { margin-left: 14px; font-size: 12.5px; letter-spacing: .2em; color: var(--mute); }
 .who i { display: block; margin-top: 6px; font-style: normal; font-size: 14px; letter-spacing: .06em; color: var(--mute); }
-@media (max-width: 374px) { .who span { display: block; margin: 4px 0 0; } }      /* 幅の狭いスマホでは、よみを、お名前の下の行へ(途中で折れて、字下げがずれるのを防ぐ) */
+@media (max-width: 374px) { .who span { display: block; margin: 4px 0 0; } }
 .org { font-family: var(--min); font-weight: 700; font-size: clamp(18px, 1.7vw, 24px); letter-spacing: .06em; line-height: 1.7; }
 .bar nav .x { display: none; }
 @media (min-width: 1280px) { .bar nav .x { display: inline; } }
-
-/* ============ 05 原則 ============ */
 .pr h3 { font-family: var(--disp); font-stretch: 125%; font-weight: 800; font-size: clamp(34px, 5.3vw, 88px); line-height: 1; letter-spacing: -.03em; color: var(--ac); }
 .pr .sm { margin-top: 16px; font-family: var(--min); font-weight: 700; font-size: clamp(17px, 1.5vw, 22px); letter-spacing: .16em; }
 .pr ul { margin-top: clamp(20px, 3vh, 32px); border-top: 1px solid var(--line); }
 .pr li { padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.95; color: var(--mute); }
-
-/* ============ 06 ご連絡 ============ */
 .facts > div { display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 14px; padding-block: 14px; border-top: 1px solid var(--line); font-size: 15.5px; line-height: 1.95; }
 .facts dt { font-size: 13.5px; font-weight: 700; letter-spacing: .14em; color: var(--ac); padding-top: 3px; }
 .facts dd { color: var(--mute); }
 .foot { margin-top: clamp(48px, 8vh, 96px); padding: 22px var(--cell) 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 13px; letter-spacing: .12em; color: var(--mute); }
-
-/* ============ 業務の詳細 ============ */
 .dv[hidden], main[hidden] { display: none; }
 .dvh .w { padding-block: 0 clamp(48px, 8vh, 96px); min-height: 78vh; min-height: 78svh; display: flex; flex-direction: column; }
 .dvh .bk { margin-top: auto; padding: clamp(60px, 12vh, 140px) var(--cell) 0; }
@@ -235,11 +198,9 @@ body.t-l .grain { opacity: .04; }
 .dvs summary::-webkit-details-marker { display: none; }
 .dvs summary::after { content: ""; width: 14px; height: 14px; justify-self: end; background: linear-gradient(var(--dot), var(--dot)) center / 14px 1.5px no-repeat, linear-gradient(var(--dot), var(--dot)) center / 1.5px 14px no-repeat; transition: transform .45s var(--e); }
 .dvs details[open] summary::after { transform: rotate(45deg); }
-/* 詳細の終わりの案内(本番の詳細ページの末尾と同じ、一文と「相談する」) */
 .dvs .say p { font-family: var(--min); font-weight: 700; font-size: clamp(18px, 1.7vw, 24px); letter-spacing: .06em; line-height: 1.9; font-feature-settings: "palt" 1; text-wrap: balance; word-break: auto-phrase; line-break: strict; }
-@media (max-width: 760px) { .dvs .say p { font-size: clamp(13.5px, calc((100vw - 58px) / 21.6), 18px); letter-spacing: 0; } }      /* スマホでは、長いほうの一文(21字)が、ちょうど1行に収まる大きさに(行の終わりに一字だけ落ちたり、助詞が行の頭に来たりするのを防ぐ) */
+@media (max-width: 760px) { .dvs .say p { font-size: clamp(13.5px, calc((100vw - 58px) / 21.6), 18px); letter-spacing: 0; } }
 .dvs details p { padding: 0 0 22px; font-size: 15.5px; line-height: 2.1; color: var(--mute); max-width: 44em; }
-/* 次の業務へ */
 .nx { display: block; text-decoration: none; }
 .nx .w { padding-block: clamp(64px, 12vh, 150px); min-height: 64vh; min-height: 64svh; display: flex; flex-direction: column; justify-content: center; }
 .nx .to { display: flex; align-items: center; gap: .4em; padding-inline: var(--cell); margin-top: 18px; font-family: var(--min); font-weight: 900; font-size: clamp(30px, 6.4vw, 108px); line-height: 1.2; letter-spacing: .01em; transition: transform .7s var(--e), color .4s; }
@@ -247,11 +208,7 @@ body.t-l .grain { opacity: .04; }
 .nx .lb { padding-inline: var(--cell); }
 .nx:hover .to { transform: translateX(clamp(8px, 1.4vw, 26px)); color: var(--gold); }
 .nx:hover .to::after { transform: scaleX(1.6); }
-
-/* 背表紙(広い画面) */
 .rail { display: none; }
-/* 寄り添う星(マウスのあるとき)。線で囲まず、濃さの差で星に見せる: 濃い芯、四方へ細く伸びる光、少し遅れてついてくる淡いにじみ、速く動いたときの尾。
-   --hl は、にじみと尾の色(地の色ごとに決める)。金のボタンの上では、白金のきらめきに替える(.hot) */
 body { --hl: 211, 173, 90; --edge: rgba(6, 10, 24, .5); }
 body.t-l { --hl: 168, 122, 30; --edge: transparent; }
 .cur, .cur-r, .cur-t { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; opacity: 0; transition: opacity .3s; }
@@ -265,32 +222,23 @@ body.t-l .cur::before { background: var(--dot); }
 .cur-r::before { content: ""; position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%; background: radial-gradient(circle closest-side, rgba(var(--hl), .2) 0, rgba(var(--hl), .08) 36%, rgba(var(--hl), 0) 100%); transform: scale(.62); transition: transform .6s var(--e); }
 .cur-t { width: 100px; height: 3px; margin-top: -1.5px; transform-origin: 0 50%; background: linear-gradient(90deg, rgba(var(--hl), .9), rgba(var(--hl), 0)); clip-path: polygon(0 0, 100% 50%, 0 100%); transition: none; }
 .cur.on, .cur-r.on { opacity: 1; }
-/* 押せるものの上(.hv): 星がひと回りして少し大きくなり、縦の光だけが少し伸びる。にじみは少し広がる。
-   触れている間ずっと出ている光なので、控えめに(強い光は、押した瞬間だけ) */
 .cur b { position: absolute; left: -1px; top: -36px; width: 2px; height: 72px; background: linear-gradient(to bottom, rgba(var(--hl), 0), var(--dot) 50%, rgba(var(--hl), 0)); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transform: scaleY(0); opacity: 0; transition: transform .65s var(--e), opacity .3s; }
 .cur.hv b { transform: scaleY(1); opacity: .62; }
 .cur.hv::before { transform: scale(.7); animation: none; box-shadow: 0 0 6px 0 rgba(var(--hl), .4); }
 .cur.hv::after { transform: rotate(90deg) scale(1.18); }
 .cur-r.hv::before { transform: scale(.84); }
-/* 押している間: 光が縮む。離すと戻る(その瞬間に、星のまたたきと衝撃の輪が走る) */
 .cur.dn::after { transform: rotate(90deg) scale(.5); transition-duration: .12s; }
 .cur.dn b { transform: scaleY(.22); transition-duration: .12s; }
 .cur-r.dn::before { transform: scale(.4); transition-duration: .12s; }
-/* 金で塗られるボタンの上: 金の星は溶けて見えなくなるので、白金のきらめきに */
 .cur.hot { --dot: #fff8e6; --hl: 255, 248, 230; --edge: rgba(60, 38, 0, .55); }
 .cur-r.hot::before, .cur-t.hot { visibility: hidden; }
 @keyframes twinkle { from { opacity: .58; scale: .86; } to { opacity: 1; scale: 1.05; } }
 @keyframes glow { from { box-shadow: 0 0 7px 0 rgba(var(--hl), .4); } to { box-shadow: 0 0 13px 2px rgba(var(--hl), .7); } }
-
-/* 押した瞬間: 細い金の輪がひとつ、小さく広がって消える(静かに) */
 .shot { position: fixed; left: 0; top: 0; z-index: 88; width: 56px; height: 56px; margin: -28px 0 0 -28px; pointer-events: none; }
 .shot::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--dot); border-radius: 50%; animation: shotRing .5s cubic-bezier(.2, .7, .2, 1) both; }
 @keyframes shotRing { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(1.2); opacity: 0; } }
 .btn:active { transform: scale(.955) !important; transition-duration: .08s; }
 .row:active .rn { transform: translateX(10px); transition-duration: .08s; }
-
-/* ============ 切り替えの幕 ============
-   4列の格子が、上からシャッターのように閉じる → 行き先の題が大きく横切る → 下へ抜けて開く。金の点は、押した場所から中央へ */
 .tr { position: fixed; inset: 0; z-index: 80; pointer-events: none; visibility: hidden; overflow: hidden; }
 .tr.on { visibility: visible; pointer-events: auto; }
 .tr > i { position: absolute; top: 0; bottom: 0; width: 25.2%; background: #04070f; border-left: 1px solid rgba(214, 171, 76, .55); transform: translateY(-101%); will-change: transform; }
@@ -298,14 +246,11 @@ body.t-l .cur::before { background: var(--dot); }
 .tr-t { position: absolute; left: 0; right: 0; top: 50%; margin-top: -.6em; text-align: center; white-space: nowrap; font-family: var(--min); font-weight: 900; font-size: clamp(40px, 9.5vw, 170px); line-height: 1.2; color: transparent; -webkit-text-stroke: 1px var(--gold); opacity: 0; will-change: transform, opacity; }
 .tr-d { position: absolute; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 34px 6px rgba(214, 171, 76, .5); opacity: 0; will-change: transform, opacity; }
 .tr-l { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--gold); transform: scaleX(0); opacity: .8; will-change: transform; }
-/* 冒頭の絞り(はじめの一度だけ) */
 .pre body::before { content: ""; position: fixed; inset: 0; z-index: 84; background: #04070f; pointer-events: none; animation: preOut .3s linear 3.6s forwards; }
 @keyframes preOut { to { opacity: 0; visibility: hidden; } }
 .intro { position: fixed; inset: 0; z-index: 85; background: #04070f; pointer-events: none; }
 .intro i { position: absolute; left: 0; top: 0; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 40px 8px rgba(214, 171, 76, .45); }
 .intro u { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); transform-origin: 0 50%; transform: scaleX(0); }
-
-/* 動き: どれも、見えている状態から始まる(動かない環境でも、全部読める) */
 @keyframes drawY { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
 @keyframes up { from { transform: translateY(108%) skewY(5deg); } }
 @keyframes rise { from { opacity: 0; transform: translateY(30px); } }
@@ -321,8 +266,7 @@ body.t-l .cur::before { background: var(--dot); }
   .sc.in .pr h3 { animation: rise .95s var(--e) both; }
   .sc.in .lb { animation: runIn .8s var(--e) both; }
   .sc.in .j { display: inline-block; animation: settle 1s cubic-bezier(.2, 1, .2, 1) both; animation-delay: calc(var(--n) * 80ms + .5s); }
-  /* 冒頭: 散らかった字と名刺が、粒が銀河になるのに合わせて、きちんと揃う(--d0 は、絞りの演出があるときの待ち時間) */
-  .hero:not(.in) .big i { animation: settle0 1.25s cubic-bezier(.2, 1, .2, 1) 3.6s both; }      /* はじまりの合図(.in)まで、字は散らかったまま・下の段は隠したまま待つ(合図が来なくても、数秒で自分で揃う) */
+  .hero:not(.in) .big i { animation: settle0 1.25s cubic-bezier(.2, 1, .2, 1) 3.6s both; }
   .hero:not(.in) .hero-g > * { animation: hold0 .6s 3.6s both; }
   .hero.in .big i { animation: settle 1.25s cubic-bezier(.2, 1, .2, 1) both; animation-delay: calc(var(--n, 0) * 55ms + .7s + var(--d0, 0s)); }
   .hero.in .hero-g > * { animation: rise 1s var(--e) .55s both; }
@@ -332,8 +276,6 @@ body.t-l .cur::before { background: var(--dot); }
   .dvs .blk.in .bd > * { animation: rise .9s var(--e) both; }
 }
 @media (prefers-reduced-motion: reduce) { .cur, .cur-r, .cur-t, .intro, .shot { display: none; animation: none; } * { transition: none !important; } }
-
-/* 広い画面: 背表紙を出し、場面を画面いっぱいの1枚にする */
 @media (min-width: 1024px) {
   :root { --rail: 58px; }
   .rail { position: fixed; left: 0; top: 0; bottom: 0; z-index: 40; width: calc(58px + env(safe-area-inset-left, 0px)); padding: 22px 0 22px env(safe-area-inset-left, 0px); display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 18px; background: #04070f; border-right: 1px solid rgba(214, 171, 76, .5); color: var(--text-d); }
@@ -348,17 +290,14 @@ body.t-l .cur::before { background: var(--dot); }
   .snap { scroll-snap-align: start; }
   .snap:not(.hero) > .w { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
 }
-/* タブレットの幅 */
 @media (min-width: 761px) and (max-width: 1023px) {
   .hero-g { row-gap: 30px; }
   .hero-g > .c-12 { grid-column: 1 / 3; }
   .hero-g > .rt { grid-column: 3 / 5; }
-  /* 社外監査役: ボタンは上の段に(1列の幅に収まらず、隣の見出しに掛かるため)。3つの説明は、その下の2〜4列 */
   .cols3 > .c-1 { grid-column: 1 / 5; padding-bottom: 0; }
   .cols3 > div:nth-child(2) { grid-column-start: 2; }
   .rn { grid-column: 1 / 3; } .rw { grid-column: 3 / 5; grid-row: 1; } .rx { grid-column: 1 / 5; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin-top: 10px; }
 }
-/* 幅の狭い画面: 線は2列に */
 @media (max-width: 760px) {
   .w::before { background: linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / 50% 100%, linear-gradient(to left, var(--line) 1px, transparent 1px) 100% 0 / 100% 100% no-repeat; }
   .w::after { background: linear-gradient(to right, var(--gold) 9px, transparent 9px) -4px 0 / 50% 1px repeat-x, linear-gradient(to right, var(--gold) 9px, transparent 9px) -4px 100% / 50% 1px repeat-x; }
@@ -383,10 +322,6 @@ body.t-l .cur::before { background: var(--dot); }
   .dvs .rw2 > div { grid-template-columns: minmax(0, 1fr); }
   .dvs .st li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
 }
-
-/* ============ 業務の選択画面 ============
-   濃い紺の「窓」の中に、選んだ業務の構造が、粒で組み上がる(窓の中は js/fig.js が描く)。右に、業務の名前・対象・課題・目指す状態。下に、全8業務の番号つきの一覧。
-   業務を替えるたび、粒はいったん散らかり、金の点のまわりで次の構造に整う。見えている間は、数秒ごとに自分で次へ進む(選んだら止まる) */
 .pk-src[hidden] { display: none; }
 .pk-src .grp:first-child { padding-top: 0; }
 .pk { position: relative; }
@@ -395,7 +330,6 @@ body.t-l .cur::before { background: var(--dot); }
 .pk-no b { display: inline-block; margin-right: .28em; font-weight: 800; font-size: clamp(30px, 3.4vw, 52px); letter-spacing: -.02em; color: var(--gold); }
 .pk-main { align-items: stretch; border-block: 1px solid var(--line); }
 .pk-ww { position: relative; padding-block: clamp(16px, 2.4vh, 26px); touch-action: pan-y; }
-/* 窓: 細い金の枠、四隅のかぎ、左右の目盛り、上下の中央の印 */
 .pk-win { position: relative; display: block; height: clamp(280px, 50vh, 520px); border: 1px solid rgba(211, 173, 90, .5); cursor: pointer; }
 .pk-win::before { content: ""; position: absolute; inset: 12px; pointer-events: none; --c: rgba(211, 173, 90, .95);
   background: linear-gradient(var(--c), var(--c)) 0 0 / 22px 1.5px no-repeat, linear-gradient(var(--c), var(--c)) 0 0 / 1.5px 22px no-repeat, linear-gradient(var(--c), var(--c)) 100% 0 / 22px 1.5px no-repeat, linear-gradient(var(--c), var(--c)) 100% 0 / 1.5px 22px no-repeat,
@@ -403,14 +337,12 @@ body.t-l .cur::before { background: var(--dot); }
 .pk-win::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: repeating-linear-gradient(to bottom, rgba(211, 173, 90, .6) 0 1px, transparent 1px 11px) 12px 50% / 7px 44% no-repeat, repeating-linear-gradient(to bottom, rgba(211, 173, 90, .6) 0 1px, transparent 1px 11px) calc(100% - 12px) 50% / 7px 44% no-repeat,
     linear-gradient(rgba(211, 173, 90, .85), rgba(211, 173, 90, .85)) 50% 0 / 1px 10px no-repeat, linear-gradient(rgba(211, 173, 90, .85), rgba(211, 173, 90, .85)) 50% 100% / 1px 10px no-repeat; }
-/* 前へ・次へ(窓の左右の端) */
 .pk-nav { position: absolute; top: 50%; z-index: 1; width: 46px; height: 46px; margin-top: -23px; border: 1px solid rgba(211, 173, 90, .5); background: rgba(7, 11, 27, .72); transition: border-color .3s, background-color .3s, transform .5s var(--e); }
 .pk-prev { left: calc(var(--cell) + 28px); } .pk-next { right: calc(var(--cell) + 28px); }
 .pk-nav::before { content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -5px 0 0 -3px; border-left: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); transform: rotate(45deg); transition: transform .4s var(--e); }
 .pk-next::before { margin-left: -7px; transform: rotate(-135deg); }
 .pk-nav:hover { border-color: var(--gold); background: rgba(7, 11, 27, .95); }
 .pk-prev:hover::before { transform: translateX(-3px) rotate(45deg); } .pk-next:hover::before { transform: translateX(3px) rotate(-135deg); }
-/* 業務の名前・対象・課題・目指す状態。8業務ぶんを同じ場所に重ねて置き、選んだものだけを見せる(高さが変わらない) */
 .pk-ps { display: grid; align-items: center; padding-block: clamp(16px, 2.4vh, 26px); touch-action: pan-y; }
 .pk-p { grid-area: 1 / 1; visibility: hidden; opacity: 0; transition: opacity .22s, visibility 0s .22s; }
 .pk-p.on { visibility: visible; opacity: 1; transition: opacity .5s .14s; }
@@ -425,7 +357,6 @@ body.t-l .cur::before { background: var(--dot); }
 .pk-st > div:last-child { border-bottom: 1px solid var(--line); }
 .pk-st dt { padding-top: 3px; font-size: 12.5px; font-weight: 700; letter-spacing: .14em; color: var(--ac); }
 .pk-st > div + div dd { font-family: var(--min); font-weight: 700; }
-/* 全8業務の一覧(2つの組)。いま選んでいる業務の上に、金の線。自分で進んでいる間は、その線が時間とともに伸びる */
 .pk-roster { padding-top: clamp(14px, 2.2vh, 22px); align-items: start; }
 .pk-gl { padding-bottom: 8px; font-size: 12.5px; font-weight: 700; letter-spacing: .16em; color: var(--ac); }
 .pk-sl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 14px; align-items: start; }
@@ -447,18 +378,13 @@ body.t-l .cur::before { background: var(--dot); }
   .pk-no b { font-size: 30px; }
 }
 @media (prefers-reduced-motion: reduce) { .pk.auto .pk-s[aria-pressed="true"]::before { animation: none; } }
-
-/* ============ 遊びと、上質さ(どれも「金の点のまわりで整う」から出す) ============ */
-/* 金箔の文字: ゆっくり光が渡る */
 .sub, .pk-no b { background: linear-gradient(100deg, #b98b3c 0%, #ecd08a 30%, #fff4d2 44%, #d7b05b 58%, #a97b20 80%, #e6c676 100%) 0 0 / 240% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
 @keyframes foil { to { background-position: 100% 0; } }
-/* 場面の番号: 大きな線書きの数字を、札のすぐ下の空いた場所に */
 .lb { position: relative; }
 .sc { --bnc: rgba(211, 173, 90, .42); } .sc[data-th="l"] { --bnc: rgba(16, 23, 43, .26); }
 .bn { position: absolute; left: 0; top: 100%; margin-top: 12px; font-family: var(--disp); font-stretch: 125%; font-weight: 800; font-size: clamp(64px, 9.4vw, 148px); line-height: .82; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px var(--bnc); pointer-events: none; user-select: none; }
 .g > .lb > .bn { left: var(--cell); }
 .g > .lb > .bn.bn-r { left: auto; right: var(--cell); top: 0; margin-top: 0; }
-/* 業務の選択画面の計器: 窓の左上に組の名前、窓の下に番号の帯(替えると流れる。まん中の三角が、いまの業務) */
 .pk-hud { position: absolute; left: 46px; top: 24px; font-size: 11px; font-weight: 700; letter-spacing: .2em; line-height: 1.4; color: var(--gold); opacity: .9; }
 .pk-tape { position: absolute; left: 62px; right: 62px; bottom: 16px; height: 36px; overflow: hidden; -webkit-mask: linear-gradient(to right, transparent, #000 26%, #000 74%, transparent); mask: linear-gradient(to right, transparent, #000 26%, #000 74%, transparent); }
 .pk-tape::after { content: ""; position: absolute; left: 50%; bottom: 0; margin-left: -5px; border: 5px solid transparent; border-top: 0; border-bottom-color: var(--gold); }
@@ -475,19 +401,12 @@ body.t-l .cur::before { background: var(--dot); }
   .pk-hud { left: 38px; top: 20px; font-size: 10.5px; }
   .pk-tape { left: 50px; right: 50px; bottom: 10px; }
 }
-
-/* ============ 冒頭の名刺(いまの本番サイトの名刺を、そのまま使う。ここから下は、本番の css/site.css から機械的に取り出したもの) ============ */
-/* ---- 名刺(冒頭の主役)。比率・字の大きさ・色は、印刷前の原本に合わせてある ----
-   墨の地の中で、照らされているのは名刺だけ。紙の厚み、淡い映り込み、足もとの影で、そこに「ある」ものとして見せる。
-   名刺は、藍の点(要)の上に、一点で立つ。傾くのも、お辞儀をするのも、その足もとを支点にする */
 .hx-space { display: flex; align-items: center; justify-content: center; }
 .mc { --iris: calc(var(--cw) * .64); --key: clamp(9px, 1.05vw, 13px); --kx: calc(-1 * min(40vw, 320px)); --cw: clamp(220px, min(86%, calc((100vh - 400px) * 1.4)), 520px); position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; perspective: 1300px; transition: transform 1.2s cubic-bezier(.16, 1, .3, 1); }
-/* 名刺だけを照らす、淡い光 */
 .mc::before {
   content: ""; position: absolute; left: 50%; top: 50%; width: min(150%, 900px); aspect-ratio: 1.5; transform: translate(-50%, -50%); pointer-events: none;
   background: radial-gradient(closest-side, rgba(143, 185, 242, .15), rgba(143, 185, 242, .05) 55%, rgba(143, 185, 242, 0) 100%);
 }
-/* 名刺が置かれる面を示す、一本の細い線 */
 .mc::after {
   content: ""; position: absolute; left: -12%; right: -12%; top: calc(100% + var(--key)); height: 1px; pointer-events: none;
   background: linear-gradient(90deg, rgba(238, 243, 249, 0), rgba(238, 243, 249, .2) 22%, rgba(238, 243, 249, .2) 78%, rgba(238, 243, 249, 0));
@@ -501,25 +420,17 @@ body.t-l .cur::before { background: var(--dot); }
   transform: rotateX(6deg) rotateY(-8deg) rotateZ(-.6deg); transform-origin: 50% 100%; transform-style: preserve-3d; will-change: transform; cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-/* 紙の厚み(少し奥に、もう一枚の面を重ねる) */
 .mc-edge { position: absolute; inset: -1px; background: #c3cee0; transform: translateZ(-2.5px); pointer-events: none; }
-/* 差し出されるときに一度だけ走る光 */
 .mc-card::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
   background: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(143, 185, 242, .34) 50%, rgba(255, 255, 255, 0) 62%) 130% 0 / 260% 100% no-repeat;
 }
-/* 傾きに合わせて動く、淡い映り込み */
 .mc-card::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(105deg, rgba(10, 78, 160, 0) 34%, rgba(10, 78, 160, .075) 48%, rgba(10, 78, 160, 0) 62%) var(--sx, 50%) 0 / 220% 100% no-repeat;
 }
 .mc-name { display: block; font-family: var(--gothic); font-weight: 500; font-size: 22px; font-size: 5.9cqw; line-height: 1; letter-spacing: .5em; margin-right: -.5em; word-spacing: .12em; color: #1e253a; transform: scaleX(.8); white-space: nowrap; }
 .mc-title { display: block; margin-top: 18px; margin-top: 4.9cqw; font-family: var(--mincho); font-weight: 400; font-size: 10.5px; font-size: max(10.5px, 2.5cqw); line-height: 1; letter-spacing: .1em; margin-right: -.1em; color: #3f4a72; }
-/* 設計図(青写真)。名刺の裏は、名刺の設計図。表からは、指やマウスの近くだけ、丸い窓(ルーペ)を通して見える。
-   Lando Norris の冒頭(ポインターの近くだけ、顔の上にヘルメットが現れる)を、この事務所の言葉に読み替えたもの: 触れたところの、構造が見える。
-   ルーペは正円が一つ。中は1.6倍に拡大され、目盛り(1mmごと)と、のぞいている位置の数字(mm)が付く。
-   中身は、ご本人の顔(青写真の色調)と、仕掛け(歯車、円の上をめぐる要の点)、のぞいた人だけが見つける一文と紋。
-   大きさは、名刺の幅に対する割合で決める */
 .mc-bp { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke: #eef3f9; stroke-width: 1; }
 .mc-plan {
   position: absolute; inset: 0; overflow: hidden; transform: translateZ(.1px); pointer-events: none; visibility: hidden;
@@ -528,92 +439,67 @@ body.t-l .cur::before { background: var(--dot); }
   -webkit-mask-image: var(--m); mask-image: var(--m); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
 }
 .mc-plan-in, .mc-back { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 3%; }
-/* 窓の中心を軸に拡大する。中心の真下にあるものは、表の名刺とずれない */
 .mc-plan-in {
   position: absolute; inset: 0; transform-origin: var(--fx, 50%) var(--fy, 50%);
-  /* --fx・--fy は、窓のまん中に見せたい所。ふだんは窓の位置と同じ。顔を見せるときだけ、顔の位置にする(窓が名刺の端で欠けないように、窓は少し右に置く) */
   transform: translate(calc(var(--x1, 50%) - var(--fx, 50%)), calc(var(--y1, 50%) - var(--fy, 50%))) scale(var(--mg, 1.6));
 }
 .mc-plan .mc-name, .mc-plan .mc-title, .mc-back .mc-name, .mc-back .mc-title { position: relative; color: transparent; -webkit-text-stroke: .8px #eef3f9; }
 .mc-plan .mc-name::before, .mc-plan .mc-title::before, .mc-back .mc-name::before, .mc-back .mc-title::before { content: attr(data-t); }
-/* 小さい字は、輪郭ではなく白い字で(輪郭だけにすると、つぶれて読めない) */
 .mc-plan .mc-title, .mc-back .mc-title { color: #eef3f9; -webkit-text-stroke: 0; }
-/* 窓の縁の目盛りと、縁をめぐる針。窓に付いて動く。中心に十字は置かない(顔の上に照準のような形を重ねないため) */
 .mc-ret { position: absolute; left: var(--x1, 50%); top: var(--y1, 50%); width: calc(var(--r1, 17) * 2cqw); height: calc(var(--r1, 17) * 2cqw); margin: calc(var(--r1, 17) * -1cqw) 0 0 calc(var(--r1, 17) * -1cqw); }
 .mc-ret svg { display: block; width: 100%; height: 100%; overflow: visible; fill: none; stroke: #eef3f9; stroke-width: 1; opacity: .92; }
 .mc-ret svg * { vector-effect: non-scaling-stroke; }
-/* ピント合わせの枠。ルーペが止まると、四隅の枠がすっと締まる(カメラが被写体にピントを合わせるときの枠) */
 .mc-lock { opacity: 0; transform: scale(1.55); transition: transform .24s cubic-bezier(.2, .9, .2, 1), opacity .2s; }
 .mc-ret.lock .mc-lock { opacity: .95; transform: scale(1); }
 .mc-read { position: absolute; left: 0; right: 0; top: 77%; text-align: center; font-family: 'Jost', sans-serif; font-size: max(8px, 1.45cqw); line-height: 1; letter-spacing: .14em; color: #eef3f9; white-space: nowrap; }
-/* 名刺の裏。一回転のあいだだけ見える */
 .mc-back { position: absolute; inset: -1px; overflow: hidden; background: #0a4ea0; transform: rotateY(180deg) translateZ(3px); -webkit-backface-visibility: hidden; backface-visibility: hidden; pointer-events: none; }
 @keyframes bpMarch { to { stroke-dashoffset: -20; } }
-/* お辞儀のあと、「相談する」から輪が一度ひろがる(一本の線が「ご連絡」に着いたときの輪と、同じ合図) */
 @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(143, 185, 242, .6); } 100% { box-shadow: 0 0 0 16px rgba(143, 185, 242, 0); } }
 @media (prefers-reduced-motion: no-preference) { .hx .btn.ping { animation: ping 1.1s cubic-bezier(.2, .6, .2, 1); } }
 @media (prefers-reduced-motion: no-preference) { .bp-march { animation: bpMarch 2.6s linear infinite; } }
 @media print { .mc-plan, .mc-back { display: none; } }
-/* 要の点。名刺は、この一点の上に立つ */
 .mc-key { position: absolute; left: 50%; top: 100%; width: var(--key); height: var(--key); margin-left: calc(var(--key) / -2); border-radius: 50%; background: var(--ai); pointer-events: none; will-change: transform, opacity; }
-/* 足もとの影。点の下の面に落ちる。名刺と同じ立体の空間には入れない(傾いた名刺の裏側に、影が食い込んで見えるのを防ぐ) */
 .mc-shadow { position: absolute; left: 50%; width: calc(var(--cw) * .82); margin-left: calc(var(--cw) * -.41); top: calc(100% + var(--key) - 10px); height: 20px; border-radius: 50%; background: rgba(0, 0, 0, .58); filter: blur(11px); opacity: var(--so, .7); pointer-events: none; will-change: transform, opacity; }
-/* 挨拶のときだけ出すもの: 顔(上が丸いアーチ形の写真)と「はじめまして。」 */
 .mc-me, .mc-hello { display: none; }
-/* 挨拶のときだけ出す、丸い窓(アイリス)。要の点から開いて、背広姿のご本人を見せ、また点に閉じる。そのあと、同じ点から名刺が立つ。
-   丸い窓で人物を見せるのは、映画の古くからの手法。特定の映画の図柄(銃口の渦、銃を構える姿など)は使わない */
 .mc-me { position: absolute; left: 50%; bottom: 0; width: var(--iris); aspect-ratio: 1; margin-left: calc(var(--iris) / -2); transform-origin: 50% 100%; transform: scale(0); pointer-events: none; }
 .mc-face { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 1.5px solid rgba(238, 243, 249, .85); will-change: transform; }
 .mc-face img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; filter: saturate(.72) contrast(1.02) brightness(1.03); }
 @keyframes irisIn { from { transform: scale(0); } to { transform: scale(1); } }
 @keyframes irisOut { to { transform: scale(0); } }
 @keyframes faceIn { from { opacity: 0; transform: scale(1); } to { opacity: 1; transform: scale(1); } }
-/* 挨拶のあいだだけ使う、図形を描く面(要の点の真上) */
 .mc-cv { display: none; position: absolute; left: 50%; pointer-events: none; }
 @keyframes irisZoom { from { transform: scale(1.1); } to { transform: scale(1); } }
 .mc-hello { position: absolute; left: 0; right: 0; top: calc(100% + 62px); text-align: center; font-family: var(--mincho); font-weight: 500; font-size: 15px; letter-spacing: .38em; color: var(--ink); will-change: transform, opacity; }
 @keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes bow { 0%, 100% { transform: none; } 45% { transform: translateY(7px); } }                 /* 小さなお辞儀 */
+@keyframes bow { 0%, 100% { transform: none; } 45% { transform: translateY(7px); } }
 @keyframes offer { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes accept { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-12px); } }
-/* 名刺の差し出し方。点 → 線 → 面。
-   藍の点が転がってきて止まる。その点から、細い線(名刺の縁)が立つ。ひと呼吸おいて、線がこちらへ向き直り、名刺になる
-   (作法どおり、相手が読める向きに返して渡す)。最後に、足もとを支点に小さくお辞儀をする。跳ねたり、行き過ぎたりはさせない。
-   奥行き(-220px)と下への移動(8.46% = 220 ÷ 1300 ÷ 2)を同じ割合で変えるので、足もとは点の上から動かない。
-   線のあいだは幅を細く保つ(奥行きを持たせない)。遠近法で、線の下端が点より下へ突き出るのを防ぐため */
 @keyframes shadowIn { from { opacity: 0; } to { opacity: var(--so, .7); } }
 @keyframes keyIn { 0% { opacity: 0; transform: translateX(var(--kx)); } 14% { opacity: 1; } 100% { opacity: 1; transform: translateX(0); } }
 @keyframes present {
   0% { opacity: 0; transform: translate3d(0, 8.46%, -220px) rotateY(80deg) rotateX(0deg) scale3d(.06, 0, 1); }
-  2% { opacity: 1; transform: translate3d(0, 8.46%, -220px) rotateY(80deg) rotateX(0deg) scale3d(.06, 0, 1); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }    /* 点から */
-  15% { opacity: 1; transform: translate3d(0, 8.46%, -220px) rotateY(80deg) rotateX(0deg) scale3d(.06, 1, 1); animation-timing-function: cubic-bezier(.4, 0, .6, 1); }   /* 細い線が立つ */
-  24% { opacity: 1; transform: translate3d(0, 8.19%, -213px) rotateY(80deg) rotateX(0deg) scale3d(.1, 1, 1); animation-timing-function: cubic-bezier(.5, 0, 1, 1); }     /* ひと呼吸 */
-  29% { opacity: 1; transform: translate3d(0, 7.69%, -200px) rotateY(74deg) rotateX(0deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.2, .9, .2, 1); }    /* 線が、面にひらく */
-  62% { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.45, 0, .2, 1); }              /* 迷いなく、こちらへ向き直る */
-  80% { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(-8deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }              /* 小さくお辞儀 */
+  2% { opacity: 1; transform: translate3d(0, 8.46%, -220px) rotateY(80deg) rotateX(0deg) scale3d(.06, 0, 1); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+  15% { opacity: 1; transform: translate3d(0, 8.46%, -220px) rotateY(80deg) rotateX(0deg) scale3d(.06, 1, 1); animation-timing-function: cubic-bezier(.4, 0, .6, 1); }
+  24% { opacity: 1; transform: translate3d(0, 8.19%, -213px) rotateY(80deg) rotateX(0deg) scale3d(.1, 1, 1); animation-timing-function: cubic-bezier(.5, 0, 1, 1); }
+  29% { opacity: 1; transform: translate3d(0, 7.69%, -200px) rotateY(74deg) rotateX(0deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.2, .9, .2, 1); }
+  62% { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.45, 0, .2, 1); }
+  80% { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(-8deg) scale3d(1, 1, 1); animation-timing-function: cubic-bezier(.3, 0, .2, 1); }
   100% { opacity: 1; transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1); }
 }
 @keyframes sheen { 0% { opacity: 1; background-position: 130% 0; } 100% { opacity: 1; background-position: -30% 0; } }
-/* 触れたとき: 小さくお辞儀を返す */
 @keyframes nod { 0%, 100% { transform: rotateX(0deg); } 42% { transform: rotateX(-9deg); } }
 @media (prefers-reduced-motion: no-preference) {
-  /* 挨拶(はじめての訪問のときだけ): 顔が静かに現れ、小さくお辞儀をする → 点が転がってきて止まり、線が立ち、名刺になって差し出される → 「はじめまして。」
-     → 顔と言葉は退き、名刺は少し前へ出て、そのまま冒頭に残る */
   .card .mc-me { display: block; }
   .card .mc-hello { display: block; }
   .card .mc-hand:not(.in), .card .mc-hello, .card .mc-key, .card .mc-shadow { opacity: 0; }
-  /* 点が、丸い窓に開く → ご本人 → 窓が点に閉じる */
   .meet .mc-me { animation: irisIn .5s cubic-bezier(.2, .8, .2, 1) .8s both, irisOut .4s cubic-bezier(.6, 0, .8, .3) 2.15s forwards; }
   .meet .mc-face img { animation: irisZoom 1.9s linear .8s both; }
-  /* 名刺が出そろったら(.in)、登場の指定を外す。あとから触れたときに、登場をやり直さないため */
-  .meet .mc-key { animation: keyIn .55s cubic-bezier(.5, 1, .89, 1) .15s both; }      /* 一定の割合で遅くなって止まる(転がる球の止まり方) */
+  .meet .mc-key { animation: keyIn .55s cubic-bezier(.5, 1, .89, 1) .15s both; }
   .meet .mc-hand:not(.in) { animation: present 2.5s linear 2.5s both; }
-  .meet .mc-shadow { animation: shadowIn .9s cubic-bezier(.3, 0, .2, 1) 3.3s both; }                /* 名刺がひらくのに合わせて、影が落ちる */
+  .meet .mc-shadow { animation: shadowIn .9s cubic-bezier(.3, 0, .2, 1) 3.3s both; }
   .meet .mc-hand:not(.in) .mc-card::before { animation: sheen 1.5s cubic-bezier(.3, 0, .2, 1) 3.2s backwards; }
   .meet .mc-hello { animation: offer 1.1s cubic-bezier(.3, 0, .1, 1) 4.4s both; }
   .met .mc-hello { animation: accept .7s cubic-bezier(.4, 0, .2, 1) both; }
-  /* 新しい挨拶(o7): 点が、構造(線 → 面 → 立体 → 4次元)に開き、ふくらんで球になり、平らにほどけて、ご本人の顔に並び直る(ここまでは dim.js が描く) → 写真の丸い窓に替わる
-     → 窓が点に閉じる → 同じ点から名刺が立つ。丸い窓の出方だけを差し替え、あとの時刻を1.5秒うしろへずらす */
   .card.o7 .mc-cv { display: block; }
   .meet.o7 .mc-me { animation: faceIn .42s cubic-bezier(.3, 0, .2, 1) 2.62s both, irisOut .4s cubic-bezier(.6, 0, .8, .3) 3.7s forwards; }
   .meet.o7 .mc-face img { animation: irisZoom 1.5s linear 2.62s both; }
@@ -621,7 +507,6 @@ body.t-l .cur::before { background: var(--dot); }
   .meet.o7 .mc-shadow { animation: shadowIn .9s cubic-bezier(.3, 0, .2, 1) 4.8s both; }
   .meet.o7 .mc-hand:not(.in) .mc-card::before { animation: sheen 1.5s cubic-bezier(.3, 0, .2, 1) 4.7s backwards; }
   .meet.o7 .mc-hello { animation: offer 1.1s cubic-bezier(.3, 0, .1, 1) 5.9s both; }
-  /* 二度目からの訪問: 挨拶は省き、名刺だけが同じ作法で差し出される */
   .pre:not(.card) .mc-hand:not(.in), .pre:not(.card) .mc-key, .pre:not(.card) .mc-shadow { opacity: 0; }
   .go:not(.greeted) .mc-key { animation: keyIn .6s cubic-bezier(.5, 1, .89, 1) .1s both; }
   .go:not(.greeted) .mc-hand:not(.in) { animation: present 2.5s linear .68s both; }
@@ -629,41 +514,30 @@ body.t-l .cur::before { background: var(--dot); }
   .go:not(.greeted) .mc-hand:not(.in) .mc-card::before { animation: sheen 1.4s cubic-bezier(.3, 0, .2, 1) 1.3s backwards; }
   .mc-hand.in.nod { animation: nod .9s cubic-bezier(.4, 0, .2, 1); }
   .mc-hand.in.nod .mc-card::before { animation: sheen 1s cubic-bezier(.3, 0, .2, 1) backwards; }
-  /* 回って正面に戻った瞬間に、光が一度走る */
   .mc-hand.in.glint .mc-card::before { animation: sheen .9s cubic-bezier(.3, 0, .2, 1) backwards; }
 }
-
-/* ---- ここまでが本番の指定。以下は、試作の冒頭に置くための指定 ----
-   名刺は、右の列に、金の点(起点 ＝ ご本人)の上に立つ。大きな字には重ねない */
 .hero .mc { --gothic: var(--goth); --mincho: var(--min); --ai: var(--gold); --cw: clamp(220px, 22vw, 340px); width: var(--cw); align-self: flex-end; margin-top: calc(-1 * clamp(20px, 6vw, 96px)); margin-bottom: clamp(26px, 4vh, 40px); }
 .mc-read { font-family: var(--disp); }
 @media (prefers-reduced-motion: no-preference) {
   .hero .btn.ping { animation: ping 1.1s cubic-bezier(.2, .6, .2, 1); }
-  .hero:not(.in) .mc-hand:not(.in), .hero:not(.in) .mc-key, .hero:not(.in) .mc-shadow { opacity: 0; }      /* はじまりの合図まで、出さない */
+  .hero:not(.in) .mc-hand:not(.in), .hero:not(.in) .mc-key, .hero:not(.in) .mc-shadow { opacity: 0; }
 }
 @media (max-width: 760px) {
   .hero .mc { --cw: min(86%, 330px); align-self: center; margin-top: 34px; margin-bottom: 44px; }
 }
-
-/* ============ 足した部分の見た目(文と部品は、いまのサイトのもの) ============ */
-/* 文の中のリンク */
 .lk { color: var(--ac); text-decoration: underline; text-decoration-color: var(--dot); text-decoration-thickness: 1px; text-underline-offset: 6px; transition: color .3s; }
 .lk:hover { color: var(--dot); }
-/* 社外監査役: 説明の一文、確認事項の一文、候補者プロフィールへのリンク */
 .lead3 { margin-top: clamp(18px, 3vh, 30px); max-width: 46em; }
 .nt { padding-block: clamp(20px, 3vh, 30px); font-size: 14.5px; max-width: 54em; }
 .more2 { margin-top: 16px; font-size: 13.5px; line-height: 1.9; }
 .cols3 .lb { margin-top: 0; padding-top: 4px; font-size: 13.5px; line-height: 1.6; color: var(--ac); }
 .cols3 .more2 { margin-top: 16px; font-size: 13.5px; }
-/* お知らせ */
 .nh { display: block; margin-bottom: 4px; font-family: var(--min); font-weight: 700; font-size: 17px; letter-spacing: .06em; color: var(--fg); }
-/* ご相談の例 */
 .asks-note { font-size: 14.5px; line-height: 2; color: var(--mute); }
 .asks-h { margin-top: 26px; font-size: 12.5px; font-weight: 700; letter-spacing: .16em; color: var(--ac); }
 .asks { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 14px; }
 .asks .ask { padding: 11px 18px; border: 1px solid var(--line); font-size: 14.5px; line-height: 1.6; letter-spacing: .04em; color: var(--fg); transition: border-color .3s, background-color .3s, color .3s; }
 .asks .ask:hover, .asks .ask[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: var(--ink); }
-/* ご相談フォーム */
 .ask-form { max-width: 46em; }
 .field + .field { margin-top: 24px; }
 .field label { display: flex; align-items: baseline; gap: 12px; font-family: var(--min); font-weight: 700; font-size: 16px; letter-spacing: .08em; }
@@ -682,7 +556,6 @@ body.t-l .cur::before { background: var(--dot); }
 .form-msg { margin-top: 14px; min-height: 1.9em; font-size: 14.5px; line-height: 1.9; }
 .ask-done .contact-lead { font-family: var(--min); font-weight: 900; font-size: clamp(22px, 2.4vw, 34px); line-height: 1.5; }
 .ask-done p + p { margin-top: 10px; font-size: 15.5px; line-height: 2; color: var(--mute); }
-/* メールでの連絡 */
 .mail-lead { font-size: 15px; line-height: 2; color: var(--mute); }
 .mail { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
 .mail-addr { padding-bottom: 4px; border-bottom: 1px solid var(--gold); text-decoration: none; font-family: var(--disp); font-weight: 600; font-size: clamp(19px, 2.2vw, 30px); letter-spacing: .02em; }
@@ -693,41 +566,30 @@ body.t-l .cur::before { background: var(--dot); }
 @media (max-width: 760px) {
   .cols3 .lb { padding-top: 0; }
 }
-
-/* ---- 名刺の挨拶(はじめての訪問)。指定は、上の本番の指定をそのまま使う。試作での置き方だけを足す ----
-   「はじめまして。」は、名刺のすぐ上に出す(名刺の下には、事務所名があるため) */
 .hero .mc-hello { top: auto; bottom: calc(100% + 16px); color: var(--text-d); }
 @media (max-width: 760px) {
   .hero .mc { --iris: calc(var(--cw) * .8); margin-top: 68px; }
 }
-
-/* ============ 下層ページ(書類の3枚・お知らせの一覧・実務支援の一覧・ページが見つからないとき) ============
-   骨組みは、業務の詳細と同じ(紺の冒頭に題と前書き、生成りの帯に、左に見出し・右に中身)。ここは、その上に足す分だけ */
 .dvh-q .w { min-height: 64vh; min-height: 64svh; }
 .dv[data-k="lost"] .dvh-q .w { min-height: 84vh; min-height: 84svh; }
-/* 書類の題: 1行ずつ。いちばん長い行が幅に収まる大きさまで、js/app.js が小さくする */
 .dvh .hd.doc { font-size: clamp(24px, 4.6vw, 68px); line-height: 1.36; letter-spacing: .03em; }
 .dvh .hd.doc > .nb { display: block; white-space: nowrap; }
 .dvh .ksl { margin-top: clamp(14px, 2.4vh, 26px); padding-inline: var(--cell); font-family: var(--disp); font-weight: 600; font-size: clamp(13px, 1.1vw, 16px); letter-spacing: .1em; color: var(--gold); }
 .dvh .act { margin-top: clamp(28px, 4.4vh, 48px); padding-inline: var(--cell); }
-/* 実務支援の一覧: 目次(2組)。押すと、その節へ進む */
 .jump { margin-top: clamp(24px, 4vh, 44px); padding-inline: var(--cell); display: grid; gap: 12px; }
 .jump p { display: grid; grid-template-columns: 11.5em minmax(0, 1fr); align-items: baseline; gap: 6px 24px; font-size: 14.5px; letter-spacing: .06em; line-height: 1.8; }
 .jump b { font-weight: 700; font-size: 12.5px; letter-spacing: .14em; color: var(--gold); }
-.jump .ji { display: flex; flex-wrap: wrap; gap: 6px 24px; }      /* 折り返した項目も、項目の列にそろえる */
+.jump .ji { display: flex; flex-wrap: wrap; gap: 6px 24px; }
 .jump a { padding-bottom: 2px; color: var(--fg); text-decoration: none; background: linear-gradient(var(--gold), var(--gold)) 0 100% / 0 1px no-repeat; transition: background-size .45s var(--e), color .3s; }
 .jump a:hover { color: var(--gold); background-size: 100% 1px; }
-/* 実務支援の一覧: 組の見出し(仕組みを整える／数字と業務を整える)と、業務ごとの一言 */
 .dvs .pil { padding: clamp(44px, 7vh, 88px) var(--cell) clamp(18px, 2.4vh, 28px); font-family: var(--min); font-weight: 900; font-size: clamp(22px, 2.5vw, 40px); letter-spacing: .04em; line-height: 1.5; }
 .dvs .pil + .blk { border-top: 1px solid var(--fg); }
 .dvs .one p { max-width: 34em; font-family: var(--min); font-weight: 700; font-size: clamp(16.5px, 1.45vw, 21px); line-height: 2; letter-spacing: .05em; word-break: auto-phrase; line-break: strict; }
-/* 書類の行: 強調する行(守秘義務)と、行の中の箇条書き */
 .dvs .rw2 > .key dt { color: var(--ac); }
 .dvs .rw2 dd p + .li2, .dvs .rw2 dd .li2 + p { margin-top: 10px; }
 .dvs .li2 li { position: relative; padding: 5px 0 5px 20px; font-size: 15.5px; line-height: 2.05; color: var(--mute); }
 .dvs .li2 li::before { content: ""; position: absolute; left: 3px; top: calc(5px + 1.025em - 2.5px); width: 5px; height: 5px; border-radius: 50%; background: var(--dot); }
 .dvs .bd > .li2 { padding-block: 13px; border-block: 1px solid var(--line); }
-/* 表(成果物の見本の、課題リスト)。スマホでは、1行を1つのまとまりにして、項目の名前を上に添える */
 .dvs .tb { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.85; }
 .dvs .tb th, .dvs .tb td { padding: 12px 14px 12px 0; vertical-align: top; text-align: left; border-bottom: 1px solid var(--line); }
 .dvs .tb th { font-weight: 700; font-size: 12.5px; letter-spacing: .1em; color: var(--ac); border-bottom: 1px solid var(--fg); white-space: nowrap; }
@@ -741,7 +603,7 @@ body.t-l .cur::before { background: var(--dot); }
 .dvs .tb .p-mid { color: var(--fg); }
 .dvs .tb .p-low { color: var(--mute); font-weight: 400; }
 @media (max-width: 760px) { .jump p { grid-template-columns: minmax(0, 1fr); } }
-@media screen and (max-width: 1240px) {      /* 表の7列が読みやすい幅で並ぶのは、およそ1240pxから。それより狭い画面(タブレットを含む)は、まとまりにする */
+@media screen and (max-width: 1240px) {
   .dvs .tb thead { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .dvs .tb, .dvs .tb tbody, .dvs .tb tr, .dvs .tb td { display: block; width: auto; }
   .dvs .tb tr { padding: 16px 0; border-bottom: 1px solid var(--fg); }
@@ -753,13 +615,11 @@ body.t-l .cur::before { background: var(--dot); }
   .dvs .tb td:nth-child(2)::before { display: none; }
   .dvs .tb td:nth-child(5), .dvs .tb td:nth-child(7) { width: auto; text-align: left; }
 }
-/* 書類の終わりのボタン(PDF・共有・印刷)。印刷は、指で操作する画面では出さない(本番と同じ) */
 .dvs .acts { display: flex; flex-wrap: wrap; gap: 10px 12px; }
 .dvs .acts .pill { display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; font: inherit; font-size: 14px; letter-spacing: .08em; background: none; color: var(--fg); text-decoration: none; cursor: pointer; }
 .dvs .acts .pill:hover { border-color: var(--dot); color: var(--ac); }
 .dvs .acts + .notes { margin-top: 14px; }
 @media (max-width: 760px), (hover: none) { .dv .only-desk { display: none !important; } }
-/* 上の帯: 幅の狭いスマホ(360pxなど)で、「相談する」が右にはみ出して切れていたので、印・事務所名・ボタンを少しずつ詰める。さらに狭い画面では、事務所名を省く(印は残る) */
 @media (max-width: 400px) {
   .bar { gap: 10px; }
   .mark { gap: 10px; }
@@ -768,16 +628,11 @@ body.t-l .cur::before { background: var(--dot); }
   .bar nav .ask { padding-inline: 14px; }
 }
 @media (max-width: 345px) { .mark span { display: none; } }
-/* 結びの一行の帯(トップページの終わりと同じ一行) */
 .ft .w { padding-block: clamp(34px, 6vh, 64px) clamp(40px, 6vh, 72px); }
 .ft .foot { margin-top: 0; padding-top: 0; border-top: 0; }
-
-/* ============ 印刷(書類を、白い紙の書類として出す) ============
-   本番の「印刷する」と同じ余白と字の大きさにして、回覧用の1枚が、A4の1枚に収まるようにする。
-   画面の飾り・メニュー・ボタンは出さない。見出しは、行の左ではなく、行の上に置く(紙の幅をいっぱいに使う) */
 @media print {
   @page { size: A4; margin: 9mm 14mm; }
-  :root { color-scheme: light; }                 /* 画面は暗い地が基準。印刷では、紙の余白まで暗く塗られないように、明るい地に戻す */
+  :root { color-scheme: light; }
   html, body { background: #fff !important; }
   body { color: #111; font-size: 9pt; }
   .bg, #fig, .rail, .grain, .tr, .cur, .cur-r, .cur-t, .shot, .intro, .dv .bar, .dv .bk, .dv .nx, .dv .ft, .dv .acts, .dv .acts + .notes, .dv .jump, .dv .act { display: none !important; }
@@ -797,7 +652,7 @@ body.t-l .cur::before { background: var(--dot); }
   .dvs .blk > span.c-1 { display: none; }
   .dvs .bd > * + * { margin-top: 3pt !important; }
   .dvs .rw2 > div { grid-template-columns: 11.6em minmax(0, 1fr); gap: 0 3mm; padding-block: 1.2pt; border-top: 0; border-bottom: .2mm solid rgba(0, 0, 0, .22); break-inside: avoid; }
-  .dvs .rw2 dt { font-size: 9pt; line-height: 1.45; letter-spacing: .02em; }      /* 行の見出しは、11字(各種新会計基準対応関連)が1行に収まる幅に */
+  .dvs .rw2 dt { font-size: 9pt; line-height: 1.45; letter-spacing: .02em; }
   .dvs .rw2 dd, .dvs .li2 li, .dvs .pp p, .dvs .one p, .dvs .tb, .dvs .fn p, .dvs .nh { font-size: 9pt !important; line-height: 1.45 !important; }
   .dvs .rw2 dd p + .li2, .dvs .rw2 dd .li2 + p { margin-top: 2pt; }
   .dvs .li2 li { padding: 1.2pt 0 1.2pt 11pt; break-inside: avoid; }
@@ -814,21 +669,15 @@ body.t-l .cur::before { background: var(--dot); }
   .dvs .fe b { font-size: 12pt; }
   .dv a { color: inherit !important; text-decoration: none !important; }
 }
-
-/* 本番の候補: ほかのページから幕で移ってきたとき、最初の一瞬から幕を閉じておく(開けるのは app.js)。動きの部品が読めなくても、3秒で自分で消える */
 .trin .tr { visibility: visible; animation: trSafe 0s linear 3s forwards; }
 .trin .tr > i { transform: none; }
 @keyframes trSafe { to { visibility: hidden; } }
 @media print { .trin .tr { display: none !important; } }
-/* 書類の印刷: 候補者プロフィールの最後の2行だけが2枚目に落ちていたので、行の間隔を少しだけ詰めて、1枚に収める(ほかの書類にも、同じ詰め方) */
 @media print {
   .dv[data-k="doc"] .rw2 dt, .dv[data-k="doc"] .rw2 dd, .dv[data-k="doc"] .li2 li, .dv[data-k="doc"] .pp p, .dv[data-k="doc"] .lead2 p { line-height: 1.36 !important; }
   .dv[data-k="doc"] .blk > .lb { margin-top: 5pt; }
   .dv[data-k="doc"] .li2 li { padding-block: .8pt; }
 }
-
-/* 代表あいさつ: 銀河の真ん中の金の点(＝ご本人)から、お顔が「にゅっ」と出てくる。場面が見えたら一度だけ、自分で動く(スクロールの量には連動しない)。
-   出たあとは、そのまま残る。銀河は、お顔のまわりを巡る(粒の図の起点を、お顔の中心に合わせる。app.js) */
 #message .g { position: relative; }
 .mf { --mf: clamp(128px, 11vw, 176px); position: absolute; z-index: 1; left: 25%; top: 50%; width: var(--mf); height: var(--mf); transform: translate(-50%, -50%); pointer-events: none; }
 .mf i { display: block; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: var(--gold); border: 1.5px solid rgba(238, 243, 249, .85);
@@ -841,9 +690,6 @@ body.t-l .cur::before { background: var(--dot); }
 @media (max-width: 760px) { .mf { --mf: 116px; left: 50%; top: 168px; } }
 @media (prefers-reduced-motion: reduce) { .mf i, .mf img { animation: none !important; transform: none; opacity: 1; } }
 @media print { .mf { display: none; } }
-
-/* 業務の選択画面の一覧: 「押して選ぶもの」と一目で分かるように、ひとつずつを枠のある札にする。右に小さな矢印。
-   選んでいる札は、金の枠と、うすい金の地。押した瞬間は、少し沈む */
 .pk-sl { gap: 10px 12px; }
 .pk-s { padding: 11px 30px 11px 13px; border: 1px solid var(--line); border-radius: 3px; background: rgba(238, 243, 249, .035); cursor: pointer;
   transition: color .3s, border-color .3s, background-color .3s, transform .12s; -webkit-tap-highlight-color: transparent; }
@@ -856,8 +702,7 @@ body.t-l .cur::before { background: var(--dot); }
 .pk-s:active { transform: scale(.97); }
 .pk-s:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .pk-s:active { transform: none; } }
-.pk-sl { align-items: stretch; }                 /* 同じ行の札は、同じ高さに */
-/* 業務名のあとに、金の輪の矢印。「押すと、この業務の詳細が開く」の印(文字は足さない) */
+.pk-sl { align-items: stretch; }
 .pk-go { position: relative; display: inline-block; vertical-align: middle; width: clamp(32px, 2.7vw, 46px); height: clamp(32px, 2.7vw, 46px); margin: -.12em 0 0 .3em; border: 1px solid var(--gold); border-radius: 50%; transition: background-color .3s, transform .4s var(--e); }
 .pk-go::before { content: ""; position: absolute; left: 27%; right: 27%; top: 50%; height: 1.5px; margin-top: -.75px; background: var(--gold); transition: background-color .3s; }
 .pk-go::after { content: ""; position: absolute; right: 27%; top: 50%; width: 24%; height: 24%; margin-top: -12%; box-sizing: border-box; border-top: 1.5px solid var(--gold); border-right: 1.5px solid var(--gold); transform: translateX(-12%) rotate(45deg); transition: border-color .3s; }
@@ -865,13 +710,8 @@ body.t-l .cur::before { background: var(--dot); }
 .pk-name:hover .pk-go::before { background: var(--ink); }
 .pk-name:hover .pk-go::after { border-color: var(--ink); }
 .pk-name:active .pk-go { background: var(--gold); }
-#message .g > .mf { padding: 0; }               /* 格子の列の内側の余白(.g > *)を受けない。受けると、丸が縦長の楕円になる */
-@media (min-width: 761px) { .pk-s { padding: 10px 24px 10px 11px; } .pk-s::after { right: 10px; } }      /* 広い画面は4列で札が細いので、内側の余白を少し詰める */
-
-/* ===== 版13: 高級感・読みやすさ・「押すとどうなるか」・立体感(裏の考え: 散らかりを秩序に変える魔法使い) =====
-   文は足さない。印は形(矢印・枠・影・沈み)だけで示す。 */
-
-/* --- 読みやすさ: 小さな文字の色を濃く、割り付けの線を一段うすく(文の後ろで、線が目に障らないように) --- */
+#message .g > .mf { padding: 0; }
+@media (min-width: 761px) { .pk-s { padding: 10px 24px 10px 11px; } .pk-s::after { right: 10px; } }
 :root { --mute-d: #bfcae0; --mute-l: #39415a; --line-d: rgba(147, 182, 255, .18); --line-l: rgba(16, 23, 43, .12); --gold-hi: #f4dda0; --gold-lo: #8f6519; }
 .sc[data-th="l"] :is(.rw2 dd, .pp p, .cols3 p, .facts dd, .rx, .notes, .fn p, .st p, .note, .asks-note, .mail-lead) { font-weight: 500; }
 .dvs .rw2 dd, .cols3 p, .facts > div { font-size: 16px; }
@@ -880,29 +720,20 @@ body.t-l .cur::before { background: var(--dot); }
 .rx { font-size: 15px; } .rx i { font-size: 13px; }
 .note, .foot { font-size: 14.5px; }
 .dvs .fn p, .notes { font-size: 15px; }
-
-/* --- 立体感: 帯は、重なった紙と布。後の帯が、前の帯の上に重なって、やわらかい影を落とす --- */
 .sc[data-th="l"]::before { box-shadow: 0 -22px 48px -14px rgba(2, 5, 16, .62), inset 0 1px 0 rgba(255, 255, 255, .75); }
 .sc[data-th="d"]::before { box-shadow: 0 -24px 52px -18px rgba(11, 18, 38, .42), inset 0 1px 0 rgba(147, 182, 255, .14); }
-/* 大きな見出し: 紙の上は、刷り込んだような浅い凹凸。紺の上は、文字が少し浮く */
 .sc[data-th="l"] .hd { text-shadow: 0 1px 0 rgba(255, 255, 255, .65), 0 3px 6px rgba(16, 23, 43, .13); }
 .sc[data-th="d"] .hd, .big { text-shadow: 0 3px 8px rgba(0, 0, 0, .5); }
-/* 金の点は、光を受けた小さな珠に */
 .lb::before { background: radial-gradient(circle at 34% 30%, var(--gold-hi) 0, var(--dot) 46%, var(--gold-lo) 100%); box-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
-/* ボタン: 上の縁に光、下に影。押すと沈む */
 .btn { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .24), inset 0 -2px 0 rgba(0, 0, 0, .2), 0 14px 30px -12px rgba(26, 79, 230, .75), 0 2px 6px rgba(0, 0, 0, .22); transition: box-shadow .35s var(--e); }
 .btn:hover, .btn:focus-visible { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(0, 0, 0, .14), 0 18px 34px -12px rgba(211, 173, 90, .7), 0 3px 8px rgba(0, 0, 0, .22); }
 .btn:active { box-shadow: inset 0 2px 6px rgba(0, 0, 0, .35), 0 2px 4px rgba(0, 0, 0, .2); }
-/* 手に取れるもの(図・窓・札・写真)は、面から少し浮かせる */
 .demo { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 26px 50px -26px rgba(16, 23, 43, .5), 0 4px 12px rgba(16, 23, 43, .08); transform-style: preserve-3d; transition: transform .6s var(--e); }
 .pk-win { box-shadow: 0 34px 70px -26px rgba(0, 0, 0, .85), 0 0 0 1px rgba(211, 173, 90, .22); }
 .pk-s { box-shadow: inset 0 1px 0 rgba(238, 243, 249, .07), 0 10px 22px -14px rgba(0, 0, 0, .9); }
 .pk-s:active { box-shadow: inset 0 3px 8px rgba(0, 0, 0, .45); }
 .who img, .mf i { box-shadow: 0 0 0 5px rgba(211, 173, 90, .12), 0 18px 34px -12px rgba(0, 0, 0, .55); }
 .sc[data-th="l"] .who img { box-shadow: 0 14px 26px -12px rgba(16, 23, 43, .45); }
-
-/* --- 押すとどうなるか: リンクの行き先を、形で見分けられるように ---
-   右の矢印 → このサイトの中の別の場所へ移る / 斜めの矢印 → 別の窓で開く / 下の矢印 → ファイルを保存する、または下のフォームへ進む */
 .lk, .pill[download], .asks .ask { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath d='M0 5h14M10 1l4 4-4 4' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E"); }
 .lk[target="_blank"] { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 10L10 2M4 2h6v6' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E"); }
 .pill[download], .asks .ask { --ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 14'%3E%3Cpath d='M6 0v12M2 8l4 4 4-4' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E"); }
@@ -915,33 +746,24 @@ body.t-l .cur::before { background: var(--dot); }
 .lk:not([target]):hover::after { transform: translateX(4px); }
 .lk[target="_blank"]:hover::after { transform: translate(2px, -2px); }
 .pill[download]:hover::after, .asks .ask:hover::after { transform: translateY(2px); }
-/* よくあるご質問: 行全体が押せることを、触れたときの色で */
 .dvs summary { transition: color .3s; }
 .dvs summary:hover { color: var(--ac); }
 .dvs details[open] summary { color: var(--ac); }
-/* 入力欄: 地から一段くぼませ、枠をはっきりさせる */
 .field input, .field textarea { border-color: rgba(238, 243, 249, .3); background: rgba(255, 255, 255, .06); box-shadow: inset 0 2px 7px rgba(0, 0, 0, .38); }
 .field input:hover, .field textarea:hover { border-color: rgba(238, 243, 249, .5); }
 .field input:focus, .field textarea:focus { box-shadow: inset 0 2px 7px rgba(0, 0, 0, .3), 0 0 0 3px rgba(211, 173, 90, .22); }
 .asks .ask { box-shadow: 0 8px 18px -12px rgba(0, 0, 0, .8); }
 .asks .ask:active { transform: scale(.97); }
-
-/* --- 魔法使い: 現れるとき、少し散らかった位置と向きから、すっと所定の線の上に整う(場面が見えたら一度だけ。スクロールの量には連動しない) --- */
 @keyframes tidyIn { from { opacity: 0; transform: translate(var(--jx, 0), var(--jy, 18px)) rotate(var(--jr, 0deg)); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .dvs .blk.in .bd > *, .sc.in .rows > li, .sc.in .cols3 > div, .sc.in .facts > div, .sc.in .pr > div { animation: tidyIn 1.05s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--n, 0) * 70ms); }
-  /* 押した所に、金の輪が外から集まって、一点に収束する(散らかりを一点へ集める) */
   .shot::before { animation: shotIn .55s cubic-bezier(.3, 0, .2, 1) both; }
 }
 @keyframes shotIn { 0% { transform: scale(1.9); opacity: 0; } 35% { opacity: .9; } 100% { transform: scale(.12); opacity: 0; } }
 @media print { .lk::after, .pill::after, .asks .ask::after { display: none; } .sc::before { box-shadow: none !important; } .hd { text-shadow: none !important; } }
-
-/* ===== 版14: 自然と読ませ、相談まで導く ===== */
-/* 大事な一句: 金のマーカーが、左から「しゃっ」と引かれる(行の下半分だけ。うるさくない濃さ) */
 mark.mk { color: inherit; background: linear-gradient(transparent 56%, rgba(211, 173, 90, .46) 56%, rgba(211, 173, 90, .46) 92%, transparent 92%) no-repeat 0 0 / 0% 100%; padding-inline: .06em; transition: background-size .62s cubic-bezier(.65, 0, .25, 1); }
 .sc[data-th="d"] mark.mk { background-image: linear-gradient(transparent 58%, rgba(211, 173, 90, .38) 58%, rgba(211, 173, 90, .38) 92%, transparent 92%); }
 mark.mk.on { background-size: 100% 100%; }
-/* いつも見える「相談する」: 右下に、お顔と一緒に。出るときは、にゅっと */
 .fab { position: fixed; z-index: 70; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 10px)); display: flex; align-items: center; gap: 12px; padding: 6px 22px 6px 6px;
   border: 1px solid rgba(211, 173, 90, .55); border-radius: 999px; background: rgba(11, 18, 38, .86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: #f3efe4; text-decoration: none;
   font-family: var(--min); font-weight: 700; font-size: 15px; letter-spacing: .14em; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 16px 34px -12px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .3);
@@ -956,22 +778,17 @@ mark.mk.on { background-size: 100% 100%; }
 @media (max-width: 760px) { .fab { gap: 10px; padding: 5px 18px 5px 5px; font-size: 14px; } .fab-me { width: 42px; height: 42px; } .fab-t::after { width: 16px; margin-left: 9px; } }
 @media (prefers-reduced-motion: reduce) { .fab { transition: opacity .2s, visibility 0s; transform: none; } mark.mk { transition: none; } }
 @media print { .fab { display: none !important; } mark.mk { background: none !important; } }
-
-/* ===== 版15: 金の玉に付いて読み進めると、最後にご本人と話したくなる ===== */
-/* 冒頭の巨大な標語: 厚みのある立体の字(層を重ねた影で、奥へ伸びる側面を作る)。光の向きは --ex・--ey(app.js) */
 .big { transform-style: preserve-3d; will-change: transform; }
 .big i { text-shadow:
   calc(var(--ex, 0) * 1px) calc(var(--ey, 2.4) * 1px) 0 #24356f, calc(var(--ex, 0) * 2px) calc(var(--ey, 2.4) * 2px) 0 #1f2f64, calc(var(--ex, 0) * 3px) calc(var(--ey, 2.4) * 3px) 0 #1a2858,
   calc(var(--ex, 0) * 4px) calc(var(--ey, 2.4) * 4px) 0 #16224c, calc(var(--ex, 0) * 5px) calc(var(--ey, 2.4) * 5px) 0 #121c41, calc(var(--ex, 0) * 6px) calc(var(--ey, 2.4) * 6px) 0 #0f1737,
   calc(var(--ex, 0) * 8px) calc(var(--ey, 2.4) * 9px) 26px rgba(0, 0, 0, .55); }
-/* 場面の大きな番号: 場面に入ると、下から金が満ちる(見た場面の印)。満ちた番号は、少し浮いて影を落とす */
 .bn { background: linear-gradient(to top, rgba(var(--bnf, 211, 173, 90), var(--bna, .44)) 50%, rgba(211, 173, 90, 0) 50%) 0 0 / 100% 200% no-repeat; -webkit-background-clip: text; background-clip: text;
   transition: background-position 1.5s cubic-bezier(.3, 0, .1, 1) .2s, filter .8s .9s; }
-.sc[data-th="l"] .bn { --bnf: 168, 122, 30; --bna: .3; }      /* 紙の上は、淡い金(満ちても、読む邪魔をしない) */
+.sc[data-th="l"] .bn { --bnf: 168, 122, 30; --bna: .3; }
 .bn.got { background-position: 0 100%; filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, .12)); }
 .sc[data-th="d"] .bn.got { filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, .45)); }
 .bn.now { transition: none; }
-/* 背表紙: 場面ごとの点。見た場面は金、いまの場面は大きく光る。触れると場面の名前、押すとその場面へ */
 .rail .rd { position: absolute; left: -4px; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; border: 1px solid rgba(147, 182, 255, .55); background: var(--ink); z-index: 1; cursor: pointer; transition: background-color .5s, border-color .5s, transform .4s var(--e); }
 .rail .rd.seen { border-color: var(--gold); background: radial-gradient(circle at 34% 30%, var(--gold-hi), var(--gold) 50%, var(--gold-lo)); }
 .rail .rd.now { transform: scale(1.45); box-shadow: 0 0 0 4px rgba(211, 173, 90, .18); }
@@ -981,15 +798,12 @@ mark.mk.on { background-size: 100% 100%; }
 .rail .rd:hover::after { opacity: 1; transform: translate(0, -50%) scale(.625); transform-origin: 0 50%; }
 .rail.dvv .rd { display: none; }
 .rail i::after { z-index: 2; box-shadow: 0 0 10px 2px rgba(211, 173, 90, .45); }
-/* 寄り添う星の点線の輪: ここを押すと、粒が集まる、の合図 */
 .cur-r::after { content: ""; position: absolute; left: -23px; top: -23px; width: 46px; height: 46px; border-radius: 50%; border: 1px dashed rgba(var(--hl), .8); opacity: 0; transform: scale(.5); transition: opacity .3s, transform .45s var(--e); }
 .cur-r.mg::after { opacity: 1; transform: scale(1); animation: mgSpin 7s linear infinite; }
 .cur-r.mg.dn::after { transform: scale(.3); transition-duration: .15s; }
 @keyframes mgSpin { to { rotate: 360deg; } }
-/* 読んでいる行: マウスを乗せると、うすく金に照らされ、金の点がそこを指す */
 .rdg { background: linear-gradient(90deg, rgba(211, 173, 90, .12), rgba(211, 173, 90, 0) 75%); transition: background-color .3s; }
 .sc[data-th="d"] .rdg { background: linear-gradient(90deg, rgba(211, 173, 90, .1), rgba(211, 173, 90, 0) 75%); }
-/* 右下の相談: はじめて出るとき、飛んできた金の点が、ふくらんで、お顔になる */
 .orb-fly { position: fixed; left: 0; top: 0; z-index: 72; width: 15px; height: 15px; margin: -7.5px 0 0 -7.5px; border-radius: 50%; pointer-events: none;
   background: radial-gradient(circle at 34% 30%, #fff0c4 0, #e6c170 45%, #a77b26 100%); box-shadow: 0 0 22px 6px rgba(214, 171, 76, .5); }
 .fab-me { background: radial-gradient(circle at 34% 30%, #fff0c4 0, #e6c170 45%, #a77b26 100%); transform-style: preserve-3d; }
@@ -1001,21 +815,16 @@ mark.mk.on { background-size: 100% 100%; }
 .fab-me { position: relative; }
 @media (prefers-reduced-motion: reduce) { .big { transform: none !important; } .bn { transition: none; } .cur-r.mg::after { animation: none; } }
 @media print { .bn { background: none !important; filter: none !important; } .big i { text-shadow: none !important; } }
-@media (max-width: 760px) { .fab { right: 12px; padding: 4px 15px 4px 4px; font-size: 13px; gap: 8px; } .fab-me { width: 36px; height: 36px; } .fab-t::after { width: 12px; margin-left: 7px; } }      /* スマホ: 本文にかかる面積を小さく */
-
-/* ===== 版16: シャッ！ときて、ニュッ！とくる ===== */
-/* マーカー: 2色目は藍(事実・数字)。引く速さは「シャッ」。引かれた一句は、字も一段濃くなる */
+@media (max-width: 760px) { .fab { right: 12px; padding: 4px 15px 4px 4px; font-size: 13px; gap: 8px; } .fab-me { width: 36px; height: 36px; } .fab-t::after { width: 12px; margin-left: 7px; } }
 mark.mk { transition: background-size .46s cubic-bezier(.75, 0, .2, 1), color .3s .3s; }
 mark.mk.on { color: var(--fg); }
 mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230, .27) 56%, rgba(26, 79, 230, .27) 92%, transparent 92%); }
 .sc[data-th="d"] mark.mk-b { background-image: linear-gradient(transparent 58%, rgba(147, 182, 255, .34) 58%, rgba(147, 182, 255, .34) 92%, transparent 92%); }
 @media (prefers-reduced-motion: no-preference) {
-  /* 見出し: 金の帯が左から「シャッ」と走り、抜けたあとに字が現れる(行ごとに少しずつ遅れて) */
   .hd > .nb { position: relative; }
   .hd > .nb::after { content: ""; position: absolute; left: 0; right: 0; top: .08em; bottom: .1em; background: linear-gradient(90deg, var(--dot), color-mix(in srgb, var(--dot) 70%, #fff)); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
   .sc.in .hd > .nb::after { animation: wipeBar .8s cubic-bezier(.7, 0, .2, 1) both; animation-delay: calc(var(--n, 0) * 130ms + .08s); }
   .sc.in .hd > .nb > span { animation: wipeTxt .8s linear both; animation-delay: calc(var(--n, 0) * 130ms + .08s); }
-  /* 部品は「ニュッ」と出る(弾んで、所定の大きさに収まる) */
   .sc.in .act .btn { animation: nyu .8s cubic-bezier(.22, 1.55, .36, 1) .55s backwards; }
   .sc.in .lb::before { animation: nyu .7s cubic-bezier(.22, 1.9, .36, 1) .1s backwards; }
   .sc.in .who img, .dvs .blk.in .who img { animation: nyu .85s cubic-bezier(.22, 1.5, .36, 1) .35s backwards; }
@@ -1026,20 +835,12 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
 @keyframes wipeTxt { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
 @keyframes nyu { 0% { transform: scale(.2); opacity: 0; } 55% { opacity: 1; } 100% { transform: none; opacity: 1; } }
 @keyframes nyuX { 0% { transform: translateX(-14px) scale(.85); opacity: 0; } 100% { transform: none; opacity: 1; } }
-/* 小さな金の点(札の頭・飛ぶ玉・右下のお顔の地)も、大きな金の玉と同じ質感に */
 .lb::before { background: radial-gradient(circle at 34% 30%, #fffaf0 0, #ffe6a3 16%, var(--dot) 48%, var(--gold-lo) 82%, #6f4a10 100%); }
 .orb-fly { background: radial-gradient(circle at 34% 30%, #fffaf0 0, #ffe6a3 16%, #e3b65a 48%, #a8771f 80%, #6f4a10 100%); }
 .orb-fly::after { content: ""; position: absolute; left: 18%; top: 16%; width: 34%; height: 20%; border-radius: 50%; background: rgba(255, 255, 255, .9); transform: rotate(-35deg); }
-
-/* ===== 版17: 考えに合わせた磨き込み(色の意味をそろえる) =====
-   金 = ご本人とその手(金の玉・思いのマーカー・見出しの帯・読んだ証・お顔の輪)。飾りには使わない。
-   藍 = 事実と行動(事実のマーカー・押して進む物・まだ読んでいない点) */
-/* 割り付けの線の端の印: 金(飾り)をやめ、線の色に */
 .sc { --tick: rgba(147, 182, 255, .55); } .sc[data-th="l"] { --tick: rgba(16, 23, 43, .38); }
 .w::after { background: linear-gradient(to right, var(--tick) 9px, transparent 9px) -4px 0 / 25% 1px repeat-x, linear-gradient(to right, var(--tick) 9px, transparent 9px) -4px 100% / 25% 1px repeat-x; }
-/* 代表あいさつのお顔の輪: 金(ご本人)に */
 .mf i { border-color: var(--gold); }
-/* 業務の選択画面: 選んでいる札・自分で進む線・詳細へ進む矢印は、押して進む物なので藍に */
 .pk-s[aria-pressed="true"] { border-color: var(--sky); background: rgba(147, 182, 255, .1); }
 .pk-s[aria-pressed="true"]::after { color: var(--sky); }
 .pk-s::before { background: var(--sky); }
@@ -1049,13 +850,9 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
 .pk-go::before { background: var(--sky); }
 .pk-go::after { border-color: var(--sky); }
 .pk-name:hover .pk-go, .pk-name:focus-visible .pk-go, .pk-name:active .pk-go { background: var(--sky); }
-
-/* ===== 版20: 金の玉の品質と、相談へ導く仕掛け =====
-   金の玉の絵(--orb-d: 紺の上用 / --orb-l: 紙の上用)は、js/fig.js が光の計算で一度だけ作って配る。
-   画面じゅうの金の点(札の頭・背表紙・飛ぶ玉・お顔の輪・幕の点)が、すべて同じ一つの玉になる。絵が無いときは、いままでの塗りに戻る */
 .lb::before { width: 9px; height: 9px; background: var(--orb-d, radial-gradient(circle at 34% 30%, #fffaf0 0, #ffe6a3 16%, var(--dot) 48%, var(--gold-lo) 82%, #6f4a10 100%)) center / 100% 100% no-repeat; box-shadow: none; }
 .sc[data-th="l"] .lb::before { background-image: var(--orb-l, radial-gradient(circle at 34% 30%, #fffaf0 0, #ffe6a3 16%, var(--dot) 48%, var(--gold-lo) 82%, #6f4a10 100%)); filter: drop-shadow(0 1px 1px rgba(58, 38, 6, .4)); }
-.back::before { width: 26px; height: 1px; background: var(--gold); filter: none; }      /* 「戻る」の頭は、玉ではなく金の線(いままでどおり) */
+.back::before { width: 26px; height: 1px; background: var(--gold); filter: none; }
 .back:hover::before { width: 44px; }
 .rail i::after { width: 10px; height: 10px; left: -4.5px; margin-top: -5px; background: var(--orb-d, var(--gold)) center / 100% 100% no-repeat; }
 .rail .rd.seen { border-color: transparent; background: var(--orb-d, var(--gold)) center / 100% 100% no-repeat; }
@@ -1063,35 +860,25 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
 .orb-fly::after { display: none; }
 .tr-d, .intro i { background: var(--orb-d, var(--gold)) center / 100% 100% no-repeat; }
 .demo b { background: var(--orb-l, var(--gold-d)) center / 100% 100% no-repeat; box-shadow: 0 2px 3px rgba(58, 38, 6, .35), 0 0 0 6px rgba(214, 171, 76, .16); }
-/* お顔は、金の玉の中に現れる: 写真のまわりに、玉の縁がそのまま金の輪として残る */
 .mf i { border: 0; padding: clamp(3px, .32vw, 5px); background: var(--orb-d, var(--gold)) center / 100% 100% no-repeat; }
 .mf img { border-radius: 50%; }
 .fab-me { border: 0; padding: 2.5px; background: var(--orb-d, radial-gradient(circle at 34% 30%, #fff0c4 0, #e6c170 45%, #a77b26 100%)) center / 100% 100% no-repeat; box-shadow: 0 0 0 3px rgba(211, 173, 90, .14); }
 .fab-me img { border-radius: 50%; }
 .fab-me::after { inset: 2.5px; }
-
-/* 区切りの合図: 右下の相談が、一度だけ弾んで、金の輪がひろがる */
 .fab.nudge { animation: fabNudge 1s cubic-bezier(.22, 1.5, .36, 1); }
 @keyframes fabNudge { 0% { transform: none; outline: 2px solid rgba(211, 173, 90, .9); outline-offset: 0; } 38% { transform: translateY(-4px) scale(1.07); } 100% { transform: none; outline: 2px solid rgba(211, 173, 90, 0); outline-offset: 18px; } }
-/* 読了のごほうび: 背表紙の点が上から順に弾み、「相談する」に金の輪 */
 .fin .rail .rd { animation: rdWave .7s cubic-bezier(.22, 1.5, .36, 1); animation-delay: calc(var(--i, 0) * 70ms); }
 @keyframes rdWave { 50% { transform: scale(2.2); box-shadow: 0 0 0 5px rgba(211, 173, 90, .3); } }
 .fin #contact .act .btn, .ask-form.ready .ask-send { animation: cheer 1.15s cubic-bezier(.22, 1.5, .36, 1) .3s; }
 @keyframes cheer { 0% { outline: 2px solid rgba(211, 173, 90, .95); outline-offset: 0; } 40% { scale: 1.06; } 100% { scale: 1; outline: 2px solid rgba(211, 173, 90, 0); outline-offset: 24px; } }
-/* フォーム: 入力が済んだ欄の見出しに、金の玉が灯る(ニュッ) */
 .field label::after { content: ""; flex: none; align-self: center; width: 11px; height: 11px; border-radius: 50%; background: var(--orb-d, var(--gold)) center / 100% 100% no-repeat; transform: scale(0); opacity: 0; transition: transform .55s cubic-bezier(.22, 1.9, .36, 1), opacity .25s; }
 .field.ok label::after { transform: none; opacity: 1; }
 .field.ok input, .field.ok textarea { border-color: rgba(211, 173, 90, .6); }
 @media (prefers-reduced-motion: reduce) { .fab.nudge, .fin .rail .rd, .fin #contact .act .btn, .ask-form.ready .ask-send { animation: none; } }
 @media print { .field label::after { display: none; } }
-
-/* ===== 版21: ポインタの位置に、飾りを置かない(ご指摘「ポインタの、カーソル部分の星でみづらい。気が散る」) =====
-   星・芯の点・縦の線・尾は出さない。残すのは、少し遅れて付いてくる淡いにじみだけ(ポインタの先を隠さない)。
-   粒が集まる所の点線の輪は、回さず、淡く */
 .cur, .cur-t { display: none !important; }
 .cur-r::before { opacity: .55; }
 .cur-r.mg::after { animation: none; opacity: .5; }
-/* 書類の印刷: 経歴の行が2つ増えたので、候補者プロフィールが1枚に収まるよう、行の間隔をもう少しだけ詰める */
 @media print {
   .dv[data-k="doc"] .rw2 dt, .dv[data-k="doc"] .rw2 dd, .dv[data-k="doc"] .li2 li, .dv[data-k="doc"] .pp p, .dv[data-k="doc"] .lead2 p { line-height: 1.3 !important; }
   .dv[data-k="doc"] .blk > .lb { margin-top: 3.6pt; padding-bottom: 1.4pt !important; }
@@ -1099,9 +886,6 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
   .dv[data-k="doc"] .li2 li { padding-block: .5pt; }
   .dv[data-k="doc"] .dvh .hd.doc { font-size: 15.5pt !important; line-height: 1.3; }
 }
-
-/* ===== 版22: 金の玉は、輪郭のない淡い光に(ご指摘「もっと薄くて上品で、ボヤッとした感じ、神々しくもある感じ。サイトが主役」) =====
-   画面じゅうの金の点を、縁の無い、にじんだ金の灯りにする。くっきりした玉の絵(--orb-d / --orb-l)は使わない */
 :root { --glow-d: radial-gradient(circle, rgba(255, 248, 228, .95) 0, rgba(246, 214, 140, .7) 26%, rgba(226, 184, 100, .28) 52%, rgba(226, 184, 100, 0) 72%);
         --glow-l: radial-gradient(circle, rgba(196, 148, 46, .78) 0, rgba(200, 154, 54, .46) 32%, rgba(204, 160, 62, .16) 56%, rgba(204, 160, 62, 0) 74%); }
 .lb::before { width: 15px; height: 15px; margin: 0 -3px; background: var(--glow-d); box-shadow: none; filter: none; }
@@ -1115,24 +899,18 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
 .tr-d, .intro i { background: var(--glow-d); box-shadow: 0 0 30px 8px rgba(238, 200, 120, .26); }
 .demo b { width: 20px; height: 20px; margin: -10px 0 0 -10px; background: var(--glow-l); box-shadow: none; }
 .field label::after { width: 15px; height: 15px; background: var(--glow-d); }
-/* お顔のまわりは、金の輪ではなく、やわらかい後光 */
 .mf i { padding: 0; background: radial-gradient(circle, #fff7e2 0, #f3d99c 60%, #e2bd72 100%); box-shadow: 0 0 0 1px rgba(244, 221, 160, .55), 0 0 34px 10px rgba(238, 200, 120, .3), 0 0 90px 30px rgba(238, 200, 120, .12); }
 .fab-me { padding: 0; background: radial-gradient(circle, #fff7e2 0, #f3d99c 60%, #e2bd72 100%); box-shadow: 0 0 0 1px rgba(244, 221, 160, .6), 0 0 16px 3px rgba(238, 200, 120, .28); }
 .fab-me::after { inset: 0; }
 @media print { .lb::before { background: #8a6a1e !important; width: 6px; height: 6px; margin: 0; border-radius: 50%; } }
-
-/* ===== 版23: 年間最優秀の作りから、型だけを借りる(主役はサイトの中身。文は足さない) ===== */
-/* 1. 見出しの要の一語: 紙の上は藍、紺の上は金。目が、最初にそこへ行く */
 .kw { font-style: normal; color: var(--blue); }
 .sc[data-th="d"] .kw { color: var(--gold); }
-/* 2. 手書きの丸: 金の線で「無料」を囲む。端正な組みの中の、一点の反骨。場面が出たあとに、一度だけ引かれる */
 .hc { position: relative; display: inline-block; color: var(--fg); }
 .hc svg { position: absolute; left: -.62em; top: -.5em; width: calc(100% + 1.24em); height: calc(100% + 1em); overflow: visible; transform: rotate(-4deg); pointer-events: none; }
 .hc path { fill: none; stroke: var(--gold); stroke-width: 1.8; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
 .sc.in .hc path { animation: hcDraw .75s cubic-bezier(.6, 0, .2, 1) 1.9s forwards; }
 .hero.in .hc path { animation-delay: 3.4s; }
 @keyframes hcDraw { to { stroke-dashoffset: 0; } }
-/* 3. 代表あいさつの背: 大きな線書きの標語が、左右から入ってきて止まる(動き続けない) */
 .bt { position: absolute; left: 0; top: 0; bottom: 0; width: 54%; z-index: 0; overflow: hidden; pointer-events: none; }
 .bt span { position: absolute; left: 0; white-space: nowrap; font-family: var(--disp); font-stretch: 125%; font-weight: 800; font-size: clamp(120px, 15.5vw, 290px); line-height: .9; letter-spacing: -.035em; color: transparent; -webkit-text-stroke: 1px rgba(147, 182, 255, .13); opacity: 0; }
 .bt span:first-child { top: 9%; transform: translateX(-24%); }
@@ -1140,74 +918,49 @@ mark.mk-b { background-image: linear-gradient(transparent 56%, rgba(26, 79, 230,
 .sc.in .bt span { animation: btIn 2.4s cubic-bezier(.16, 1, .3, 1) .2s forwards; }
 @keyframes btIn { to { opacity: 1; transform: translateX(-6%); } }
 @media (max-width: 760px) { .bt { width: 100%; height: 400px; bottom: auto; } .bt span { font-size: 33vw; } .bt span:first-child { top: 70px; } .bt span:last-child { bottom: 20px; } }
-/* 4. 結び: 事務所名を、画面いっぱいの線書きで(真ちゅうの表札)。見えたら、光が一度だけ走る */
 .foot { display: block; }
 .foot span:first-child { display: block; margin-bottom: 12px; font-family: var(--min); font-weight: 900; font-size: min(calc((100vw - var(--rail) - var(--gut) * 2 - var(--cell) * 2) / 12.5), 122px); line-height: 1.25; letter-spacing: .03em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(211, 173, 90, .6);
   background: linear-gradient(100deg, rgba(244, 221, 160, 0) 42%, rgba(244, 221, 160, .9) 50%, rgba(244, 221, 160, 0) 58%) 140% 0 / 300% 100% no-repeat; -webkit-background-clip: text; background-clip: text; }
 .sc.in .foot span:first-child, .blk.in ~ .foot span:first-child { animation: foilOnce 2.6s ease .5s 1 forwards; }
 @keyframes foilOnce { to { background-position: -140% 0; } }
-/* 5. 読んでいる行のほかを、少し沈める(PC。マウスを乗せた行だけが、はっきり見える) */
 @media (hover: hover) and (pointer: fine) {
   .dvs .rw2 > div, .facts > div, .dvs details, .cols3 > div, .pk-s { transition: filter .35s, color .3s, border-color .3s, background-color .3s, transform .12s; }
   .dvs .rw2:hover > div:not(:hover), .facts:hover > div:not(:hover), .dvs .fq:hover > details:not(:hover):not([open]), .cols3:hover > div:not(:hover) { filter: opacity(.5); }
 }
-/* 場面の主なボタン: 出そろったあとに、光が一度だけ走る(次に押す所へ、目を連れていく) */
 .sc.in .act .btn { background-image: linear-gradient(105deg, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, .34) 50%, rgba(255, 255, 255, 0) 62%); background-size: 260% 100%; background-repeat: no-repeat; background-position: 170% 0; }
 @media (prefers-reduced-motion: no-preference) { .sc.in .act .btn { animation: nyu .8s cubic-bezier(.22, 1.55, .36, 1) .55s backwards, sheen 1.25s ease 1.6s 1 forwards; } }
 @keyframes sheen { to { background-position: -170% 0; } }
-/* 細部: 文字を選んだときの色、スクロールバー、冒頭の「下へ」の合図 */
 ::selection { background: var(--gold); color: var(--ink); }
 html { scrollbar-color: rgba(211, 173, 90, .55) #0b1226; scrollbar-width: thin; }
 #top::after { content: ""; position: absolute; z-index: 2; left: 50%; bottom: 14px; width: 1px; height: 52px; background: linear-gradient(to bottom, rgba(211, 173, 90, 0), var(--gold)); transform-origin: 50% 0; animation: drip 2.8s cubic-bezier(.7, 0, .2, 1) 4s infinite both; pointer-events: none; }
 @keyframes drip { 0% { transform: scaleY(0); transform-origin: 50% 0; } 45% { transform: scaleY(1); transform-origin: 50% 0; } 55% { transform: scaleY(1); transform-origin: 50% 100%; } 100% { transform: scaleY(0); transform-origin: 50% 100%; } }
 @media (prefers-reduced-motion: reduce) { .hc path { stroke-dashoffset: 0; animation: none !important; } .bt span { opacity: 1; animation: none !important; } #top::after { animation: none; transform: none; } }
 @media print { .hc svg, .bt, #top::after { display: none !important; } .foot span:first-child { -webkit-text-stroke: 0; color: #111; font-size: 12pt; background: none; } .kw { color: inherit !important; } }
-
-/* ===== 版23b ===== */
-/* 代表あいさつ: これから読む文は淡く、読む位置まで来た文は濃く(一字ずつ、順に満ちる)。動きを止める設定のときは、はじめから全部濃い */
 .ms p .ch { opacity: .3; transition: opacity .5s ease; }
 .ms p .ch.lit { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .ms p .ch { opacity: 1; } }
 @media print { .ms p .ch { opacity: 1 !important; } }
-/* 部品は、下からせり上がってきて、整う(「スクロールしたら、下から出てくる感」)。行き過ぎてから、戻る */
 @keyframes tidyIn { from { opacity: 0; transform: translate(var(--jx, 0), var(--jy, 96px)) rotate(var(--jr, 0deg)); } 62% { opacity: 1; transform: translate(0, -7px) rotate(0deg); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .dvs .blk.in .bd > *, .sc.in .rows > li, .sc.in .cols3 > div, .sc.in .facts > div, .sc.in .pr > div { animation-duration: .95s; animation-timing-function: cubic-bezier(.2, .9, .3, 1); animation-delay: calc(var(--n, 0) * 85ms); }
 }
-
-/* ===== 版23c: スマホでは、結びの事務所名の線を細く(小さな字で線が太いと、にじんで読みにくい) ===== */
 @media (max-width: 760px) { .foot span:first-child { font-weight: 700; -webkit-text-stroke: .6px rgba(222, 188, 112, .85); letter-spacing: .05em; } }
-
-/* ===== 版24 ===== */
-/* 結び: 冒頭と同じロゴと事務所名(線書きの大きな事務所名は、やめた。ご指摘「このデザインダサい。冒頭のロゴと事務所名でいい」) */
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
 .foot span:first-child { display: inline-flex; align-items: center; gap: 14px; margin: 0; font-family: var(--min); font-weight: 700; font-size: 15px; line-height: 1.6; letter-spacing: .14em; white-space: nowrap; color: var(--fg); -webkit-text-stroke: 0; background: none; -webkit-background-clip: border-box; background-clip: border-box; animation: none !important; }
 .foot span:first-child::before { content: "KS"; display: grid; place-items: center; flex: none; width: 38px; height: 38px; border: 1px solid var(--gold); border-radius: 50%; font-family: var(--disp); font-weight: 700; font-size: 13px; letter-spacing: .04em; color: var(--gold); }
 @media (max-width: 760px) { .foot span:first-child { gap: 10px; font-size: 12.5px; letter-spacing: .04em; -webkit-text-stroke: 0; } .foot span:first-child::before { width: 34px; height: 34px; font-size: 12px; } }
 @media print { .foot span:first-child { color: #111; font-size: 11pt; } .foot span:first-child::before { display: none; } }
-
-/* 大事なところは、手で書いた字で(ご指示「魂が伝わる手書きっぽい感じ。熱いソウルが届くような」)。
-   決まりは一つ: 金のマーカーの一句(思い・約束)と、ご本人の言葉の大きな一行は、筆の字。事実(藍のマーカー)と本文は、活字のまま。
-   お名前(署名)は、活字のまま。手書きに見せた署名は、作らない */
 :root { --hand: "Yuji Syuku", "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 mark.mk:not(.mk-b) { font-family: var(--hand); font-weight: 400; font-synthesis: none; font-size: 1.12em; letter-spacing: .03em; }
 .jp, .qt, #contact .hd { font-family: var(--hand); font-weight: 400; font-synthesis: none; }
 .jp { font-size: clamp(20px, 2vw, 31px); letter-spacing: .08em; }
 .qt { font-size: clamp(24px, 3.1vw, 48px); line-height: 1.55; }
-
-/* ===== 版25: 立体感を、読む場面にも通す(ご指示「3Dのかっこよさ。世界最高峰のUXUI。全体分析して、最高なものに」) =====
-   全体を見た結果: 立体感が冒頭・業務・ご連絡に集まり、読む場面(社外監査役の下半分・実務支援・原則)が平たい。
-   決まりは一つ: 「紙は、寝た姿から起き上がる。起きた紙には、厚みと影がある」。光は左上から、影は右下へ(これまでの決まりのまま) */
-
-/* 1. 部品は、寝かせた姿から、奥行きをもって起き上がる(下から出て、整う) */
 @keyframes tidyIn {
   from { opacity: 0; transform: perspective(900px) translate(var(--jx, 0), var(--jy, 96px)) rotateX(-40deg) rotate(var(--jr, 0deg)); }
   62% { opacity: 1; transform: perspective(900px) translate(0, -7px) rotateX(4deg) rotate(0deg); }
   to { opacity: 1; transform: none; }
 }
 .dvs .blk .bd > *, .sc .rows > li, .sc .cols3 > div, .sc .facts > div, .sc .pr > div { transform-origin: 50% 100%; }
-
-/* 2. 社外監査役の六つの札: 重ねた紙の厚みと、右下に落ちる影。マウスを乗せると、少し持ち上がる */
 .sc[data-th="l"] .cols3 > div:not(.c-1) { position: relative; margin: 16px 14px 18px 0; padding: 22px 22px 24px; border: 0; border-radius: 3px 14px 14px 14px; background: linear-gradient(180deg, #fffdf8, #f8f4eb);
   box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(20, 27, 46, .07), 3px 4px 0 #e6dfcf, 6px 8px 0 #dbd3c1, 18px 26px 34px -18px rgba(20, 27, 46, .4); }
 .sc[data-th="l"] .cols3 h3 { color: var(--text-l); font-size: 19px; letter-spacing: .06em; line-height: 1.6; }
@@ -1219,32 +972,20 @@ mark.mk:not(.mk-b) { font-family: var(--hand); font-weight: 400; font-synthesis:
   .sc[data-th="l"] .cols3 > div:not(.c-1):hover h3::after { width: 64px; }
 }
 @media (max-width: 760px) { .sc[data-th="l"] .cols3 > div:not(.c-1) { margin: 12px 8px 20px 0; border-top: 0; } }
-
-/* 3. 原則の大きな字: 冒頭の標語と同じ、厚みのある字(影は右下) */
 .pr h3 { text-shadow: .012em .02em 0 #1a45c4, .024em .04em 0 #183fb6, .036em .06em 0 #1539a6, .048em .08em 0 #123396, .06em .1em 0 #102d87, .072em .12em 0 #0e2878, .16em .26em .32em rgba(16, 40, 120, .3); }
-
-/* 4. 実務支援の図: 机に置いた一枚の板のように、少し傾けて厚みを見せる。マウスを乗せると、こちらを向く */
 .demo { border-radius: 6px; transform: perspective(1200px) rotateX(7deg) rotateY(-11deg); transform-origin: 62% 50%; transition: transform .9s cubic-bezier(.16, 1, .3, 1), box-shadow .6s;
   box-shadow: 1px 1px 0 #e9e3d4, 3px 4px 0 #ded6c4, 6px 8px 0 #d3cab6, 34px 48px 54px -28px rgba(20, 27, 46, .48); }
 @media (hover: hover) and (pointer: fine) { .demo:hover { transform: perspective(1200px) rotateX(0deg) rotateY(0deg); } }
 @media (max-width: 760px) { .demo { transform: perspective(900px) rotateX(5deg) rotateY(-6deg); } }
-
 @media print { .sc[data-th="l"] .cols3 > div:not(.c-1) { box-shadow: none; background: none; margin: 0; padding-inline: 0; } .demo { transform: none; box-shadow: none; } .pr h3 { text-shadow: none; } }
-
-/* ===== 版25b: 手で書いた感じを、ふんだんに(ご指示「手書きで書いた感じはふんだんに取り入れて。AIが作った感じは微塵も感じさせないように」) =====
-   決まり: ご本人の声(見出し・あいさつの手紙・約束の一句)は、筆の字。説明と事実(表・質問・業務の名前)は、活字。お名前は活字のまま(手書きに見せた署名は作らない) */
 .hd, .cols3 h3, .pr .sm, .ms p { font-family: var(--hand); font-weight: 400; font-synthesis: none; }
 .hd { letter-spacing: .02em; }
 .sc[data-th="l"] .cols3 h3 { font-size: 22px; letter-spacing: .04em; }
 .pr .sm { font-size: clamp(21px, 1.9vw, 28px); letter-spacing: .12em; }
 .ms .sg2, .ms .sg2 b { font-family: var(--min); }
-
-/* マーカーは、まっすぐな帯ではなく、手で引いた線(筆の入りと抜きがある) */
 .sc mark.mk, .sc[data-th="d"] mark.mk { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M1 11C18 6 42 9 70 7S128 4 160 6 190 5 199 8C200 11 199 14 197 16 170 18 138 15 104 17S44 15 22 17C12 18 4 18 2 16 0 14 0 12 1 11Z' fill='rgb(211,173,90)' fill-opacity='.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 0 86%; background-size: 0% .62em; }
 .sc mark.mk-b, .sc[data-th="d"] mark.mk-b { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M2 12C24 8 50 10 82 8S140 6 168 7 192 6 198 9C200 12 198 15 196 16 166 17 132 15 100 16S40 15 20 17C10 18 3 17 1 15 0 13 1 12 2 12Z' fill='rgb(96,140,255)' fill-opacity='.42'/%3E%3C/svg%3E"); }
 .sc mark.mk.on { background-size: 100% .62em; }
-
-/* 代表あいさつ: 筆の字の手紙。文字は、ぼんやりした光から、読む位置で浮かび上がる(ご指示「スクロールしてよむ速度に合わせ、文字が浮かんでくるような。高級な感じ。魂が伝わる感じ。読みやすく、丁寧に」) */
 .ms { max-width: 34em; }
 .ms p { font-size: clamp(19px, 1.56vw, 23px); line-height: 2.2; letter-spacing: .05em; }
 .ms p + p { margin-top: 1.7em; }
@@ -1258,14 +999,9 @@ mark.mk:not(.mk-b) { font-family: var(--hand); font-weight: 400; font-synthesis:
 }
 @media (prefers-reduced-motion: reduce) { .ms p .ch, .ms p .ch.lit { top: 0; color: inherit; text-shadow: none; animation: none; } }
 @media print { .ms p .ch, .ms p .ch.lit { top: 0 !important; color: inherit !important; text-shadow: none !important; animation: none !important; } }
-
-/* 飾りの光は、足さない: ボタンの上を走る光を、やめる(出るときの弾みだけ残す) */
 .sc.in .act .btn { background-image: none; }
 @media (prefers-reduced-motion: no-preference) { .sc.in .act .btn { animation: nyu .8s cubic-bezier(.22, 1.55, .36, 1) .55s backwards; } }
-
-/* ===== 版25c: 小さい字を、全体に大きく(ご指示「文字小さすぎるのだめ。読みやすく端的に」)。機械的に拾って、同じ場所のまま大きい値で上書き ===== */
 @media screen {
-
 body { font-size: 17.5px; }
 .lb { font-size: 15.5px; }
 .tx { font-size: clamp(17px, 1.37vw, 18px); }
@@ -1372,15 +1108,9 @@ body { font-size: 17.5px; }
 }
 .ms .sg2 { font-size: 16.5px; }
 }
-
-/* ===== 版25d: 原則の大きな字の厚みを、控えめに(厚すぎると、おもちゃのように見える) ===== */
 .pr h3 { text-shadow: .01em .016em 0 #1a45c4, .02em .032em 0 #173eb2, .03em .048em 0 #1437a0, .04em .064em 0 #11308e, .1em .16em .24em rgba(16, 40, 120, .26); }
-
-/* ===== 版28: 社外監査役は、紺の空に、いちばん大きな光の構造(額縁なし) ===== */
-/* 見出しの下に、光の構造のための広い空きを取る */
 .sc[data-fig="board"] .hx { margin-bottom: clamp(330px, 58vh, 600px); }
 @media (max-width: 760px) { .sc[data-fig="board"] .hx { margin-bottom: clamp(300px, 46vh, 380px); } }
-/* 紺の上の六つの札: 重ねた紙の厚みは、そのまま(紙は生成り、字は紺) */
 .sc[data-fig="board"] .cols3 > div:not(.c-1) { position: relative; margin: 16px 14px 18px 0; padding: 22px 22px 24px; border: 0; border-radius: 3px 14px 14px 14px; background: linear-gradient(180deg, #fffdf8, #f6f1e6); color: var(--text-l);
   box-shadow: inset 0 1px 0 #fff, 3px 4px 0 #cfc7b4, 6px 8px 0 #b9b19e, 20px 28px 38px -16px rgba(0, 0, 0, .7); }
 .sc[data-fig="board"] .cols3 h3 { color: var(--text-l); font-size: 22px; letter-spacing: .04em; line-height: 1.6; }
@@ -1393,32 +1123,20 @@ body { font-size: 17.5px; }
 }
 @media (max-width: 760px) { .sc[data-fig="board"] .cols3 > div:not(.c-1) { margin: 12px 8px 20px 0; border-top: 0; } }
 @media print { .sc[data-fig="board"] .hx { margin-bottom: 0; } .sc[data-fig="board"] .cols3 > div:not(.c-1) { box-shadow: none; background: none; margin: 0; padding-inline: 0; } }
-
-/* ===== 版28b: 社外監査役の空きを広く。スマホのご連絡は、見出しとボタンのあいだに、お顔の星の場所を取る ===== */
 .sc[data-fig="board"] .hx { margin-bottom: clamp(360px, 64vh, 660px); }
 @media (max-width: 760px) { .sc[data-fig="board"] .hx { margin-bottom: clamp(320px, 50vh, 420px); } .sc[data-fig="ks"] .hx { margin-bottom: 250px; } }
 @media print { .sc[data-fig="board"] .hx, .sc[data-fig="ks"] .hx { margin-bottom: 0; } }
-
-/* ===== 版29: ご連絡の場面に、お顔の星のための場所を広く取る(PC) ===== */
 @media (min-width: 761px) { .sc[data-fig="ks"] .g.mt { margin-bottom: clamp(60px, 16vh, 170px); } }
 @media print { .sc[data-fig="ks"] .g.mt { margin-bottom: 0; } }
-
-/* ===== 版28(確認用ページ): ご指摘4点 ===== */
-/* 1. 紺の場面の中の、生成りの札: 字の色を、紙の上の色に戻す(マーカーの一句が、白くなって見えなくなっていた) */
 .sc[data-fig="board"] .cols3 > div:not(.c-1) { --fg: var(--text-l); --mute: var(--mute-l); --ac: var(--blue); --line: var(--line-l); }
 .sc[data-fig="board"] .cols3 > div:not(.c-1) mark.mk { color: var(--text-l); }
 .sc[data-fig="board"] .cols3 > div:not(.c-1) mark.mk-b { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M2 12C24 8 50 10 82 8S140 6 168 7 192 6 198 9C200 12 198 15 196 16 166 17 132 15 100 16S40 15 20 17C10 18 3 17 1 15 0 13 1 12 2 12Z' fill='rgb(36,71,201)' fill-opacity='.26'/%3E%3C/svg%3E"); }
-/* 2. カーソルに付いてくる輪は、出さない(ポインタの位置に飾りを出さない) */
 .cur-r { display: none !important; }
-/* 3. 実務支援: 額縁をやめる。構造は、場面の中に、そのまま大きく浮かぶ。左右の送りは、丸い淡いボタンに */
 .pk-win { border: 0; box-shadow: none; height: clamp(320px, 58vh, 600px); }
 .pk-win::before, .pk-win::after { display: none; }
 .pk-hud, .pk-tape { display: none; }
 .pk-nav { border-radius: 50%; border-color: rgba(211, 173, 90, .4); background: rgba(7, 11, 27, .35); }
 @media (max-width: 760px) { .pk-win { height: clamp(270px, 44vh, 380px); } }
-
-/* ===== 版29(確認用ページ): 代表あいさつの文字が浮かぶ速さを落とす(ご指示「ここ、ちょっとはやすぎるな。品よく」) =====
-   一字が浮かび上がるのに、約2秒。上がる幅と、途中の光を、ひかえめに */
 .ms p .ch { top: .16em; }
 .ms p .ch.lit { animation: chIn 2s cubic-bezier(.3, .5, .3, 1) both; }
 @keyframes chIn {
@@ -1427,32 +1145,20 @@ body { font-size: 17.5px; }
   100% { top: 0; color: var(--fg); text-shadow: 0 0 0 rgba(255, 236, 196, 0); }
 }
 @media (prefers-reduced-motion: reduce) { .ms p .ch, .ms p .ch.lit { top: 0; color: inherit; text-shadow: none; animation: none; } }
-
-/* ===== 版30(確認用ページ): 名刺を大きく(ご指示「名刺はもうちょっと大きくていい。名刺交換がわりなので」) ===== */
 .hero .mc { --cw: clamp(260px, 27.5vw, 430px); }
 @media (max-width: 760px) { .hero .mc { --cw: min(96%, 420px); } }
-
-/* ===== 版30(確認用ページ)b: 名刺の大きさを整える(大きくしすぎると、標語の「e」に角がかかった)。もとより約15%大きい ===== */
 .hero .mc { --cw: clamp(250px, 25.5vw, 410px); }
 @media (max-width: 760px) { .hero .mc { --cw: min(106%, 420px); } }
-
-/* ===== 版30(確認用ページ)c: 全体を、静かに(ご指示「うるさくならないように、あくまでスマートに。ごちゃごちゃしない」) ===== */
-/* 割り付けの線(縦の線と、上下の目盛り)は、気づくか気づかないかの淡さに。文字にかかっても、じゃまをしない */
 .w::before { opacity: .38; }
 .w::after { opacity: .4; }
 @media (max-width: 760px) { .w::before { opacity: .2; } .w::after { opacity: .25; } }
-/* 冒頭の「下へ」の合図と、右下の相談の弾みは、やめる */
 #top::after { display: none; }
 .fab.nudge { animation: none !important; }
-
-/* ===== 版30(確認用ページ)d: 業務の画面で、「押すとどうなるか」を明示する ===== */
-/* 1. 「詳細」のボタン: 押すと、その業務のページへ進む */
 .pk-more { display: inline-flex; align-items: center; gap: 14px; margin-top: clamp(18px, 2.6vh, 28px); padding: 13px 22px 13px 28px; border: 1px solid var(--gold); border-radius: 999px; color: var(--fg); font-weight: 700; font-size: 16px; line-height: 1.4; letter-spacing: .24em; text-decoration: none; transition: background-color .3s, color .3s, transform .3s cubic-bezier(.2, 1.4, .3, 1); }
 .pk-more span { width: 24px; height: 10px; background: currentColor; clip-path: polygon(0 42%, 74% 42%, 74% 0, 100% 50%, 74% 100%, 74% 58%, 0 58%); transition: transform .3s cubic-bezier(.2, 1.4, .3, 1); }
 .pk-more:hover, .pk-more:focus-visible { background: var(--gold); color: var(--ink); }
 .pk-more:hover span { transform: translateX(5px); }
 .pk-more:active { transform: scale(.97); }
-/* 2. 一覧: 「選ぶ」ための札だと分かる形に。上に案内の一行。右の印は、進む矢印ではなく、選んだ印(丸)。選んだ札は、明るい地に紺の字 */
 .pk-hint { padding-bottom: 14px; font-size: 15px; font-weight: 500; letter-spacing: .08em; color: var(--mute); }
 .pk-s { padding: 13px 46px 13px 16px; border-radius: 10px; }
 .pk-s::before { display: none; }
@@ -1461,41 +1167,25 @@ body { font-size: 17.5px; }
 .pk-s[aria-pressed="true"] { background: var(--text-d); border-color: var(--text-d); color: var(--ink); font-weight: 700; }
 .pk-s[aria-pressed="true"] b { color: var(--blue); opacity: 1; }
 .pk-s[aria-pressed="true"]::after { border-color: var(--ink); background: radial-gradient(circle, var(--ink) 0 40%, transparent 46%); color: var(--ink); opacity: 1; }
-
-/* ===== 版31(確認用ページ): 場面の大きな番号(02・06 など)を、やめる(ご指摘「なんのためにあるの？これいる？」) =====
-   順番の目印と「読んだ印」のつもりだったが、読む人の役に立っていなかった。いまどこにいるかは、左の背表紙の小さな番号(02 / 12)が示す */
 .bn { display: none !important; }
-
-/* ===== 版32(確認用ページ): すっきりシンプルを徹底する(ご指示「すっきりシンプルが一番。これ徹底して。コンセプト遵守」「今調子乗って、ごちゃごちゃやりすぎ」) =====
-   足したものを、引く。残すのは: 金の点(ご本人)・名刺・筆の字・業務と社外監査役の構造・「整う」の動きだけ */
-/* 冒頭: 名刺が主役(ご指示「とっぷは、名刺大きく、のほうがいいです」)。標語は小さく、平らに、動かさない */
 .big { font-size: clamp(50px, 8.4vw, 150px); text-shadow: none; }
 .big i { text-shadow: none !important; font-variation-settings: "wdth" 112, "wght" 800 !important; }
 .hero .mc { --cw: clamp(280px, 33vw, 520px); }
 @media (max-width: 760px) { .big { font-size: clamp(48px, 15vw, 96px); } .hero .mc { --cw: min(106%, 420px); } }
-/* 原則の大きな字も、平らに */
 .pr h3 { text-shadow: none; }
-/* 見出しの一語だけ色を替えるのを、やめる(金は、ご本人のしるしにだけ使う) */
 .kw { color: inherit !important; }
-/* 札: 重ねた紙の厚みをやめ、一枚の紙に、淡い影だけ */
 .sc[data-fig="board"] .cols3 > div:not(.c-1), .sc[data-th="l"] .cols3 > div:not(.c-1) { border-radius: 12px; box-shadow: 0 16px 30px -20px rgba(0, 0, 0, .5); }
 @media (hover: hover) and (pointer: fine) {
   .sc[data-fig="board"] .cols3 > div:not(.c-1):hover, .sc[data-th="l"] .cols3 > div:not(.c-1):hover { transform: translateY(-3px); box-shadow: 0 22px 34px -20px rgba(0, 0, 0, .55); }
 }
-/* 実務支援の図: 傾けない */
 .demo, .demo:hover { transform: none; box-shadow: 0 16px 30px -22px rgba(20, 27, 46, .4); }
-/* 部品の出方: 下から静かに上がって、止まるだけ(傾き・行き過ぎは、やめる) */
 @keyframes tidyIn { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .dvs .blk.in .bd > *, .sc.in .rows > li, .sc.in .cols3 > div, .sc.in .facts > div, .sc.in .pr > div { animation-duration: .8s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); animation-delay: calc(var(--n, 0) * 60ms); }
 }
-
-/* ===== 版33(確認用ページ): 冒頭は、ドーンと名刺。標語は控えめに(ご指示「名刺が主役でいいかな。コンセプトの文字は、控えめでよろしい。ドーンと、名刺」) ===== */
-/* 標語(Key Structure / is to Keep it Simple.)は、小さく、静かに */
 .big { margin-top: clamp(8px, 1.6vh, 18px); font-size: clamp(26px, 2.6vw, 40px); line-height: 1.1; letter-spacing: -.02em; }
 .hero .sub { font-size: clamp(17px, 1.7vw, 26px); line-height: 1.2; }
 .hero .jp { margin-top: clamp(10px, 1.6vh, 16px); font-size: clamp(16px, 1.3vw, 20px); }
-/* 広い画面: 左に、控えめな標語と相談のボタン。右に、大きな名刺と事務所名 */
 @media (min-width: 1001px) {
   .hero-g { flex: 1; margin-top: clamp(2px, .6vh, 8px); padding-top: 0; grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); column-gap: clamp(20px, 3vw, 48px); align-items: stretch; }
   .hero-g > .c-12 { grid-column: 1; display: flex; flex-direction: column; }
@@ -1504,7 +1194,6 @@ body { font-size: 17.5px; }
   .hero .mc { --cw: clamp(320px, min(50vw, calc((100vh - 330px) * 1.6)), 760px); margin-top: 0; margin-bottom: clamp(18px, 3vh, 30px); }
 }
 @supports (height: 100svh) { @media (min-width: 1001px) { .hero .mc { --cw: clamp(320px, min(50vw, calc((100svh - 330px) * 1.6)), 760px); } } }
-/* タブレットとスマホ: 標語のすぐ下に、名刺を大きく。そのあとに、説明と相談のボタン */
 @media (max-width: 1000px) {
   .hero-g { grid-template-columns: minmax(0, 1fr); margin-top: 0; padding-top: 6px; row-gap: 18px; }
   .hero-g > .c-12, .hero-g > .rt { grid-column: 1; }
@@ -1514,9 +1203,6 @@ body { font-size: 17.5px; }
   .big { font-size: clamp(26px, 7.4vw, 36px); }
 }
 @media (max-width: 760px) { .hero .mc { --cw: min(106%, 420px); margin-top: 58px; } }
-
-/* ===== 版33(確認用ページ)b: タブレットとスマホの冒頭の順番を整える =====
-   名刺 → 事務所名 → 標語(Key Structure / is to Keep it Simple.) → 説明と相談のボタン。標語の途中に名刺が割り込まないようにする */
 @media (max-width: 1000px) {
   .hero-g { display: contents; }
   .hero .w > .bar { order: 0; }
@@ -1527,9 +1213,6 @@ body { font-size: 17.5px; }
   .hero .mc { --cw: min(100%, 560px); margin-top: 60px; margin-bottom: 30px; }
 }
 @media (max-width: 760px) { .hero .mc { --cw: min(100%, 420px); margin-top: 60px; } }
-
-/* ===== 版34(確認用ページ): 名刺を、もっと大きく(ご指示「というか名刺はもっと大きく」) ===== */
-/* 広い画面: 名刺は、標語と同じ高さから始まり、画面の6割ほどの幅まで。左の列は、標語・説明・相談のボタンだけの細い列 */
 @media (min-width: 1001px) {
   .hero { --bigh: calc(2.2 * clamp(26px, 2.6vw, 40px) + 12px); }
   .hero-g { margin-top: calc(-1 * var(--bigh)); grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(18px, 2.2vw, 34px); }
@@ -1538,34 +1221,22 @@ body { font-size: 17.5px; }
   .hero .mc { --cw: clamp(360px, min(62vw, calc((100vh - 250px) * 1.655)), 980px); margin-bottom: clamp(14px, 2.4vh, 26px); }
 }
 @supports (height: 100svh) { @media (min-width: 1001px) { .hero .mc { --cw: clamp(360px, min(62vw, calc((100svh - 250px) * 1.655)), 980px); } } }
-/* タブレットとスマホ: 画面の端近くまで */
 @media (max-width: 1000px) { .hero .mc { --cw: min(100%, 680px); } }
 @media (max-width: 760px) { .hero .mc { --cw: min(108%, 460px); } }
-
-/* ===== 版34(確認用ページ)b: 大きくした名刺のまわりを整える ===== */
-/* 広い画面: 「初回…無料」が2行に割れないように(左の列が細くなったため)。名刺は、画面の6割 */
 @media (min-width: 1001px) {
   .hero .mc { --cw: clamp(360px, min(60vw, calc((100vh - 250px) * 1.655)), 980px); }
   .hero .act .note { font-size: 14px; letter-spacing: .04em; white-space: nowrap; }
 }
 @supports (height: 100svh) { @media (min-width: 1001px) { .hero .mc { --cw: clamp(360px, min(60vw, calc((100svh - 250px) * 1.655)), 980px); } } }
-/* スマホ: 画面の端から、はみ出さない大きさに */
 @media (max-width: 760px) { .hero .mc { --cw: min(104%, 460px); } }
-
-/* ===== 版34(確認用ページ)c: 名刺が傾いたとき、上の一行(京都の公認会計士事務所…)に角がかからない高さに ===== */
 @media (min-width: 1001px) { .hero .mc { --cw: clamp(360px, min(60vw, calc((100vh - 296px) * 1.655)), 980px); } }
 @supports (height: 100svh) { @media (min-width: 1001px) { .hero .mc { --cw: clamp(360px, min(60vw, calc((100svh - 296px) * 1.655)), 980px); } } }
-
-/* ===== 版34(確認用ページ)d: 名刺が演じて傾いても、上の一行にかからないよう、名刺の始まりを少し下げる ===== */
 @media (min-width: 1001px) {
   .hero-g { margin-top: calc(-1 * var(--bigh) + 28px); }
   .hero-g > .c-12 { padding-top: calc(var(--bigh) - 24px); }
   .hero .mc { --cw: clamp(360px, min(60vw, calc((100vh - 326px) * 1.655)), 980px); }
 }
 @supports (height: 100svh) { @media (min-width: 1001px) { .hero .mc { --cw: clamp(360px, min(60vw, calc((100svh - 326px) * 1.655)), 980px); } } }
-
-/* ===== 版35(確認用ページ) ===== */
-/* 1. はじめての挨拶: お写真の丸い窓は、出さない(ご指示「最初私の写真、みたいな演出いらんわ」)。金の点 → 名刺が立つ → 「はじめまして。」 */
 .mc-me { display: none !important; }
 @media (prefers-reduced-motion: no-preference) {
   .meet .mc-hand:not(.in) { animation: present 2.5s linear .7s both; }
@@ -1573,21 +1244,11 @@ body { font-size: 17.5px; }
   .meet .mc-hand:not(.in) .mc-card::before { animation: sheen 1.5s cubic-bezier(.3, 0, .2, 1) 1.4s backwards; }
   .meet .mc-hello { animation: offer 1.1s cubic-bezier(.3, 0, .1, 1) 2.6s both; }
 }
-/* 2. 業務の粒の構造: 小さく、控えめに(ご指示「もっと控えめで小さく。ごちゃごちゃしとる」)。置き場所の高さを半分ほどにする */
 .pk-win { height: clamp(190px, 28vh, 270px); }
 @media (max-width: 760px) { .pk-win { height: clamp(170px, 25vh, 220px); } }
-
-/* ===== 版35(確認用ページ)b: 広い画面の「はじめまして。」は、名刺の右上に(上の一行と並んで読みにくかった) ===== */
 @media (min-width: 1001px) { .hero .mc-hello { text-align: right; padding-right: 8px; } }
-
-/* ===== 版36(確認用ページ): 右下の「相談する」から、お顔を外す(ご指摘「ここの顔もいらないかも」) =====
-   金の点が飛んできてお顔になる動きも、やめる。ボタンは、文字と形だけ */
 .fab-me, .orb-fly { display: none !important; }
 .fab { padding: 13px 24px 13px 26px; }
-
-
-/* ===== 版37(確認用ページ): いつも見えている案内の言葉を「相談する」→「お問い合わせ」に(ご指摘「相談する、より、お問い合わせ、とかの方がいいかも」) =====
-   上の帯のボタンと、右下のボタンの2つ。2字長くなるので、スマホの上の帯で右にはみ出さないよう、印・事務所名・ボタンの間と字の大きさを、幅に合わせて少しずつ詰める */
 @media (max-width: 760px) {
   .bar { gap: 14px; }
   .mark { gap: 12px; }
@@ -1610,32 +1271,18 @@ body { font-size: 17.5px; }
   .bar nav { font-size: 13.5px; letter-spacing: 0; }
   .bar nav .ask { padding-inline: 8px; }
 }
-/* 355px より狭い画面(ごく古い小さな機種)では、事務所名を省く(印は残る)。これまでの境目は 345px */
 @media (max-width: 355px) { .mark span { display: none; } }
-
-/* 版37の続き: タブレットの縦(768px など)で、上の帯の案内(社外監査役・実務支援・原則)が2行に折れたので、折れないようにし、字の間を少し詰める */
 .bar nav a { white-space: nowrap; }
 @media (min-width: 761px) and (max-width: 880px) {
   .mark span { letter-spacing: .08em; }
   .bar nav { letter-spacing: .06em; }
 }
-
-
-/* ===== 版40(確認用ページ): 本番反映の候補の通し確認で見つけたもの =====
-   1) 幅 1001〜1140px ほど(タブレットの横・小さめのノートPC)のトップ: 名刺が大きすぎて、左の文の列が細くなり(1024px で約170px)、
-      紹介文が5字ほどで折れ、青いボタンの線が切れていた。名刺の幅に「画面の幅 − 500px」の上限を足して、左の列を確保する(1250px より広い画面は、これまでと同じ) */
 @media (min-width: 1001px) {
   .hero .mc { --cw: clamp(360px, min(60vw, calc(100vw - 500px), calc((100svh - 326px) * 1.655)), 980px); }
 }
-/* 2) 事務所案内などの長いURL: スマホ(360px)で、枠の右へ少しはみ出していた。枠の中で折り返す */
 .dvs dd, .dvs td, .dvs p, .dvs li { overflow-wrap: break-word; }
-
-/* 3) 業務ページの題と、右上の粒の構造(PC・タブレット): 「経理・決算業務の改善」の「善」が構造に重なり、「内部統制・J-SOX／」の「／」と「内部監査の外部委託」の「託」が構造に触れていた。
-      題の箱を、構造の列(右の24%)の手前までにする。語のまとまりが収まらないときは、app.js の fitSvc が字を少し小さくする */
 @media (min-width: 761px) {
   .dvh:not(.dvh-q):not([data-fig="dust"]) .hd { max-width: 76%; }
-  .dvh:not(.dvh-q):not([data-fig="dust"]) .hd > .nb { white-space: nowrap; }      /* 語のまとまりの途中では折らない(1字だけ次の行に落ちないように)。収まらないぶんは、字を小さくする */
+  .dvh:not(.dvh-q):not([data-fig="dust"]) .hd > .nb { white-space: nowrap; }
 }
-
-/* 4) トップの肩書きの行: 幅によって、語の途中で折れていた(820px で「不正調／査」、360px で「社外監査／役」)。語の途中では折らず、区切り(空き・「／」の前後)で折る */
 .hero .eb { word-break: keep-all; overflow-wrap: break-word; }
