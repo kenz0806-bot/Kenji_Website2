@@ -109,6 +109,7 @@
 - 相談: 初回相談は30〜60分・オンライン・無料
 - 就任の可否: 会社との関係や期待される役割、会社法の要件、取引所が定める独立役員の基準、既存の取引・顧問関係との利益相反を、会社ごとに確認したうえで判断する
 - 対応地域: 全国(オンラインと出張)。関西圏は訪問も可能
+- 社外監査役のページ: https://www.kenji-sato.jp/outside-auditor.html
 - 候補者プロフィール(PDFあり): https://www.kenji-sato.jp/candidate.html
 
 ## よくある質問(サイトに載せている質問と答え)
@@ -150,6 +151,7 @@
 ## ページ
 
 - [トップページ](https://www.kenji-sato.jp/): 事務所の全体像、社外監査役、実務支援、略歴、事務所概要、よくあるご質問、連絡先
+- [社外監査役](https://www.kenji-sato.jp/outside-auditor.html): 想定する会社、相談できる関与、関わり方、就任前に確認する事項、よくあるご質問
 - [社外監査役候補者プロフィール](https://www.kenji-sato.jp/candidate.html): 社外監査役の候補としての資格、職歴、専門領域、担当経験、就任前に確認する事項
 - [実務支援](https://www.kenji-sato.jp/services.html): 業務ごとの対象、相談例、支援内容、成果物、進め方、対象外、費用
 - [内部監査の外部委託](https://www.kenji-sato.jp/internal-audit.html): 対象、支援内容、成果物、進め方と費用、よくあるご質問
@@ -159,4 +161,5 @@
 - [AUP業務（合意された手続）](https://www.kenji-sato.jp/aup.html): 対象、相談例、支援内容、成果物、進め方、対象外
 - [AI・ITの活用](https://www.kenji-sato.jp/ai.html): 対象、相談例、支援内容、成果物、進め方、対象外
 - [内部統制・J-SOX/IPO準備支援](https://www.kenji-sato.jp/jsox-ipo.html): 支援内容、進め方、料金、よくあるご質問
+- [大阪の会社へのご支援](https://www.kenji-sato.jp/osaka.html): 大阪府の会社への対応(京都市の事務所から訪問、オンライン)、対象、業務の一覧
 - [最新情報](https://www.kenji-sato.jp/news.html): お知らせ

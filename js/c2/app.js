@@ -82,7 +82,7 @@
         else { a.x = w.left + w.width * 0.25; a.y = r.top + r.height * 0.5; a.R = Math.min(w.width * 0.068, H * 0.1); }
         return a;
       }
-      if (k === 'board') {                                        /* 社外監査役: 見出しの下の広い空きいっぱいに(額縁なし)。金の点は、いちばん上のまん中 */
+      if (k === 'board' && !sc.classList.contains('dvh')) {                                        /* 社外監査役: 見出しの下の広い空きいっぱいに(額縁なし)。金の点は、いちばん上のまん中 */
         a = $('.hx', sc).getBoundingClientRect(); c = $('.tx', sc).getBoundingClientRect(); q = c.top - a.bottom;
         return { x: sm ? W * 0.5 : w.left + w.width * 0.5, y: a.bottom + q * 0.04, R: Math.max(40, Math.min(q * 0.385, W * (sm ? 0.3 : 0.26))) };
       }
