@@ -1393,3 +1393,4 @@ body { line-break: strict; }
 }
 @media print { .dvs .rw2 > div.np, .rw2 > div.np { display: none; } }
 .who p span { white-space: nowrap; }
+@media print { .dvs .blk.np { display: none; } }
