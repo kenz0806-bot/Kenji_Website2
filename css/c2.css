@@ -1391,3 +1391,4 @@ body { line-break: strict; }
   .duo-a + .duo-a { border-top: 0; }
   .duo-a::after { top: 23px; }
 }
+@media print { .dvs .rw2 > div.np, .rw2 > div.np { display: none; } }
