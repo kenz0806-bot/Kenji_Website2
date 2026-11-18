@@ -1392,3 +1392,4 @@ body { line-break: strict; }
   .duo-a::after { top: 23px; }
 }
 @media print { .dvs .rw2 > div.np, .rw2 > div.np { display: none; } }
+.who p span { white-space: nowrap; }
