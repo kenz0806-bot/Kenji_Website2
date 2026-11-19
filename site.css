@@ -792,4 +792,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .ct-h .ct-n { margin-top: 8px; font-size: var(--t1); letter-spacing: .06em; color: var(--fg2); }
 .duo2 .ds, .duo2 .ring { align-self: center; } .duo2 .ds { margin-top: 16px; }
 
+/* 2026-11-20 本番のフォームの試験で見つけた不具合: .ask-form の display:grid が hidden に勝ち、送信のあともフォームが残っていた。
+   隠すと決めた物は、どの部品でも必ず隠す(確認用ページでは外枠が同じ決まりを持っていたので、試作では見えなかった) */
+[hidden] { display: none !important; }
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
