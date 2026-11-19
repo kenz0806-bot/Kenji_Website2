@@ -81,12 +81,12 @@
 - 初回相談: 30〜60分・オンライン・無料
 - 診断パッケージ: 10万円〜(税別)
 - 継続支援: 10万円〜/人日(税別)
-- 2026年1月1日からの料金。いずれも導入価格。最新の料金は下記ページを参照
+- いずれも現時点の目安の価格。最新の料金は下記ページを参照
 - 「10万円〜」は下限の金額(一律の定額ではない)。実際の費用は、範囲と稼働日数に応じて、初回相談のあとに見積もる
 
 ## 取引にあたって
 
-- 問い合わせ: サイトのフォーム(https://www.kenji-sato.jp/#contact)、またはメール。電話は受け付けていない
+- 問い合わせ: サイトのフォーム(https://www.kenji-sato.jp/contact.html)、またはメール。電話は受け付けていない
 - 返信: 通常3営業日以内(目安)
 - 面談: オンラインは、Google Meet、Zoom、Microsoft Teams など、希望のツールで対応できる。関西圏は訪問も可能
 - 守秘義務: 公認会計士法および税理士法にもとづく守秘義務を負う。預かった情報は、相談への対応以外には使わない
@@ -114,7 +114,7 @@
 
 ## よくある質問(サイトに載せている質問と答え)
 
-トップページ(https://www.kenji-sato.jp/#faq)から:
+お問い合わせのページ(https://www.kenji-sato.jp/contact.html#faq)から:
 
 - 問: どんな相談を受けていますか。
   答: 社外監査役の就任のご相談と、実務支援（内部統制・J-SOX、内部監査の外部委託、不正調査・不正対応、経理・決算業務の改善、IPO準備支援、社外CFO、AUP業務、AI・ITの活用）です。上場企業、上場準備企業、中小企業の経営者と管理部門からのご相談が中心です。
@@ -176,14 +176,19 @@
 
 ## ページ
 
-- [トップページ](https://www.kenji-sato.jp/): 事務所の全体像、社外監査役、実務支援、略歴、事務所概要、よくあるご質問、連絡先
+- [トップページ](https://www.kenji-sato.jp/): 事務所の全体像、ご相談いただけること(社外監査役・実務支援)、ご相談から着手まで(進め方と費用の目安)、読み物
+- [社外監査役について](https://www.kenji-sato.jp/auditor.html): 想定する会社、相談できる関与、経験が役立つ点、関わり方
+- [事務所について](https://www.kenji-sato.jp/about.html): 代表あいさつ、原則、プロフィール(略歴)、事務所概要、お取引にあたって
+- [お問い合わせ](https://www.kenji-sato.jp/contact.html): ご相談フォーム、お問い合わせのあとの流れ、よくあるご質問
+- [読み物の一覧](https://www.kenji-sato.jp/journal.html): 読み物3本の一覧
+- [サイトマップ](https://www.kenji-sato.jp/sitemap.html): すべてのページの一覧
 - [社外監査役](https://www.kenji-sato.jp/outside-auditor.html): 想定する会社、相談できる関与、関わり方、就任前に確認する事項、よくあるご質問
 - [社外監査役候補者プロフィール](https://www.kenji-sato.jp/candidate.html): 社外監査役の候補としての資格、職歴、専門領域、担当経験、就任前に確認する事項
 - [実務支援](https://www.kenji-sato.jp/services.html): 業務ごとの対象、相談例、支援内容、成果物、進め方、対象外、費用
 - [内部監査の外部委託](https://www.kenji-sato.jp/internal-audit.html): 対象、支援内容、成果物、進め方と費用、よくあるご質問
 - [不正調査・不正対応](https://www.kenji-sato.jp/fraud-investigation.html): 考え方、対象、支援内容、成果物、進め方と費用、よくあるご質問
 - [社外CFO](https://www.kenji-sato.jp/outside-cfo.html): 対象、支援内容、成果物、進め方と費用、よくあるご質問
-- [経理・決算業務の改善](https://www.kenji-sato.jp/closing-improvement.html): 考え方、対象、支援内容、成果物、進め方と費用、よくあるご質問
+- [決算支援(経理・決算業務の改善)](https://www.kenji-sato.jp/closing-improvement.html): 考え方、対象、支援内容、成果物、進め方と費用、よくあるご質問
 - [AUP業務（合意された手続）](https://www.kenji-sato.jp/aup.html): 対象、相談例、支援内容、成果物、進め方、対象外
 - [AI・ITの活用](https://www.kenji-sato.jp/ai.html): 対象、相談例、支援内容、成果物、進め方、対象外
 - [内部統制・J-SOX/IPO準備支援](https://www.kenji-sato.jp/jsox-ipo.html): 支援内容、進め方、料金、よくあるご質問

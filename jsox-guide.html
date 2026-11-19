@@ -1,124 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#0b1226">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
-    <meta name="robots" content="index, follow">
-    <title>J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所</title>
-    <meta name="description"
-        content="はじめてJ-SOX（内部統制報告制度）に取り組む会社へ。J-SOXとは何か、だれが何をするのか、進め方（現状診断、3点セットの文書化、評価・テスト、運用の改善、監査法人対応）、2024年4月からの改訂、つまずきやすい所と進めるうえでの工夫を、京都の公認会計士がまとめました。">
-
-    <link rel="canonical" href="https://www.kenji-sato.jp/jsox-guide.html">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.kenji-sato.jp/jsox-guide.html">
-    <meta property="og:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
-    <meta property="og:description" content="はじめてJ-SOXに取り組む会社へ。進め方、2024年4月からの改訂、つまずきやすい所と、進めるうえでの工夫。">
-    <meta property="og:site_name" content="佐藤健司公認会計士事務所">
-    <meta property="og:locale" content="ja_JP">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所">
-    <meta name="twitter:description" content="はじめてJ-SOXに取り組む会社へ。進め方、2024年4月からの改訂、つまずきやすい所と、進めるうえでの工夫。">
-    <meta name="twitter:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" id="gf" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Syuku&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;700;900&family=Yuji+Syuku&display=swap"></noscript>
-    <link rel="stylesheet" href="css/c2.css?v=m72">
-
-    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48">
-    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg?v=2">
-    <link rel="apple-touch-icon" href="/img/favicon.png?v=2">
-
-    <!-- 構造化データ -->
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "https://www.kenji-sato.jp/jsox-guide.html#webpage",
-      "url": "https://www.kenji-sato.jp/jsox-guide.html",
-      "name": "J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所",
-      "inLanguage": "ja",
-      "isPartOf": {
-        "@id": "https://www.kenji-sato.jp/#website"
-      },
-      "about": {
-        "@id": "https://www.kenji-sato.jp/#office"
-      },
-      "dateModified": "2026-11-19T08:16:00+09:00"
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "ホーム",
-          "item": "https://www.kenji-sato.jp/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "内部統制・J-SOX／IPO準備支援",
-          "item": "https://www.kenji-sato.jp/jsox-ipo.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "J-SOX対応の進め方",
-          "item": "https://www.kenji-sato.jp/jsox-guide.html"
-        }
-      ]
-    },
-    {
-      "@type": "Article",
-      "@id": "https://www.kenji-sato.jp/jsox-guide.html#article",
-      "headline": "J-SOX対応の進め方",
-      "description": "はじめてJ-SOX（内部統制報告制度）に取り組む会社へ。J-SOXとは何か、だれが何をするのか、進め方（現状診断、3点セットの文書化、評価・テスト、運用の改善、監査法人対応）、2024年4月からの改訂、つまずきやすい所と進めるうえでの工夫を、京都の公認会計士がまとめました。",
-      "inLanguage": "ja",
-      "url": "https://www.kenji-sato.jp/jsox-guide.html",
-      "mainEntityOfPage": {
-        "@id": "https://www.kenji-sato.jp/jsox-guide.html#webpage"
-      },
-      "author": {
-        "@id": "https://www.kenji-sato.jp/#kenji-sato"
-      },
-      "publisher": {
-        "@id": "https://www.kenji-sato.jp/#office"
-      },
-      "datePublished": "2026-11-19T07:47:00+09:00",
-      "dateModified": "2026-11-19T08:16:00+09:00",
-      "image": "https://www.kenji-sato.jp/img/ogp.jpg",
-      "citation": "https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html"
-    }
-  ]
-}
-    </script>
-    <script>/* ほかのページから幕で移ってきたときは、最初の一瞬から幕を閉じておく(開けるのは app.js) */try{var t=sessionStorage.getItem('ks2-tr');sessionStorage.removeItem('ks2-tr');if(t!==null&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('trin');document.documentElement.setAttribute('data-trt',t)}}catch(e){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所</title>
+<meta name="description" content="はじめてJ-SOX（内部統制報告制度）に取り組む会社へ。J-SOXとは何か、だれが何をするのか、進め方（現状診断、3点セットの文書化、評価・テスト、運用の改善、監査法人対応）、2024年4月からの改訂、つまずきやすい所と進めるうえでの工夫を、京都の公認会計士がまとめました。">
+<script>(function(r){r.classList.add('js');r.setAttribute('data-acc','shinshu');try{var t=localStorage.getItem('tone');if(t==='light'||t==='paper')r.setAttribute('data-tone',t);if(sessionStorage.getItem('pt')){r.classList.add('pt-in');sessionStorage.removeItem('pt');}if(!sessionStorage.getItem('lg')){r.classList.add('first');sessionStorage.setItem('lg','1');}}catch(e){}})(document.documentElement);</script>
+<link rel="canonical" href="https://www.kenji-sato.jp/jsox-guide.html">
+<meta name="format-detection" content="telephone=no">
+<meta name="google-site-verification" content="bWKf_rMMEJGuM97fa7p35ZVdd0ZkdL8JunqLGHcdCzI" />
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#212121">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:title" content="J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kenji-sato.jp/jsox-guide.html">
+<meta property="og:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
+<meta property="og:description" content="はじめてJ-SOXに取り組む会社へ。進め方、2024年4月からの改訂、つまずきやすい所と、進めるうえでの工夫。">
+<meta property="og:site_name" content="佐藤健司公認会計士事務所">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所">
+<meta name="twitter:description" content="はじめてJ-SOXに取り組む会社へ。進め方、2024年4月からの改訂、つまずきやすい所と、進めるうえでの工夫。">
+<meta name="twitter:image" content="https://www.kenji-sato.jp/img/ogp.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.kenji-sato.jp/jsox-guide.html#webpage","url":"https://www.kenji-sato.jp/jsox-guide.html","name":"J-SOX対応の進め方（はじめて取り組む会社へ）｜佐藤健司公認会計士事務所","inLanguage":"ja","isPartOf":{"@id":"https://www.kenji-sato.jp/#website"},"about":{"@id":"https://www.kenji-sato.jp/#office"},"dateModified":"2026-11-19T08:16:00+09:00"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://www.kenji-sato.jp/"},{"@type":"ListItem","position":2,"name":"内部統制・J-SOX／IPO準備支援","item":"https://www.kenji-sato.jp/jsox-ipo.html"},{"@type":"ListItem","position":3,"name":"J-SOX対応の進め方","item":"https://www.kenji-sato.jp/jsox-guide.html"}]},{"@type":"Article","@id":"https://www.kenji-sato.jp/jsox-guide.html#article","headline":"J-SOX対応の進め方","description":"はじめてJ-SOX（内部統制報告制度）に取り組む会社へ。J-SOXとは何か、だれが何をするのか、進め方（現状診断、3点セットの文書化、評価・テスト、運用の改善、監査法人対応）、2024年4月からの改訂、つまずきやすい所と進めるうえでの工夫を、京都の公認会計士がまとめました。","inLanguage":"ja","url":"https://www.kenji-sato.jp/jsox-guide.html","mainEntityOfPage":{"@id":"https://www.kenji-sato.jp/jsox-guide.html#webpage"},"author":{"@id":"https://www.kenji-sato.jp/#kenji-sato"},"publisher":{"@id":"https://www.kenji-sato.jp/#office"},"datePublished":"2026-11-19T07:47:00+09:00","dateModified":"2026-11-19T08:16:00+09:00","image":"https://www.kenji-sato.jp/img/ogp.jpg","citation":"https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html"}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Shippori+Mincho:wght@500&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
-<div class="bg" aria-hidden="true"></div>
-<canvas id="fig" aria-hidden="true"></canvas>
-<div class="rail" aria-hidden="true"><span class="rnm">佐藤健司公認会計士事務所</span><i></i><span class="cnt"><b>01</b> / 12</span></div>
-
-<article class="dv" id="dv" data-slug="jsox-guide" data-k="svc" data-back="services"><header class="sc dvh" data-th="d" data-fig="grid"><div class="w"><div class="bar">
-      <a class="mark" href="./" aria-label="佐藤健司公認会計士事務所 このページの先頭へ"><b>KS</b><span>佐藤健司公認会計士事務所</span></a>
-      <nav aria-label="このページの中"><a href="./#director">社外監査役</a><a href="./#work">実務支援</a><a class="x" href="./#profile">略歴</a><a href="./#principles">原則</a><a class="x" href="./#terms">お取引にあたって</a><a class="ask" href="./#contact">お問い合わせ</a></nav>
-    </div><p class="bk"><a class="lb back" href="jsox-ipo.html">内部統制・J-SOX／IPO準備支援</a></p><h1 class="hd"><span class="nb" style="--n:0"><span>J-SOX対応の</span></span><span class="nb" style="--n:1"><span>進め方</span></span></h1><div class="lead2"><p>はじめてJ-SOX（内部統制報告制度）に取り組む、管理部門の方へ。</p><p>何を、どの順で、どこまで行うのかを、短くまとめました。</p></div></div></header><section class="sc dvs" data-th="l" data-fig="dust"><div class="w"><div class="g blk hx"><p class="lb c-1">J-SOXとは</p><div class="c-234 bd"><div class="pp"><p>J-SOXは、金融商品取引法にもとづく内部統制報告制度の通称です。上場会社の経営者が、決算書などの財務報告を正しく作るための社内の仕組み（内部統制）が働いているかを自ら評価し、その評価を公認会計士・監査法人が監査します。</p><p>2008年4月1日以後に始まる事業年度から適用されています。</p></div></div></div><div class="g blk hx"><p class="lb c-1">だれが、何をするのか</p><div class="c-234 bd"><dl class="rw2"><div><dt>会社（経営者）</dt><dd>評価する範囲を決め、内部統制を整え、評価して、結果を内部統制報告書にまとめます。評価の主体は、会社です。</dd></div><div><dt>監査法人</dt><dd>会社の評価の結果が適正かどうかを、監査します。</dd></div><div><dt>外の支援者</dt><dd>文書化や評価の作業を手伝います。判断と責任は、会社に残ります。</dd></div></dl></div></div><div class="g blk hx"><p class="lb c-1">進め方</p><div class="c-234 bd"><dl class="rw2"><div><dt>1. 現状診断</dt><dd>あるべき姿と現状の差を確かめ、優先度をつけた課題の一覧にします。</dd></div><div><dt>2. 文書化（3点セット）</dt><dd>業務の流れと、誤りが起きうる所（リスク）、それを防ぐ手続（統制）を、業務記述書・フローチャート・リスクと統制の対応表（RCM）に書きます。</dd></div><div><dt>3. 評価・テスト</dt><dd>統制が、リスクを抑えられる形に決められているか（整備状況）、決めたとおりに行われているか（運用状況）を確かめます。</dd></div><div><dt>4. 運用の改善</dt><dd>評価で見つかった不備を直し、文書を実務に合わせて更新します。</dd></div><div><dt>5. 監査法人対応</dt><dd>評価の範囲とその根拠、評価の結果を、監査法人に説明します。</dd></div></dl><div class="pp"><p>3点セットは、決まった様式ではありません。実施基準には、業務の流れ図、業務記述書、リスクと統制の対応の例が、参考として載っています。会社がすでに作っている資料があれば、それを使い、必要な所を補えば足りるとされています。</p></div></div></div><div class="g blk hx"><p class="lb c-1">2024年4月からの改訂</p><div class="c-234 bd"><div class="pp"><p>内部統制の基準と実施基準は改訂され、2024年4月1日以後に始まる事業年度から適用されています（3月決算の会社は2025年3月期から）。</p></div><dl class="rw2"><div><dt>評価範囲の決め方</dt><dd>「売上高等のおおむね3分の2」「売上・売掛金・棚卸資産の3勘定」を機械的に当てはめず、財務報告への影響の重要性から評価範囲を決めることが求められます。</dd></div><div><dt>不正リスクと、内部統制の無効化</dt><dd>リスクの評価に、不正のリスクを織り込みます。経営者などが内部統制を無視・無効にする行為に備える統制の例が、示されました。</dd></div><div><dt>ITを利用した統制の評価</dt><dd>何年ごとに評価するかを機械的に決めず、IT環境の変化を踏まえて判断します。</dd></div><div><dt>内部監査と報告の流れ</dt><dd>内部監査人が、取締役会と監査役等へ報告する経路を確保します。</dd></div></dl><div class="pp"><p>出典：金融庁・企業会計審議会「財務報告に係る内部統制の評価及び監査の基準並びに財務報告に係る内部統制の評価及び監査に関する実施基準の改訂について（意見書）」（2023年4月7日）</p><p><a class="lk" href="https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html" target="_blank" rel="noopener">金融庁の公表ページ</a></p></div></div></div><div class="g blk hx"><p class="lb c-1">つまずきやすい所</p><div class="c-234 bd"><div class="pp"><p>はじめて取り組む会社で、よく見かける所です。</p></div><dl class="rw2"><div><dt>何から始めるか、どこまで書くか</dt><dd>最初につまずくのは、何をすればよいのかが分からない、という所です。次に、3点セットの書き方と、どの程度まで書けば足りるのかが分からない、という所です。</dd></div><div><dt>文書と実務のずれ</dt><dd>実務が変わっても、文書が古いままになっていることがあります。実務を変えたことで、リスクがどう変わったのか。全体とのつながりが分からないと、文書をどう直せばよいかが決まらず、そのままになります。</dd></div><div><dt>統制上の要点の選びすぎ</dt><dd>会計上のリスクが高くないものや、本来は統制上の要点（キーコントロール）でないものまで、要点にしていることがあります。その分、運用状況の評価の仕事量が増えます。統制上の要点とは、財務報告の信頼性に重要な影響を及ぼす統制のことで、業務プロセスの評価は、この要点について行います。</dd></div></dl></div></div><div class="g blk hx"><p class="lb c-1">進めるうえでの工夫</p><div class="c-234 bd"><dl class="rw2"><div><dt>監査法人に、早めに聞く</dt><dd>監査法人が、どの論点をいちばんリスクが高いと見ているのか。早いうちに確かめておきます。評価範囲については、必要に応じて、決める前に監査法人と協議しておくことが適切とされています（実施基準）。</dd></div><div><dt>少ない人数で続けるには</dt><dd>3点セットを、整理整頓しておくこと。会計上のリスクを、漏れなく把握しておくこと。実務が変わったら、すぐに文書を直せる体制と仕組みを作っておくこと。</dd></div></dl></div></div><div class="g blk hx"><p class="lb c-1">支援と費用</p><div class="c-234 bd"><dl class="rw2"><div><dt>支援の内容</dt><dd><a class="lk" href="jsox-ipo.html">内部統制・J-SOX／IPO準備支援の詳細と料金</a><br><a class="lk" href="sample-jsox.html">成果物の見本（架空の会社を題材にした説明用サンプル）</a></dd></div><div><dt>費用の目安</dt><dd>診断は10万円〜（税別）、継続支援は10万円〜／人日（税別）が目安です。診断だけで終えていただいて構いません。</dd></div></dl></div></div><div class="g blk hx np"><p class="lb c-1">ほかの読み物</p><div class="c-234 bd"><div class="fn"><p><a class="lk" href="jsox-outsourcing.html">内部統制の支援を、外に頼むとき</a></p><p><a class="lk" href="ipo-audit-prep.html">上場準備で、監査を受ける前に</a></p></div></div></div><div class="g blk hx"><p class="lb c-1">担当</p><div class="c-234 bd"><div class="who"><img src="img/profile.jpg" width="480" height="640" alt="佐藤 健司（公認会計士・京都）" loading="lazy"><p><b>佐藤 健司</b><span>さとう けんじ</span></p></div><div class="pp"><p>公認会計士・税理士。PwC Japan有限責任監査法人にて約9年、製造業、サービス業、小売業、商社、IT企業、信用金庫等、多様な業種の監査経験。グロース市場からプライム市場までの上場企業監査とJ-SOX内部統制評価を現場責任者（統括主査）として担当。IPO準備企業／上場直後の企業の現場責任者も多数経験。佐藤健司公認会計士事務所 代表。京都市。</p></div></div></div><div class="g blk hx"><span class="c-1"></span><div class="c-234 bd"><div class="say"><p>まずは30〜60分のオンライン相談から。</p><p>「一度、話を聞いてほしい」という一文で構いません。</p></div><p class="act"><a class="btn" href="./#contact">お問い合わせ</a></p></div></div></div></div></section><a class="sc nx" href="jsox-ipo.html" data-th="d" data-fig="dust"><div class="w"><p class="lb">実務支援</p><p class="to"><span>内部統制・J-SOX／IPO準備支援</span></p></div></a></article>
-<div class="grain" aria-hidden="true"></div>
-<div class="tr" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="tr-t"></b><u class="tr-l"></u><s class="tr-d"></s></div>
-
-<script src="js/c2/nav.js?v=m72"></script>
-<script src="js/c2/fig.js?v=m72"></script>
-<script src="js/c2/app.js?v=m72"></script>
+<a class="skip" href="#main">本文へ</a>
+<div class="pt" aria-hidden="true"><i></i></div>
+<span id="top"></span><div class="gut pat"><header class="top"><a class="logo" href="./" aria-label="佐藤健司公認会計士事務所 ホームへ"><span class="km" aria-hidden="true"><span class="n" lang="en">Ken<span>ȷ</span><span class="i">ı</span> Sato</span><span class="j">佐藤健司公認会計士事務所</span></span></a><nav aria-label="サイトの案内"><a href="auditor.html">社外監査役</a><a href="services.html">実務支援</a><a href="about.html">事務所について</a><a href="journal.html" aria-current="page">読み物</a><a class="ob" href="contact.html">お問い合わせ</a></nav><div class="mode2" role="group" aria-label="画面の明るさ"><button type="button" data-tone-btn="dark" aria-pressed="true" aria-label="ダーク（暗い画面）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7z"/></svg><span>ダーク</span></button><button type="button" data-tone-btn="light" aria-pressed="false" aria-label="ライト（明るい画面）"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9L13 13M3 13l1.1-1.1M11.9 4.1L13 3"/></svg><span>ライト</span></button><button type="button" data-tone-btn="paper" aria-pressed="false" aria-label="ペーパー（生成りの紙の画面）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.6L12.5 4.7v9.5H4z"/><path d="M9.4 1.8v3.1h3.1M6 8h4.5M6 10.5h4.5"/></svg><span>ペーパー</span></button></div><button class="tcyc" type="button" data-tone-cycle aria-label="画面の明るさを切り替える（ダーク・ライト・ペーパーの順）"><span class="i-dark"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7z"/></svg></span><span class="i-light"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9L13 13M3 13l1.1-1.1M11.9 4.1L13 3"/></svg></span><span class="i-paper"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.6L12.5 4.7v9.5H4z"/><path d="M9.4 1.8v3.1h3.1M6 8h4.5M6 10.5h4.5"/></svg></span></button><button class="menu" type="button" aria-expanded="false" aria-controls="drawer" lang="en">Menu</button></header></div>
+<div class="drawer" id="drawer"><nav aria-label="サイトの案内（携帯）"><a href="auditor.html" style="--i:0">社外監査役<i class="go" aria-hidden="true"></i></a><a href="services.html" style="--i:1">実務支援<i class="go" aria-hidden="true"></i></a><a href="about.html" style="--i:2">事務所について<i class="go" aria-hidden="true"></i></a><a href="journal.html" style="--i:3">読み物<i class="go" aria-hidden="true"></i></a><a href="contact.html" style="--i:4">お問い合わせ<i class="go" aria-hidden="true"></i></a></nav><span class="mode"><span class="lbl" lang="en">MODE</span><span class="seg" role="group" aria-label="画面の明るさ"><button type="button" data-tone-btn="dark" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10.2A6 6 0 0 1 5.8 2.5a6 6 0 1 0 7.7 7.7z"/></svg><span>ダーク</span></button><button type="button" data-tone-btn="light" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9L13 13M3 13l1.1-1.1M11.9 4.1L13 3"/></svg><span>ライト</span></button><button type="button" data-tone-btn="paper" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.8h5.6L12.5 4.7v9.5H4z"/><path d="M9.4 1.8v3.1h3.1M6 8h4.5M6 10.5h4.5"/></svg><span>ペーパー</span></button></span></span></div>
+<a class="sbar" href="contact.html" aria-label="お問い合わせ（初回 30〜60分・オンライン・無料）"><b>お問い合わせ</b><span>初回 30〜60分・オンライン・無料</span><i class="go" aria-hidden="true"></i></a>
+<main id="main" tabindex="-1" class="p-jsox-guide">
+<div class="gut"><nav class="crumb" aria-label="いまの位置"><ol><li><a href="./">ホーム</a></li><li><a href="journal.html">読み物</a></li><li><span aria-current="page">J-SOX対応の進め方</span></li></ol></nav></div>
+<div class="gut"><header class="dh" data-io><p class="kick rv" lang="en">Journal <i>/</i> 01</p><h1 class="dt"><span class="l"><span>J-SOX対応の</span></span><span class="l"><span>進め方</span></span></h1><p class="den rv" lang="en">Journal</p><div class="dlead rv"><p>はじめてJ-SOX（内部統制報告制度）に取り組む、管理部門の方へ。</p><p>何を、どの順で、どこまで行うのかを、短くまとめました。</p></div></header></div>
+<div class="gut"><nav class="subnav rv" aria-label="このページの中"><a href="#s1">J-SOXとは</a><a href="#s2">だれが、何をするのか</a><a href="#s3">進め方</a><a href="#s4">2024年4月からの改訂</a><a href="#s5">つまずきやすい所</a><a href="#s6">進めるうえでの工夫</a><a href="#s7">支援と費用</a><a href="#s8">ほかの読み物</a><a href="#s9">担当</a></nav></div>
+<div class="gut doc"><section class="blk2" id="s1" data-io><h2 class="jh2 sm rv"><span class="jt">J-SOXとは</span><span class="je" lang="en">01</span></h2><div class="bd2 rv"><div class="pp"><p>J-SOXは、金融商品取引法にもとづく内部統制報告制度の通称です。上場会社の経営者が、決算書などの財務報告を正しく作るための社内の仕組み（内部統制）が働いているかを自ら評価し、その評価を公認会計士・監査法人が監査します。</p><p>2008年4月1日以後に始まる事業年度から適用されています。</p></div></div></section>
+<section class="blk2" id="s2" data-io><h2 class="jh2 sm rv"><span class="jt">だれが、何をするのか</span><span class="je" lang="en">02</span></h2><div class="bd2 rv"><dl class="rw2"><div><dt>会社（経営者）</dt><dd>評価する範囲を決め、内部統制を整え、評価して、結果を内部統制報告書にまとめます。評価の主体は、会社です。</dd></div><div><dt>監査法人</dt><dd>会社の評価の結果が適正かどうかを、監査します。</dd></div><div><dt>外の支援者</dt><dd>文書化や評価の作業を手伝います。判断と責任は、会社に残ります。</dd></div></dl></div></section>
+<section class="blk2" id="s3" data-io><h2 class="jh2 sm rv"><span class="jt">進め方</span><span class="je" lang="en">03</span></h2><div class="bd2 rv"><dl class="rw2"><div><dt>1. 現状診断</dt><dd>あるべき姿と現状の差を確かめ、優先度をつけた課題の一覧にします。</dd></div><div><dt>2. 文書化（3点セット）</dt><dd>業務の流れと、誤りが起きうる所（リスク）、それを防ぐ手続（統制）を、業務記述書・フローチャート・リスクと統制の対応表（RCM）に書きます。</dd></div><div><dt>3. 評価・テスト</dt><dd>統制が、リスクを抑えられる形に決められているか（整備状況）、決めたとおりに行われているか（運用状況）を確かめます。</dd></div><div><dt>4. 運用の改善</dt><dd>評価で見つかった不備を直し、文書を実務に合わせて更新します。</dd></div><div><dt>5. 監査法人対応</dt><dd>評価の範囲とその根拠、評価の結果を、監査法人に説明します。</dd></div></dl><div class="pp"><p>3点セットは、決まった様式ではありません。実施基準には、業務の流れ図、業務記述書、リスクと統制の対応の例が、参考として載っています。会社がすでに作っている資料があれば、それを使い、必要な所を補えば足りるとされています。</p></div></div></section>
+<section class="blk2" id="s4" data-io><h2 class="jh2 sm rv"><span class="jt">2024年4月からの改訂</span><span class="je" lang="en">04</span></h2><div class="bd2 rv"><div class="pp"><p>内部統制の基準と実施基準は改訂され、2024年4月1日以後に始まる事業年度から適用されています（3月決算の会社は2025年3月期から）。</p></div><dl class="rw2"><div><dt>評価範囲の決め方</dt><dd>「売上高等のおおむね3分の2」「売上・売掛金・棚卸資産の3勘定」を機械的に当てはめず、財務報告への影響の重要性から評価範囲を決めることが求められます。</dd></div><div><dt>不正リスクと、内部統制の無効化</dt><dd>リスクの評価に、不正のリスクを織り込みます。経営者などが内部統制を無視・無効にする行為に備える統制の例が、示されました。</dd></div><div><dt>ITを利用した統制の評価</dt><dd>何年ごとに評価するかを機械的に決めず、IT環境の変化を踏まえて判断します。</dd></div><div><dt>内部監査と報告の流れ</dt><dd>内部監査人が、取締役会と監査役等へ報告する経路を確保します。</dd></div></dl><div class="pp"><p>出典：金融庁・企業会計審議会「財務報告に係る内部統制の評価及び監査の基準並びに財務報告に係る内部統制の評価及び監査に関する実施基準の改訂について（意見書）」（2023年4月7日）</p><p><a class="lk" href="https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html" target="_blank" rel="noopener">金融庁の公表ページ</a></p></div></div></section>
+<section class="blk2" id="s5" data-io><h2 class="jh2 sm rv"><span class="jt">つまずきやすい所</span><span class="je" lang="en">05</span></h2><div class="bd2 rv"><div class="pp"><p>はじめて取り組む会社で、よく見かける所です。</p></div><dl class="rw2"><div><dt>何から始めるか、どこまで書くか</dt><dd>最初につまずくのは、何をすればよいのかが分からない、という所です。次に、3点セットの書き方と、どの程度まで書けば足りるのかが分からない、という所です。</dd></div><div><dt>文書と実務のずれ</dt><dd>実務が変わっても、文書が古いままになっていることがあります。実務を変えたことで、リスクがどう変わったのか。全体とのつながりが分からないと、文書をどう直せばよいかが決まらず、そのままになります。</dd></div><div><dt>統制上の要点の選びすぎ</dt><dd>会計上のリスクが高くないものや、本来は統制上の要点（キーコントロール）でないものまで、要点にしていることがあります。その分、運用状況の評価の仕事量が増えます。統制上の要点とは、財務報告の信頼性に重要な影響を及ぼす統制のことで、業務プロセスの評価は、この要点について行います。</dd></div></dl></div></section>
+<section class="blk2" id="s6" data-io><h2 class="jh2 sm rv"><span class="jt">進めるうえでの工夫</span><span class="je" lang="en">06</span></h2><div class="bd2 rv"><dl class="rw2"><div><dt>監査法人に、早めに聞く</dt><dd>監査法人が、どの論点をいちばんリスクが高いと見ているのか。早いうちに確かめておきます。評価範囲については、必要に応じて、決める前に監査法人と協議しておくことが適切とされています（実施基準）。</dd></div><div><dt>少ない人数で続けるには</dt><dd>3点セットを、整理整頓しておくこと。会計上のリスクを、漏れなく把握しておくこと。実務が変わったら、すぐに文書を直せる体制と仕組みを作っておくこと。</dd></div></dl></div></section>
+<section class="blk2" id="s7" data-io><h2 class="jh2 sm rv"><span class="jt">支援と費用</span><span class="je" lang="en">07</span></h2><div class="bd2 rv"><dl class="rw2"><div><dt>支援の内容</dt><dd><a class="lk" href="jsox-ipo.html">内部統制・J-SOX／IPO準備支援の詳細と料金</a><br><a class="lk" href="sample-jsox.html">成果物の見本（架空の会社を題材にした説明用サンプル）</a></dd></div><div><dt>費用の目安</dt><dd>診断は10万円〜（税別）、継続支援は10万円〜／人日（税別）が目安です。診断だけで終えていただいて構いません。</dd></div></dl></div></section>
+<section class="blk2" id="s8" data-io><h2 class="jh2 sm rv"><span class="jt">ほかの読み物</span><span class="je" lang="en">08</span></h2><div class="bd2 rv"><div class="fn"><p><a class="lk" href="jsox-outsourcing.html">内部統制の支援を、外に頼むとき</a></p><p><a class="lk" href="ipo-audit-prep.html">上場準備で、監査を受ける前に</a></p></div></div></section>
+<section class="blk2" id="s9" data-io><h2 class="jh2 sm rv"><span class="jt">担当</span><span class="je" lang="en">09</span></h2><div class="bd2 rv"><div class="who"><img src="img/profile.jpg" width="480" height="640" alt="佐藤 健司（公認会計士・京都）" loading="lazy"><p><b>佐藤 健司</b><span>さとう けんじ</span></p></div><div class="pp"><p>公認会計士・税理士。PwC Japan有限責任監査法人にて約9年、製造業、サービス業、小売業、商社、IT企業、信用金庫等、多様な業種の監査経験。グロース市場からプライム市場までの上場企業監査とJ-SOX内部統制評価を現場責任者（統括主査）として担当。IPO準備企業／上場直後の企業の現場責任者も多数経験。佐藤健司公認会計士事務所 代表。京都市。</p></div></div></section>
+</div>
+<div class="gut"><section class="cta" data-io><div><p class="state rv"><span class="nb">まずは30〜60分の</span><span class="nb">オンライン相談から。</span></p><p class="sm2 rv" style="--i:1">「一度、話を聞いてほしい」という一文で構いません。</p><ul class="trust rv" style="--i:2"><li>初回 30〜60分・オンライン・無料</li><li>通常、3営業日以内にご返信</li><li>最初から最後まで、代表が担当</li></ul></div><a class="ob rv" style="--i:3" href="contact.html#ask-jsox">お問い合わせ</a></section></div>
+<div class="gut"><a class="nxt" href="jsox-outsourcing.html" data-io><span class="k rv" lang="en">Next</span><span class="lb rv">読み物</span><span class="to"><span class="l"><span>内部統制の支援を、外に頼むとき</span></span></span><i class="ring" aria-hidden="true"></i></a></div>
+</main>
+<div class="gut ptop"><a class="totop" href="#top" aria-label="このページの先頭へ"><i aria-hidden="true"></i><span lang="en">Page Top</span></a></div>
+<footer class="gut"><div class="ft"><div class="box lf"><a class="logo" href="./" aria-label="佐藤健司公認会計士事務所 ホームへ"><span class="km" aria-hidden="true"><span class="n" lang="en">Ken<span>ȷ</span><span class="i">ı</span> Sato</span><span class="j">佐藤健司公認会計士事務所</span></span></a><a class="row" href="contact.html">お問い合わせ<i class="go" aria-hidden="true"></i></a></div><div class="box rt"><div class="col"><a href="auditor.html">社外監査役<i class="go" aria-hidden="true"></i></a><ul><li><a href="auditor.html">社外監査役について</a></li><li><a href="outside-auditor.html">就任のご相談と関わり方</a></li><li><a href="candidate.html">候補者プロフィール</a></li></ul></div><div class="col"><a href="services.html">実務支援<i class="go" aria-hidden="true"></i></a><ul><li><a href="closing-improvement.html">決算支援</a></li><li><a href="jsox-ipo.html">内部統制・J-SOX／IPO準備支援</a></li><li><a href="fraud-investigation.html">不正調査・不正対応</a></li><li><a href="services.html">実務支援の一覧</a></li><li><a href="osaka.html">大阪の会社へのご支援</a></li></ul></div><div class="col"><a href="about.html">事務所について<i class="go" aria-hidden="true"></i></a><ul><li><a href="about.html#message">代表あいさつ</a></li><li><a href="about.html#principles">原則</a></li><li><a href="about.html#profile">プロフィール</a></li><li><a href="about.html#office">事務所概要</a></li><li><a href="news.html">お知らせ</a></li><li><a href="office.html">事務所案内（回覧用）</a></li></ul></div><div class="col"><a href="journal.html">読み物<i class="go" aria-hidden="true"></i></a><ul><li><a href="jsox-guide.html">J-SOX対応の進め方</a></li><li><a href="jsox-outsourcing.html">内部統制の支援を、外に頼むとき</a></li><li><a href="ipo-audit-prep.html">上場準備で、監査を受ける前に</a></li><li><a href="sample-jsox.html">現状診断の成果物（サンプル）</a></li></ul></div></div></div><div class="legal"><span>© 佐藤健司公認会計士事務所</span><nav class="lg-links" aria-label="サイトの決まりと一覧"><a href="sitemap.html">サイトマップ</a><a href="about.html#terms">お取引にあたって</a><a href="about.html#office">事務所概要</a><a href="contact.html">お問い合わせ</a></nav><span>京都　公認会計士・税理士</span></div></footer>
+<script src="js/site.js"></script>
 </body>
 </html>
