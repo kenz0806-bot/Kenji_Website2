@@ -72,6 +72,16 @@
     if (first) sio.observe(first); away.forEach(function (e) { sio.observe(e); });
   }
 
+  /* Page Top: Safari では空の目印(#top)へ移らないことがあるので、押したら先頭へ動かす(2026-11-20 本番の試験で見つけた) */
+  all('a.totop').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var r = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try { window.scrollTo({ top: 0, behavior: r ? 'auto' : 'smooth' }); } catch (x) { window.scrollTo(0, 0); }
+      var m = document.getElementById('main'); if (m) { try { m.focus({ preventScroll: true }); } catch (x) { /* 古いブラウザ */ } }
+    });
+  });
+
   /* よくあるご質問: 開け閉めを、静かに伸び縮みさせる */
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   all('.fq details').forEach(function (dt) {
@@ -98,12 +108,12 @@
     var a = e.target.closest ? e.target.closest('a[href]') : null; if (!a) return;
     var href = a.getAttribute('href');
     if (!href || a.target === '_blank' || a.hasAttribute('download') || /^(https?:|mailto:|tel:|#)/.test(href) || /\.pdf($|#)/.test(href)) return;
-    var u; try { u = new URL(a.href, location.href); } catch (x) { return; }
+    var u; try { u = new URL(href, location.href); } catch (x) { return; }   /* SVG の中のリンクは a.href が文字でないので、href の文字から作る */
     if (u.origin !== location.origin) return;
     if (u.pathname === location.pathname && u.search === location.search) { closeDr(); return; }   /* 同じページの中の移動は、幕を降ろさない */
     e.preventDefault(); closeDr();
     try { sessionStorage.setItem('pt', '1'); } catch (x) { /* 幕は出ないが、移動はする */ }
     root.classList.add('pt-out');
-    setTimeout(function () { location.href = a.href; }, 520);
+    setTimeout(function () { location.href = u.href; }, 520);
   });
 })();
