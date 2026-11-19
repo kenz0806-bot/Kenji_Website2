@@ -613,7 +613,7 @@
       + '<button class="pk-nav pk-prev" type="button" aria-label="前の業務"></button><button class="pk-nav pk-next" type="button" aria-label="次の業務"></button></div><div class="c-34 pk-ps">';
     rows.forEach(function (r, i) {
       h += '<div class="pk-p' + (i ? '' : ' on') + '"><a class="pk-name" style="--i:0" href="' + r.getAttribute('href') + '" data-go>' + $('.rn', r).innerHTML + '<span class="pk-go" aria-hidden="true"></span></a><p class="pk-for" style="--i:1">' + esc($('.rw', r).textContent) + '</p><dl class="pk-st" style="--i:2">'
-        + $$('.rx > span', r).map(function (x) { var t = $('i', x).textContent; return '<div><dt>' + esc(t) + '</dt><dd>' + esc(x.textContent.slice(t.length)) + '</dd></div>'; }).join('') + '</dl><a class="pk-more" style="--i:3" href="' + r.getAttribute('href') + '" data-go>詳細<span aria-hidden="true"></span></a></div>';
+        + $$('.rx > span', r).map(function (x) { var t = $('i', x).textContent; return '<div><dt>' + esc(t) + '</dt><dd>' + x.innerHTML.replace(/^<i>[^<]*<\/i>/, '') + '</dd></div>'; }).join('') + '</dl><a class="pk-more" style="--i:3" href="' + r.getAttribute('href') + '" data-go>詳細<span aria-hidden="true"></span></a></div>';
     });
     h += '</div></div><div class="g pk-roster"><p class="pk-hint c-all">業務を選ぶと、上の表示が切り替わります。</p>';
     grp.forEach(function (q, gi) {

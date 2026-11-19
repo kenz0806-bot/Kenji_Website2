@@ -1394,3 +1394,6 @@ body { line-break: strict; }
 @media print { .dvs .rw2 > div.np, .rw2 > div.np { display: none; } }
 .who p span { white-space: nowrap; }
 @media print { .dvs .blk.np { display: none; } }
+.ph, .pk-st dd { word-break: keep-all; overflow-wrap: anywhere; }
+@media (pointer: coarse) { .lk { padding-block: 10px; } }
+.demo i { font-size: clamp(12px, 1.05vw, 15px); }
