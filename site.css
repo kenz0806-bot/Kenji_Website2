@@ -796,4 +796,13 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
    隠すと決めた物は、どの部品でも必ず隠す(確認用ページでは外枠が同じ決まりを持っていたので、試作では見えなかった) */
 [hidden] { display: none !important; }
 
+/* お問い合わせの左: 小さな担当(写真は控えめに。2026-11-20) */
+.who-sm { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line2); }
+.who-sm img { width: 72px; height: 96px; object-fit: cover; border-radius: 6px; }
+.who-sm p { display: grid; gap: 4px; margin: 0; }
+.who-sm b { font: 500 var(--t3)/1.4 var(--sans); letter-spacing: .08em; }
+.who-sm span { font-size: var(--t0); letter-spacing: .08em; color: var(--fg2); }
+.who-sm small { margin-top: 6px; font-size: var(--t1); line-height: 1.8; color: var(--fg1); }
+.who-sm .ln { justify-self: start; margin-top: 8px; }
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
