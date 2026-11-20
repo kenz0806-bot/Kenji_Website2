@@ -286,7 +286,7 @@ a.pan:hover { border-color: var(--fg); background: var(--line2); }
 .bd2 ol.st { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; counter-reset: st; }
 .bd2 ol.st li { position: relative; display: grid; align-content: start; gap: 8px; padding: 24px; border: 1px solid var(--line); border-radius: var(--r); }
 .bd2 ol.st b { font: 500 var(--t5)/1 var(--en); letter-spacing: -.02em; color: var(--acc); }
-.bd2 ol.st h4 { margin: 8px 0 0; font: 500 var(--t2)/1.7 var(--sans); letter-spacing: .04em; } .bd2 ol.st p { font-size: var(--t1); color: var(--fg2); line-height: 1.9; }
+.bd2 ol.st h4, .bd2 ol.st h3 { margin: 8px 0 0; font: 500 var(--t2)/1.7 var(--sans); letter-spacing: .04em; } .bd2 ol.st p { font-size: var(--t1); color: var(--fg2); line-height: 1.9; }
 .bd2 .fe { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
 .bd2 .fe > div { display: grid; gap: 12px; padding: 24px 24px 28px; border-radius: var(--r); background: var(--panel); }
 .bd2 .fe span { font-size: var(--t1); letter-spacing: .08em; color: var(--fg2); } .bd2 .fe b { font: 500 var(--t5)/1.3 var(--sans); letter-spacing: .02em; }
