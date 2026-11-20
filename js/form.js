@@ -275,7 +275,10 @@
     var m = (location.hash || '').match(/^#ask-(\w+)$/);
     if (m && ASK[m[1]]) {
       var b0 = document.getElementById('ask-' + m[1]);
-      if (b0) { b0.setAttribute('aria-pressed', 'true'); F.fill(ASK[m[1]].b, ASK[m[1]].s, true); }
+      if (b0) {
+        var dt0 = b0.closest ? b0.closest('details') : null; if (dt0) dt0.open = true;   /* 折りたたんだ「そのほかの業務」の文例でも、開いて見せる */
+        b0.setAttribute('aria-pressed', 'true'); F.fill(ASK[m[1]].b, ASK[m[1]].s, true);
+      }
     }
     for (var i = 0; i < asks.length; i++) {
       asks[i].addEventListener('click', function () {
