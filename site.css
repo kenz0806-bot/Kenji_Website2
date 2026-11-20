@@ -817,5 +817,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .pan .goal::before { content: "→ "; color: var(--acc); }
 @media (max-width: 1023px) { .simple3 { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
 @media (max-width: 639px) { .simple-l { margin-top: 32px; } .simple3 { margin-top: 28px; gap: 28px; } .simple3 li { padding-top: 20px; } }
+/* 「こんなときに」の下の一行(2026-11-20) */
+.bd2 .ask-here { margin-top: 28px; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
