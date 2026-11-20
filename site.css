@@ -805,4 +805,17 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .who-sm small { margin-top: 6px; font-size: var(--t1); line-height: 1.8; color: var(--fg1); }
 .who-sm .ln { justify-self: start; margin-top: 8px; }
 
+/* ===== 2026-11-20 シンプルの意味(色と配置は今のまま。文字組みだけ) ===== */
+.simple-l { margin-top: 48px; font: 500 clamp(22px, 2.4vw, 32px)/1.6 var(--sans); letter-spacing: .06em; }
+.simple3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; margin: 40px 0 0; padding: 0; list-style: none; }
+.simple3 li { display: grid; align-content: start; gap: 12px; padding-top: 28px; border-top: 1px solid var(--line); }
+.simple3 b { font: 500 clamp(32px, 3.4vw, 44px)/1.2 var(--sans); letter-spacing: .12em; }
+.simple3 .h { margin: 8px 0 0; font: 500 var(--t3)/1.7 var(--sans); letter-spacing: .04em; }
+.simple3 .f { margin: 0; font-size: var(--t2); line-height: 1.9; color: var(--fg2); }
+/* 主な支援の札: 困りごと → 目指す状態 */
+.pan .goal { margin-top: 8px; font-size: var(--t1); line-height: 1.9; color: var(--fg1); }
+.pan .goal::before { content: "→ "; color: var(--acc); }
+@media (max-width: 1023px) { .simple3 { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+@media (max-width: 639px) { .simple-l { margin-top: 32px; } .simple3 { margin-top: 28px; gap: 28px; } .simple3 li { padding-top: 20px; } }
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
