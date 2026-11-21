@@ -885,4 +885,15 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 @media (max-width: 639px) { .in .duo2 figure.dph { background-image: var(--ph-sp, none); } }
 .duo2 .en { font-weight: 500; letter-spacing: -.045em; }
 
+/* 公開前の最終調整（2026-11-21）: 小さな日本語と操作の手当て。英語の小さなラベル（Outfit、--t0 の 11px）はそのまま */
+/* 日本語の注記・札・読みがなは 11px → 12px（字間は今のまま。英語の見出しの -0.045em は使わない） */
+.field .req, .field .opt, .sbar span, .news .tg, .who-sm span, .bd2 .who span { font-size: 12px; }
+.tb td::before { font-size: 12px; }   /* スマホで表を縦に並べたときの項目名 */
+/* 足もとの細いリンク: 押せる高さを 23px → 約31px に（見た目の文字と間隔は変えない） */
+.lg-links a { display: inline-block; padding-block: 4px; }
+.lg-links { row-gap: 0; }
+/* キーボードで動かしたときの枠を 1px → 2px に */
+:focus-visible { outline-width: 2px; }
+@media (max-width: 374px) { .sbar span { letter-spacing: 0; } }   /* 幅360で 12px の注記が末尾まで入るように */
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
