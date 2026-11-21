@@ -70,7 +70,7 @@
 - 不正への向き合い方: 人は誰でも誤ることがある。起きたときこそ、体制を立て直す機会にできる
 - AI・IT: 定型的な作業はAIやITに任せ、人は、本当に考えるべきことと、まだ言葉になっていない情報をつかむことに時間を使う
 - 約束: 仕組みが整っていない点は、曖昧にせず伝える。申し上げにくいことも、率直に伝える
-- 言葉の由来: Key Structure is to Keep it Simple. は Kenji Sato の頭文字から生まれた。もっとも共感した本は、岡本太郎『自分の中に毒を持て』
+- 言葉: 冒頭のコピーは Keep it simple.。もとになった言葉 Key Structure is to Keep it Simple. は、Kenji Sato の頭文字(K と S)から生まれた。もっとも共感した本は、岡本太郎『自分の中に毒を持て』
 
 ## 実務支援の2つの柱
 
@@ -99,7 +99,7 @@
 
 ## 考え方
 
-- Key Structure is to Keep it Simple.(核心の構造とは、シンプルを保つこと。)K と S は、代表 佐藤健司(Kenji Sato)の頭文字。
+- Keep it simple.(冒頭のコピー。もとは Key Structure is to Keep it Simple. で、K と S は代表 佐藤健司(Kenji Sato)の頭文字。)
 - Key Structure: 散らかった数字・業務・ルールを、判断できる構造に組み直す。タスクの列挙ではなく、優先順位と依存関係まで落とす。
 - Keep it Simple: 「文書のための文書」は作らない。増員ありきの絵は描かない。必要のない支援は勧めない。
 

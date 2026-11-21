@@ -819,5 +819,12 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 @media (max-width: 639px) { .simple-l { margin-top: 32px; } .simple3 { margin-top: 28px; gap: 28px; } .simple3 li { padding-top: 20px; } }
 /* 「こんなときに」の下の一行(2026-11-20) */
 .bd2 .ask-here { margin-top: 28px; }
+/* 冒頭の一文「Keep it simple.」(2026-11-21 ご本人の指示。3案を比べて C 案を採用)
+   文字は Outfit の 500(ロゴと同じ太さ)。末尾の点だけ 700 の金(ロゴの点・名刺の点と同じ #d3ad5a)にして、細い字の最後で静かに言い切る。
+   点は e に 0.01字 寄せる(句点の間合いは残す)。PC・タブレットは一行、スマホも一行で、画面の幅に合わせて大きさを決める。 */
+.hero .G.ks { margin: 28px 0 0 -.05em; font: 500 clamp(42px, 8.8vw, 132px)/.95 var(--en); letter-spacing: -.045em; white-space: nowrap; }
+.hero .G.ks .l { display: inline-block; }
+.hero .G.ks .gd { font-weight: 700; color: #d3ad5a; margin-left: -.01em; }
+@media (max-width: 767px) { .hero .G.ks { font-size: 13vw; } }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
