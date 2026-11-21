@@ -845,5 +845,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .hero .ob:hover { color: var(--bg); }
 .hero.hero::before { inset: 0 0 0 auto; width: 68%; background: var(--kp) right center / auto 100% no-repeat; }
 @media (max-width: 639px) { .hero.hero::before { inset: auto 0 0 0; width: 100%; height: 62%; background: var(--kp-sp) right bottom / auto 100% no-repeat; opacity: .75; } }
+/* 事務所について「より良くすることが、好きです。」(2026-11-21): 代表あいさつと同じ組み(左に大きな字、右に本文)。上に一段の間をとる */
+.two.love { margin-top: var(--sec); }
+.two.love h3.state { padding-bottom: 0; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
