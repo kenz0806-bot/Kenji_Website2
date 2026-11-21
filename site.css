@@ -831,7 +831,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .km .n { letter-spacing: -.012em; }
 .top .km .n { letter-spacing: 0; }
 .ft .lf .km .n { letter-spacing: -.02em; }
-/* 冒頭の背景(2026-11-21 ご本人の追加指示「背景写真を活用したエディトリアルデザイン」。A 写真なし・B ごく薄い・C 少し印象的 を比べて B を採用)
+/* 冒頭の背景(2026-11-21 ご本人の追加指示で B ごく薄い を採用 → 同日、ご本人の最終指示で D40 に。画像は D40 の見え方40、作り方は 01_作り方の元/冒頭の背景写真を作る_D40.py)
    写真: Unsplash「structure」Verne Ho(https://unsplash.com/photos/0LAJfSNa-xQ、Unsplash ライセンス=商用可・表示不要)。
    モードごとに、地の色と合成した画像を使う(作り方は 01_作り方の元/冒頭の背景写真を作る.py)。ダークは明るい所だけが浮き、ライト・ペーパーは暗い所だけが薄く刷られる。
    縁の透明なぼかしは画像に焼き込み済みなので、CSS は置くだけ。文字の後ろは無地(地の色)のまま。写真は飾りなので、代わりの文は要らない */
@@ -843,10 +843,44 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .hero .ob { border-color: var(--fg); color: var(--fg); }
 .hero .ob::before { background: var(--fg); }
 .hero .ob:hover { color: var(--bg); }
-.hero.hero::before { inset: 0 0 0 auto; width: 68%; background: var(--kp) right center / auto 100% no-repeat; }
-@media (max-width: 639px) { .hero.hero::before { inset: auto 0 0 0; width: 100%; height: 62%; background: var(--kp-sp) right bottom / auto 100% no-repeat; opacity: .75; } }
+.hero.hero::before { inset: 0 0 0 auto; width: 70%; background: var(--kp) right center / auto 100% no-repeat; }
+@media (max-width: 639px) { .hero.hero::before { inset: auto 0 0 0; width: 100%; height: 60%; background: var(--kp-sp) right bottom / auto 100% no-repeat; opacity: .6; } }
 /* 事務所について「より良くすることが、好きです。」(2026-11-21): 代表あいさつと同じ組み(左に大きな字、右に本文)。上に一段の間をとる */
 .two.love { margin-top: var(--sec); }
 .two.love h3.state { padding-bottom: 0; }
+/* ===== D40(2026-11-21 ご本人「D40 のデザイン思想を全体へ」) =====
+   トップ: 文字の組みは比較の C 案(一文を縦の中ほど、幅の11%)。名刺は残し、ライト・ペーパーで紙・ふち・影を地に寄せる */
+.hero-t { display: flex; flex-direction: column; justify-content: center; }
+.hero .G.ks { font-size: clamp(48px, 11vw, 168px); margin-top: 36px; }
+:root[data-tone="light"] .hero .mc-card { background: linear-gradient(#fdfdfc, #f6f6f4); border-color: rgba(33, 33, 33, .12); }
+:root[data-tone="paper"] .hero .mc-card { background: linear-gradient(#fbf9f4, #f3efe6); border-color: rgba(60, 45, 20, .14); }
+:root[data-tone="light"] .hero .mc-shadow { background: rgba(20, 20, 20, .18); }
+:root[data-tone="paper"] .hero .mc-shadow { background: rgba(70, 50, 20, .2); }
+@media (max-width: 767px) { .hero .G.ks { font-size: 13vw; margin-top: 28px; } .hero-t { justify-content: flex-start; } }
+
+/* 薄い写真(入口の帯・入口カード共通)。モード別の画像を変数で切り替える。作り方は 01_作り方の元/薄い写真を作る.py。
+   写真はすべて Unsplash(商用可・表示不要)。飾りなので alt は付けない */
+.ph-about { --ph: url(img/ph-about-dark-pc.webp); --ph-sp: url(img/ph-about-dark-sp.webp); }
+.ph-auditor { --ph: url(img/ph-auditor-dark-pc.webp); --ph-sp: url(img/ph-auditor-dark-sp.webp); }
+.ph-services { --ph: url(img/ph-services-dark-pc.webp); --ph-sp: url(img/ph-services-dark-sp.webp); }
+:root[data-tone="light"] .ph-about { --ph: url(img/ph-about-light-pc.webp); --ph-sp: url(img/ph-about-light-sp.webp); }
+:root[data-tone="light"] .ph-auditor { --ph: url(img/ph-auditor-light-pc.webp); --ph-sp: url(img/ph-auditor-light-sp.webp); }
+:root[data-tone="light"] .ph-services { --ph: url(img/ph-services-light-pc.webp); --ph-sp: url(img/ph-services-light-sp.webp); }
+:root[data-tone="paper"] .ph-about { --ph: url(img/ph-about-paper-pc.webp); --ph-sp: url(img/ph-about-paper-sp.webp); }
+:root[data-tone="paper"] .ph-auditor { --ph: url(img/ph-auditor-paper-pc.webp); --ph-sp: url(img/ph-auditor-paper-sp.webp); }
+:root[data-tone="paper"] .ph-services { --ph: url(img/ph-services-paper-pc.webp); --ph-sp: url(img/ph-services-paper-sp.webp); }
+
+/* 入口の帯: 写真の上の白い字をやめ、地はモードの地の色、文字はモードの文字色。写真は右の60%に薄く(見え方28) */
+.kvh { color: var(--fg); background: var(--bg); }
+.kvh::after { display: none; }
+.kvh::before { content: ""; position: absolute; inset: 0 0 0 auto; width: 60%; pointer-events: none; background: var(--ph, none) right center / contain no-repeat; }   /* contain: 溶かした縁を切り落とさない */
+.kvh h1 { font-weight: 500; letter-spacing: -.045em; }
+.kvh .sub { color: var(--fg2); }
+:root[data-tone="paper"] .kvh::before { filter: none; }
+@media (max-width: 639px) { .kvh::before { inset: 0 0 auto 0; width: 100%; height: 72%; background: var(--ph-sp, none) right top / contain no-repeat; opacity: .8; } }
+
+/* 入口カード(トップ): 帯と同じ薄い写真。カードの地はページの地、ふちは細い線 */
+.duo2 figure.dph { background: var(--ph, none) center / cover no-repeat, var(--bg); box-shadow: inset 0 0 0 1px var(--line2); }
+.duo2 .en { font-weight: 500; letter-spacing: -.045em; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
