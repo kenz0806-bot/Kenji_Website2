@@ -831,5 +831,19 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .km .n { letter-spacing: -.012em; }
 .top .km .n { letter-spacing: 0; }
 .ft .lf .km .n { letter-spacing: -.02em; }
+/* 冒頭の背景(2026-11-21 ご本人の追加指示「背景写真を活用したエディトリアルデザイン」。A 写真なし・B ごく薄い・C 少し印象的 を比べて B を採用)
+   写真: Unsplash「structure」Verne Ho(https://unsplash.com/photos/0LAJfSNa-xQ、Unsplash ライセンス=商用可・表示不要)。
+   モードごとに、地の色と合成した画像を使う(作り方は 01_作り方の元/冒頭の背景写真を作る.py)。ダークは明るい所だけが浮き、ライト・ペーパーは暗い所だけが薄く刷られる。
+   縁の透明なぼかしは画像に焼き込み済みなので、CSS は置くだけ。文字の後ろは無地(地の色)のまま。写真は飾りなので、代わりの文は要らない */
+:root { --kp: url(img/kp-dark.webp); --kp-sp: url(img/kp-dark-sp.webp); }
+:root[data-tone="light"] { --kp: url(img/kp-light.webp); --kp-sp: url(img/kp-light-sp.webp); }
+:root[data-tone="paper"] { --kp: url(img/kp-paper.webp); --kp-sp: url(img/kp-paper-sp.webp); }
+.hero { background: var(--bg); color: var(--fg); }
+.hero .eb, .hero .act span { color: var(--fg2); }
+.hero .ob { border-color: var(--fg); color: var(--fg); }
+.hero .ob::before { background: var(--fg); }
+.hero .ob:hover { color: var(--bg); }
+.hero.hero::before { inset: 0 0 0 auto; width: 68%; background: var(--kp) right center / auto 100% no-repeat; }
+@media (max-width: 639px) { .hero.hero::before { inset: auto 0 0 0; width: 100%; height: 62%; background: var(--kp-sp) right bottom / auto 100% no-repeat; opacity: .75; } }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
