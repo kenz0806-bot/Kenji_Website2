@@ -896,4 +896,9 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 :focus-visible { outline-width: 2px; }
 @media (max-width: 374px) { .sbar span { letter-spacing: 0; } }   /* 幅360で 12px の注記が末尾まで入るように */
 
+/* 2026-11-22 最終改善: 「そのほかの支援」の行で、隣の項目が2行になると名前と対象の行の間が広がっていた。行を上に詰める */
+.list a { align-content: start; }
+/* 2026-11-22 最終改善: トップ「ご相談から着手まで」のリンクが4つになったため、文の幅(56em)はそのままに、リンクの並びだけを横いっぱいに使う(PC で1行に収める) */
+.flow-nt { max-width: none; } .flow-nt p { max-width: 56em; }
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
