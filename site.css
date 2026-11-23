@@ -902,22 +902,43 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .flow-nt { max-width: none; } .flow-nt p { max-width: 56em; }
 /* 2026-11-23 監査: 成果物の見本の課題リスト(表は最小 760px)が、PC でも右の段(690px)に入りきらず「目安」の列が横送りの先に隠れていた。
    表を含む区画だけ、PC では本文を段の全幅に広げる(見出しが上、表が下)。タブレット以下の形は変えない */
-@media (min-width: 1024px) { .blk2:has(.tbw) > .bd2 { grid-column: 1 / -1; max-width: none; } }
+@media (min-width: 960px) { .blk2:has(.tbw) > .bd2 { grid-column: 1 / -1; max-width: none; } }
 /* 2026-11-23 統合改善: 見本の表で「目安」(1か月目 など)が語の途中で折れないように。表の形(PC)のときだけ */
-@media (min-width: 1024px) { .tb th:last-child, .tb td[data-th="目安"] { white-space: nowrap; } }
+@media (min-width: 960px) { .tb th:last-child, .tb td[data-th="目安"] { white-space: nowrap; } }
 /* 2026-11-24 最終品質改善(見本の表)
    1) PC(1024以上)で表を全幅にした区画は、見出しが上・表が下に並ぶ。見出しが「追いかける」形のままだと、送ったときに表の文字に重なるので、この区画だけ止める
    2) PC の表で「領域」の語(評価範囲 など)が語の途中で折れないように
    3) タブレット(640〜1023)は、7列の表では列が細すぎる(1行5字、768 では「目安」が横送りの先)。表の形は全幅が取れる PC だけにして、
       ここはスマホと同じ「項目名と中身を縦に並べる形」にする(決まりは 639 以下のものと同じ) */
-@media (min-width: 1024px) { .blk2:has(.tbw) > .jh2.sm { position: static; } .tb td[data-th="領域"] { word-break: keep-all; } }
-@media (min-width: 640px) and (max-width: 1023px) {
+@media (min-width: 960px) { .blk2:has(.tbw) > .jh2.sm { position: static; } .tb td[data-th="領域"] { word-break: keep-all; } }
+@media (min-width: 640px) and (max-width: 959px) {
   .tbw { overflow: visible; border: 0; border-radius: 0; }
   .tb { min-width: 0; } .tb thead { display: none; } .tb, .tb tbody, .tb tr, .tb td { display: block; }
   .tb tr { padding: 16px 0; border-top: 1px solid var(--line2); } .tb tr:last-child { border-bottom: 1px solid var(--line2); }
   .tb td { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding: 4px 0; border: 0; white-space: normal !important; }
   .tb td::before { content: attr(data-th); color: var(--fg3); font-size: 12px; letter-spacing: .08em; line-height: 2.2; }
   .tb td.p-high::before, .tb td.p-mid::before, .tb td.p-low::before { content: attr(data-th); display: block; width: auto; height: auto; margin: 0; border: 0; background: none; border-radius: 0; vertical-align: baseline; }
+}
+/* 2026-11-24 AD深化: 表の切り替えを 1024 から 960 に(ページが1段から2段に変わる幅と同じ)。959 以下は縦に並べる形、960 以上は全幅の表。
+   3案(縦型のまま・枠の中で横送り・900で切替)を実画面で比べて決めた。900 では「影響」の列が1行6字で窮屈、960 で7字、1023 で8字 */
+/* 2026-11-24 AD深化: 事務所紹介の大きな一文(バックオフィスは、…)。PC の左の段では1行11字しか入らず、
+   「単なる」「です。」だけの行ができて7行に割れていた。12字(単なるコストセンターでは／セーフティーネットです。)が
+   必ず1行に入るよう、字の大きさを段の幅から決める。文の切れ目(主題のあと・1文目の終わり)では必ず改行する。
+   960〜1279 は左の段を 4:8 から 5:7 に広げて、字を 26〜30px に保つ(同じ区画の「より良くすることが、好きです。」も揃える) */
+/* 改行は、区切りの文節(主題・1文目の終わり)をブロックにして入れる。::after に改行文字を入れる書き方は、
+   text-wrap: pretty と重なると WebKit(Safari)でページが落ちるので使わない(2026-11-24 に試験で確認) */
+.two > .stk > .state.q .nb:first-child, .two > .stk > .state.q .nb:nth-child(4) { display: block; }
+@media (max-width: 639px) { .two > .stk > .state.q { font-size: min(var(--t5), calc((100vw - 32px) / 12.5)); } }
+@media (min-width: 960px) and (max-width: 1279px) {
+  .two:has(> .stk > .state) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .two > .stk > .state.q { font-size: clamp(26px, calc((100vw - 176px) / 29.6), 30px); }
+}
+@media (min-width: 1280px) { .two > .stk > .state.q { font-size: clamp(29px, calc((100vw - 176px) / 37.2), 36px); } }
+/* 2026-11-24 AD深化: 大きい画面(1441以上)で本文の1行が伸び続けるのを止める。幅1920 では手紙が1行61字、注記が77字になっていた。
+   1440 のときの行幅(手紙・導入文・注記 843px＝19pxで約44字、項目の中身 619px＝15pxで約41字)を上限にする。1440 以下は変えない */
+@media (min-width: 1441px) {
+  .letter p, .two p.intro, p.org, p.asks-lead, p.privacy { max-width: 845px; }
+  .rows3 dd, .rows3 p { max-width: 620px; }
 }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
