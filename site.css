@@ -903,5 +903,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 /* 2026-11-23 監査: 成果物の見本の課題リスト(表は最小 760px)が、PC でも右の段(690px)に入りきらず「目安」の列が横送りの先に隠れていた。
    表を含む区画だけ、PC では本文を段の全幅に広げる(見出しが上、表が下)。タブレット以下の形は変えない */
 @media (min-width: 1024px) { .blk2:has(.tbw) > .bd2 { grid-column: 1 / -1; max-width: none; } }
+/* 2026-11-23 統合改善: 見本の表で「目安」(1か月目 など)が語の途中で折れないように。表の形(PC)のときだけ */
+@media (min-width: 1024px) { .tb th:last-child, .tb td[data-th="目安"] { white-space: nowrap; } }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
