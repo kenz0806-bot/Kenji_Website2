@@ -905,5 +905,19 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 @media (min-width: 1024px) { .blk2:has(.tbw) > .bd2 { grid-column: 1 / -1; max-width: none; } }
 /* 2026-11-23 統合改善: 見本の表で「目安」(1か月目 など)が語の途中で折れないように。表の形(PC)のときだけ */
 @media (min-width: 1024px) { .tb th:last-child, .tb td[data-th="目安"] { white-space: nowrap; } }
+/* 2026-11-24 最終品質改善(見本の表)
+   1) PC(1024以上)で表を全幅にした区画は、見出しが上・表が下に並ぶ。見出しが「追いかける」形のままだと、送ったときに表の文字に重なるので、この区画だけ止める
+   2) PC の表で「領域」の語(評価範囲 など)が語の途中で折れないように
+   3) タブレット(640〜1023)は、7列の表では列が細すぎる(1行5字、768 では「目安」が横送りの先)。表の形は全幅が取れる PC だけにして、
+      ここはスマホと同じ「項目名と中身を縦に並べる形」にする(決まりは 639 以下のものと同じ) */
+@media (min-width: 1024px) { .blk2:has(.tbw) > .jh2.sm { position: static; } .tb td[data-th="領域"] { word-break: keep-all; } }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .tbw { overflow: visible; border: 0; border-radius: 0; }
+  .tb { min-width: 0; } .tb thead { display: none; } .tb, .tb tbody, .tb tr, .tb td { display: block; }
+  .tb tr { padding: 16px 0; border-top: 1px solid var(--line2); } .tb tr:last-child { border-bottom: 1px solid var(--line2); }
+  .tb td { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding: 4px 0; border: 0; white-space: normal !important; }
+  .tb td::before { content: attr(data-th); color: var(--fg3); font-size: 12px; letter-spacing: .08em; line-height: 2.2; }
+  .tb td.p-high::before, .tb td.p-mid::before, .tb td.p-low::before { content: attr(data-th); display: block; width: auto; height: auto; margin: 0; border: 0; background: none; border-radius: 0; vertical-align: baseline; }
+}
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
