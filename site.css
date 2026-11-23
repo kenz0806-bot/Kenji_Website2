@@ -900,5 +900,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .list a { align-content: start; }
 /* 2026-11-22 最終改善: トップ「ご相談から着手まで」のリンクが4つになったため、文の幅(56em)はそのままに、リンクの並びだけを横いっぱいに使う(PC で1行に収める) */
 .flow-nt { max-width: none; } .flow-nt p { max-width: 56em; }
+/* 2026-11-23 監査: 成果物の見本の課題リスト(表は最小 760px)が、PC でも右の段(690px)に入りきらず「目安」の列が横送りの先に隠れていた。
+   表を含む区画だけ、PC では本文を段の全幅に広げる(見出しが上、表が下)。タブレット以下の形は変えない */
+@media (min-width: 1024px) { .blk2:has(.tbw) > .bd2 { grid-column: 1 / -1; max-width: none; } }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
