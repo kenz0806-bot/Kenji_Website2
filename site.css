@@ -1038,5 +1038,12 @@ section:has(> #deliverables) ul.li li .sv { font-size: var(--t2); letter-spacing
 section:has(> #approach) .bd2 ol.st p.ph { word-break: keep-all; overflow-wrap: normal; }
 /* 足もとのリンク: 見た目は同じまま、押せる範囲を上下 4px ずつ広げる（1行 24px → 32px。リンクの間は 4px 残る） 2026-11-25 */
 .ft .col li a { padding-block: 4px; margin-block: -4px; }
+/* DESIGN90 比較1 B（案を伏せた審査で1位）: 項目と説明の項目名を、本文と同じ大きさ・色にして拾いやすく。項目の列は詳しいページ（.blk2）だけ 160px → 200px（「文書化支援（3点セット）」を1行に） 2026-11-25 */
+.bd2 dl.rw2 dt { font-size: var(--t2); letter-spacing: .06em; color: var(--fg); }
+@media (min-width: 640px) { .blk2 .bd2 dl.rw2 > div { grid-template-columns: minmax(0, 200px) minmax(0, 1fr); } }
+/* DESIGN90 比較3 B: パンくずの地の箱を外し、文字だけに（補助の情報に面を与えない。罫線は足さない） 2026-11-25 */
+.crumb { padding: 0; background: none; border-radius: 0; }
+/* 金額と単位・時間を途中で折らない（組み立ての道具が本文の「10万円〜」「（1時間）」「30〜60分」を包む） 2026-11-25 */
+.nw { white-space: nowrap; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
