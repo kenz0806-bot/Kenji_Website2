@@ -1003,5 +1003,7 @@ section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top
    枠の地を透かして、ページと同じ紙の質感にする(写真・名刺・構図・濃さは同じ。ダーク・ライトは地に質感がないので見た目は変わらない) */
 :root[data-tone="paper"] .hero { background: transparent; }
 @media (min-width: 960px) and (max-width: 1099px) { .bd2 .fe b { font-size: 24px; } }   /* 料金の箱が2列で狭くなる幅でも「10万円〜／人日」を1行に */
+/* Round 6(別の審査担当の指摘): 料金の2枚の箱で、（税別）が片方だけ次の行に落ち、金額の行の高さがずれていた(いまの本番から)。（税別）は両方とも金額の下の行に置く */
+.bd2 .fe b small { display: block; margin: 6px 0 0; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
