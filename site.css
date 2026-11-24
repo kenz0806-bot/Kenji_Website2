@@ -927,7 +927,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
    960〜1279 は左の段を 4:8 から 5:7 に広げて、字を 26〜30px に保つ(同じ区画の「より良くすることが、好きです。」も揃える) */
 /* 改行は、区切りの文節(主題・1文目の終わり)をブロックにして入れる。::after に改行文字を入れる書き方は、
    text-wrap: pretty と重なると WebKit(Safari)でページが落ちるので使わない(2026-11-24 に試験で確認) */
-.two > .stk > .state.q .nb:first-child, .two > .stk > .state.q .nb:nth-child(4) { display: block; }
+/* 2026-11-24 AD深化2: 一文は「行のまとまり(.sl)」で組む形に替えた。ここは「より良くすることが、／好きです。」(h3)だけに残す */
+.two.love > .stk > .state.q .nb:first-child { display: block; }
 @media (max-width: 639px) { .two > .stk > .state.q { font-size: min(var(--t5), calc((100vw - 32px) / 12.5)); } }
 @media (min-width: 960px) and (max-width: 1279px) {
   .two:has(> .stk > .state) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
@@ -940,5 +941,41 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
   .letter p, .two p.intro, p.org, p.asks-lead, p.privacy { max-width: 845px; }
   .rows3 dd, .rows3 p { max-width: 620px; }
 }
+
+/* ===== 2026-11-24 AD深化2(文字の組みと、箱の反復を減らす直し。色・写真・飾りは足していない) ===== */
+/* 1. 大きな一文を「行のまとまり(.sl)」で組む。事務所紹介は、文ごとに組み、文と文の間にだけ小さな空きを置く
+      (「ありません。」だけの行をなくす。否定の文と肯定の文の対比を、空きで見せる)。
+      実務支援・社外監査役の一文も同じ大きさ(12字が1行に入る大きさ)にそろえ、意味の切れ目で2行にする
+      (42px のままでは左の段に8〜9字しか入らず、「整理し、」「経験を、」だけの行ができて3〜4行に割れていた) */
+.state .sl { display: block; } .state .sl > .nb.br { display: block; } .state .sl.s2 { margin-top: .45em; }
+/* 2. 手順の一覧(ol.st): 小さな箱を並べる形から、番号つきの行へ。箱の中は1行11字(13px)で、
+      「ます。」「めます。」だけの行が続いていた。行にすると説明は15pxで1行40字前後、1〜2行で読める。責任の範囲などの行の一覧と骨格がそろう */
+.bd2 ol.st { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.bd2 ol.st li { grid-template-columns: 64px minmax(0, 1fr); gap: 4px 0; align-items: baseline; padding: 22px 0 24px; border: 0; border-top: 1px solid var(--line2); border-radius: 0; }
+.bd2 ol.st li:last-child { border-bottom: 1px solid var(--line2); }
+.bd2 ol.st b { grid-row: 1 / span 2; font-size: var(--t4); line-height: 1.5; }
+.bd2 ol.st h3, .bd2 ol.st h4 { margin: 0; font-size: var(--t3); line-height: 1.6; }
+.bd2 ol.st p { grid-column: 2; font-size: var(--t2); line-height: 1.9; }
+@media (max-width: 639px) { .bd2 ol.st li { grid-template-columns: 44px minmax(0, 1fr); padding: 18px 0 20px; } .bd2 ol.st h3, .bd2 ol.st h4 { font-size: var(--t2); } }
+/* 3. 社外監査役の「関わり方」: 箱3つから、罫線の3列へ(トップの「判断・説明・不安」と同じ文法)。
+      3つ目の文が短く、箱の下が空いていた。箱をやめると高さの差が気にならず、言葉が前に出る */
+.pans:not(.four) { gap: 0 40px; }
+.pans:not(.four) > .pan { min-height: 0; padding: 28px 0 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; }
+.pans:not(.four) > .pan b { margin-top: 12px; font-size: clamp(var(--t4), 1.7vw, 24px); letter-spacing: .04em; }
+.pans:not(.four) > .pan p { margin-top: 16px; }
+@media (max-width: 959px) { .pans:not(.four) { gap: 32px; } }
+/* 960〜1279 は列が狭く、見出しが1行・2行・2行になる。本文の始まる高さをそろえる */
+@media (min-width: 960px) and (max-width: 1279px) { .pans:not(.four) > .pan b { min-height: 3em; } }
+/* 4. 料金の箱(J-SOX／IPO): 「10万円〜／人日（税別）」が箱の中で2行に折れ、左右の箱の高さの中で字がずれていた。
+      トップと同じく、金額を大きく、単位と税の注記を小さく書く(言葉は同じ) */
+.bd2 .fe b small { margin-left: .15em; font: 500 var(--t2)/1 var(--sans); letter-spacing: .04em; color: var(--fg1); white-space: nowrap; }
+/* 5. 語の途中で折れる所を、文節の切れ目で折る。足もとのリンク(全ページ。幅1280で「就任のご相談と関わ／り方」など)と、
+      行の一覧の項目名(「文書化支援（3点セッ／ト）」など)。切れ目は HTML の <wbr> で指定し、ここでは語の途中で折らない設定だけを入れる */
+.ft .col > a, .ft .col li a, .bd2 dl.rw2 dt { word-break: keep-all; overflow-wrap: anywhere; }
+/* 項目名の列の幅(160px)は変えない。広げると右の文が狭くなり、別の段落で「ます。」だけの行が新しく出た(入れ替わるだけで、良くならない) */
+/* 6. 読み物の一覧の説明文: 1行50〜52字で、2行目が「た。」だけになる行があった。行幅を44字ほどに抑える */
+.news.nt0 small { max-width: 44em; }
+/* 7. 相談の箱の一文(幅374以下): 「オンライン相談から。」の10字が入らず「から。」だけの行ができていた。10字が入る大きさにする */
+@media (max-width: 639px) { .cta .state { font-size: min(var(--t5), calc((100vw - 82px) / 10.3)); } }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
