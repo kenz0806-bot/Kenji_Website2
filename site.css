@@ -984,13 +984,20 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
       隣の「責任の範囲」(小さな項目名｜中身の行)と、同じ行の一覧に見えないようにする。箱は戻さない。スマホは番号 28px、軸は外す */
 .bd2 ol.st li { grid-template-columns: 80px minmax(0, 1fr); gap: 6px 0; padding: 30px 0 32px; border-top-color: var(--line); }
 .bd2 ol.st li:last-child { border-bottom-color: var(--line); }
-.bd2 ol.st b { font: 500 40px/1 var(--en); letter-spacing: -.02em; align-self: start; padding-top: 2px; }
+.bd2 ol.st b { font: 500 34px/1 var(--en); letter-spacing: -.02em; align-self: start; padding-top: 2px; }   /* 2026-11-24 DESIGN100: 40px → 34px。伏せた比較で別の審査担当も 34px を選んだ(見出しが主役のまま、工程の見出しだけの行で番号が沈まない) */
 .bd2 ol.st h3, .bd2 ol.st h4 { font-size: var(--t3); line-height: 1.5; } .bd2 ol.st p { margin-top: 2px; }   /* 番号の列 80px・行の上限なし: 96px・36em より「ます。」だけの行が少ない(6ページ×7幅で 8 → 5) */
 .bd2:has(> ol.st) > p, .bd2:has(> ol.st) > .fe, .bd2:has(> ol.st) > .fn { margin-left: 80px; }
-@media (max-width: 639px) { .bd2 ol.st li { grid-template-columns: 56px minmax(0, 1fr); padding: 22px 0 24px; } .bd2 ol.st b { font-size: 28px; } .bd2:has(> ol.st) > p, .bd2:has(> ol.st) > .fe, .bd2:has(> ol.st) > .fn { margin-left: 0; } }
+@media (max-width: 639px) { .bd2 ol.st li { grid-template-columns: 56px minmax(0, 1fr); padding: 22px 0 24px; } .bd2 ol.st b { font-size: 24px; } .bd2:has(> ol.st) > p, .bd2:has(> ol.st) > .fe, .bd2:has(> ol.st) > .fn { margin-left: 0; } }
 /* 2. 代表あいさつの2つの大きな一文(代表本人の声)だけを明朝に。同じページの「原則」の枠と同じ書体(新しい書体ではない)。
       大きさ・改行・文の間の空きは前と同じ。字間 .02em なら、どの幅でも「セーフティーネットです。」は1行に収まる(10幅で確認) */
 section:has(> #message) .two > .stk > .state.q { font-family: var(--min); letter-spacing: .02em; line-height: 1.66; }
 section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top: .5em; }
+
+/* ===== 2026-11-24 DESIGN100 ===== */
+/* 決算支援の目玉の一文: 強調は冒頭の1か所だけ。一文を一回り大きく濃く(22px)、続く説明は前と同じ大きさ。
+   見出し「決算支援」→ 目玉の一文 → 説明 の3段で、何を頼めるかが一度で分かる。支援内容の行は通常の行(先頭には置く) */
+.p-closing-improvement .dh .dlead p:first-child { font-size: var(--t4); line-height: 1.75; letter-spacing: .04em; color: var(--fg); }
+.p-closing-improvement .dh .dlead p + p { margin-top: 20px; }
+@media (max-width: 639px) { .p-closing-improvement .dh .dlead p:first-child { font-size: min(var(--t4), calc((100vw - 32px) / 15.6)); } }   /* 幅360 でも「フォーマットの作成と運用支援。」(15字)が1行に入る */
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
