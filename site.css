@@ -998,6 +998,10 @@ section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top
    見出し「決算支援」→ 目玉の一文 → 説明 の3段で、何を頼めるかが一度で分かる。支援内容の行は通常の行(先頭には置く) */
 .p-closing-improvement .dh .dlead p:first-child { font-size: var(--t4); line-height: 1.75; letter-spacing: .04em; color: var(--fg); }
 .p-closing-improvement .dh .dlead p + p { margin-top: 20px; }
-@media (max-width: 639px) { .p-closing-improvement .dh .dlead p:first-child { font-size: min(var(--t4), calc((100vw - 32px) / 15.6)); } }   /* 幅360 でも「フォーマットの作成と運用支援。」(15字)が1行に入る */
+@media (max-width: 639px) { .p-closing-improvement .dh .dlead p:first-child { font-size: min(var(--t4), calc((100vw - 32px) / 16.4)); } }   /* 幅320〜390 でも「フォーマットの作成と運用支援。」(15字)が、1字ぶんの余裕を残して1行に入る */
+/* Round 5(別の審査担当の指摘): ペーパーのトップで、冒頭の枠だけが質感のない平らな色で塗られ、角の丸い明るい四角と、縁で切れた写真のもやに見えていた。
+   枠の地を透かして、ページと同じ紙の質感にする(写真・名刺・構図・濃さは同じ。ダーク・ライトは地に質感がないので見た目は変わらない) */
+:root[data-tone="paper"] .hero { background: transparent; }
+@media (min-width: 960px) and (max-width: 1099px) { .bd2 .fe b { font-size: 24px; } }   /* 料金の箱が2列で狭くなる幅でも「10万円〜／人日」を1行に */
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
