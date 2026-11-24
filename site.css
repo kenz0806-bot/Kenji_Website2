@@ -1006,4 +1006,32 @@ section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top
 /* Round 6(別の審査担当の指摘): 料金の2枚の箱で、（税別）が片方だけ次の行に落ち、金額の行の高さがずれていた(いまの本番から)。（税別）は両方とも金額の下の行に置く */
 .bd2 .fe b small { display: block; margin: 6px 0 0; }
 
+/* ===== 2026-11-24 博報堂の公式サイトの分析から(原則「情報の種類ごとに組み方を変える」「区画の境目と、まとまりの中の行の間隔を分ける」)。実務支援だけ ===== */
+/* 1. 仕事の進め方(実務支援): PC は空の左の列をやめ、6工程を全幅の3列×2段に。上の罫線と番号(34px)で順番を示す。地図より下が同じ「左に見出し・右に行」の繰り返しだったのを、工程の場面として分ける。
+      列が狭くなるので、説明は読点の所でだけ折る(「…確かめ／ます。」のような短い最後の行を出さない)。
+      修正試作(別の審査の指摘): 幅1024 では列が狭すぎ、読点が行の頭に来た(禁則の崩れ)。3列は幅1200 以上だけにし、1199 以下は前と同じ1列 */
+@media (min-width: 1200px) {
+  section:has(> #approach) > .two { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  section:has(> #approach) > .two > .stk { display: none; }
+  section:has(> #approach) .bd2 { max-width: none; }
+  section:has(> #approach) .bd2 > p { margin-left: 0; max-width: 46em; }
+  section:has(> #approach) .bd2 ol.st { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 56px; row-gap: 0; }
+  section:has(> #approach) .bd2 ol.st li { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 28px 0 40px; border-top: 1px solid var(--line); border-bottom: 0; }
+  section:has(> #approach) .bd2 ol.st li:last-child { border-bottom: 0; }
+  section:has(> #approach) .bd2 ol.st b { grid-row: auto; margin-bottom: 18px; }
+  section:has(> #approach) .bd2 ol.st h3 { margin: 0; }
+  section:has(> #approach) .bd2 ol.st p { grid-column: auto; margin-top: 8px; }
+}
+/* 2. 成果物の例(実務支援): 「成果物｜業務」の索引。業務名は右に揃えた小さな列(スマホは成果物の下の行)。括弧の中の割れがなくなる */
+section:has(> #deliverables) ul.li li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 40px; align-items: baseline; }
+section:has(> #deliverables) ul.li li .sv { font-size: var(--t2); letter-spacing: .06em; color: var(--fg2); white-space: nowrap; text-align: right; }
+@media (max-width: 639px) { section:has(> #deliverables) ul.li li { grid-template-columns: minmax(0, 1fr); row-gap: 2px; } section:has(> #deliverables) ul.li li .sv { text-align: left; } }
+/* 3. 足もとのリンク(全ページ): 1つのリンクの中の行間(27px)と、リンクとリンクの間(35px)の差が小さく、折り返した長いリンクの境目が分かりにくかった。
+      中の行間を 1.6 に詰め、間を 12px に広げる(差 8px → 約21px)。1.6 なら1行のリンクの高さが 24px で、押せる所の大きさ(24px 以上)を保つ(1.55 では 23.3px になり点検で出た) */
+.ft .col ul { gap: 12px; } .ft .col li a { line-height: 1.6; }
+/* 404 の見出し(幅359以下): 「見つかりませんでした。」(11字)が入らず「。」だけの行ができていた(幅320 の点検で見つけた、前からの不具合)。字の大きさを画面の幅から決める */
+@media (max-width: 359px) { .dh .dt { font-size: min(26px, calc((100vw - 32px) / 11.8)); } }
+/* 修正試作: 工程の説明の文節の折れ目(.ph)は、3列になる幅1200 以上だけで効かせる。1199 以下は前と同じ折り方 */
+@media (max-width: 1199px) { section:has(> #approach) .bd2 ol.st p.ph { word-break: normal; overflow-wrap: normal; } }
+
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
