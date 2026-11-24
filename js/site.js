@@ -41,12 +41,18 @@
   var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(redraw, 150); });
 
   /* MODE: 明るい地と暗い地 */
-  var TONES = ['dark', 'light', 'paper'];
-  function setTone(t) { if (TONES.indexOf(t) < 0) t = 'dark'; if (t === 'dark') root.removeAttribute('data-tone'); else root.setAttribute('data-tone', t); store('tone', t);
-    all('[data-tone-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-tone-btn') === t)); }); setTimeout(redraw, 50); }
-  all('[data-tone-btn]').forEach(function (b) { b.addEventListener('click', function () { setTone(b.getAttribute('data-tone-btn')); }); });
-  all('[data-tone-cycle]').forEach(function (b) { b.addEventListener('click', function () { var c = root.getAttribute('data-tone') || 'dark'; setTone(TONES[(TONES.indexOf(c) + 1) % TONES.length]); }); });
-  setTone(root.getAttribute('data-tone') || 'dark');
+  /* 2026-11-24 ご本人の指示: 標準はペーパー。順は ペーパー → ダーク → ライト → ペーパー。
+     選んだモードは、押したときだけ mode に保存する(前は開くたびに tone に保存していたので、選んでいない人にもダークが残っていた) */
+  var TONES = ['paper', 'dark', 'light'], TNAME = {paper: 'ペーパー', dark: 'ダーク', light: 'ライト'}, TBG = {paper: '#f3eee4', dark: '#212121', light: '#f5f5f5'};
+  function setTone(t, save) { if (TONES.indexOf(t) < 0) t = 'paper'; root.setAttribute('data-tone', t); if (save) store('mode', t);
+    all('[data-tone-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-tone-btn') === t)); });
+    var n = TONES[(TONES.indexOf(t) + 1) % TONES.length];
+    all('[data-tone-cycle]').forEach(function (b) { b.setAttribute('aria-label', '画面の明るさ: いまは' + TNAME[t] + '。押すと' + TNAME[n] + 'に切り替わります（ペーパー・ダーク・ライトの順）'); });
+    var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', TBG[t]);
+    setTimeout(redraw, 50); }
+  all('[data-tone-btn]').forEach(function (b) { b.addEventListener('click', function () { setTone(b.getAttribute('data-tone-btn'), true); }); });
+  all('[data-tone-cycle]').forEach(function (b) { b.addEventListener('click', function () { var c = root.getAttribute('data-tone'); if (TONES.indexOf(c) < 0) c = 'paper'; setTone(TONES[(TONES.indexOf(c) + 1) % TONES.length], true); }); });
+  setTone(root.getAttribute('data-tone') || 'paper');
 
   /* 差し色の見比べ(試作だけ) */
   function setAcc(a) { if (a === 'fuji') root.removeAttribute('data-acc'); else root.setAttribute('data-acc', a); store('acc', a);

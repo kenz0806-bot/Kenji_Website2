@@ -479,20 +479,20 @@ a.ln, .bd2 a.lk, .bd2 dd a, .bd2 p a { text-underline-offset: 6px; }
 :root[data-tone="paper"] .kv img, :root[data-tone="paper"] .door img { filter: sepia(.1) saturate(.9); }
 :root[data-tone="paper"] .pf img, :root[data-tone="paper"] .bd2 .who img { filter: saturate(.86) sepia(.06); }
 
-/* 切り替え: 三つ。スマホでは一つのボタンで、押すたびに ダーク → ライト → ペーパー と順に替わる(目次の中には三つとも文字つきで) */
+/* 切り替え: 三つ。スマホでは一つのボタンで、押すたびに ペーパー → ダーク → ライト と順に替わる(目次の中には三つとも文字つきで。2026-11-24 順を変更) */
 .tcyc { display: none; }
 @media (max-width: 639px) {
   .mode2 { display: none; }
   .tcyc { flex: none; margin-left: auto; display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; color: var(--fg); cursor: pointer; }
   .tcyc svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-  .tcyc svg { display: none; } :root:not([data-tone]) .tcyc .i-dark, :root[data-tone="light"] .tcyc .i-light, :root[data-tone="paper"] .tcyc .i-paper { display: block; }
+  .tcyc svg { display: none; } :root:not([data-tone]) .tcyc .i-dark, :root[data-tone="dark"] .tcyc .i-dark, :root[data-tone="light"] .tcyc .i-light, :root[data-tone="paper"] .tcyc .i-paper { display: block; }
 }
 @media (max-width: 359px) { .tcyc { width: 34px; height: 34px; } }
 .drawer .seg button { width: auto; height: 32px; padding: 0 12px; gap: 6px; display: inline-flex; align-items: center; font: 500 var(--t1)/1 var(--sans); }
 /* スマホの丸いボタン: いまの画面の印(月・太陽・紙)を出す(印の外側の箱で出し分ける) */
 @media (max-width: 639px) {
   .tcyc svg { display: block; } .tcyc > span { display: none; }
-  :root:not([data-tone]) .tcyc .i-dark, :root[data-tone="light"] .tcyc .i-light, :root[data-tone="paper"] .tcyc .i-paper { display: grid; place-items: center; }
+  :root:not([data-tone]) .tcyc .i-dark, :root[data-tone="dark"] .tcyc .i-dark, :root[data-tone="light"] .tcyc .i-light, :root[data-tone="paper"] .tcyc .i-paper { display: grid; place-items: center; }
 }
 
 /* ===== 博報堂の徹底分析から(2026-11-20 朝、ご本人「これでさらに完璧にして。博報堂徹底分析して」) =====
@@ -621,7 +621,8 @@ a.pan:hover { background: color-mix(in srgb, var(--acc) 5%, transparent); border
 /* 10. 画面の明るさの切り替え: 選んだ所へ、白い札が滑って移る */
 .mode2 { position: relative; display: inline-grid; grid-template-columns: repeat(3, 1fr); }
 .mode2::before { content: ""; position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3); border-radius: 999px; background: var(--fg); transition: transform .45s var(--ease2), background-color var(--d2) var(--ease); }
-:root[data-tone="light"] .mode2::before { transform: translateX(100%); } :root[data-tone="paper"] .mode2::before { transform: translateX(200%); }
+/* 2026-11-24 並びは ペーパー・ダーク・ライト(標準はペーパー=左端) */
+:root[data-tone="dark"] .mode2::before { transform: translateX(100%); } :root[data-tone="light"] .mode2::before { transform: translateX(200%); }
 .mode2 button { position: relative; justify-content: center; } .mode2 button[aria-pressed="true"] { background: none; color: var(--bg); transition: color .45s var(--ease2); }
 
 /* 11. 携帯の目次: 上から幕が下りるように開く */
@@ -977,5 +978,19 @@ html { scrollbar-width: thin; scrollbar-color: var(--line) var(--bg); }
 .news.nt0 small { max-width: 44em; }
 /* 7. 相談の箱の一文(幅374以下): 「オンライン相談から。」の10字が入らず「から。」だけの行ができていた。10字が入る大きさにする */
 @media (max-width: 639px) { .cta .state { font-size: min(var(--t5), calc((100vw - 82px) / 10.3)); } }
+
+/* ===== 2026-11-24 夜 AD深化3(ペーパーを標準に。A・B・C を8画面で比べて、明らかに良くなる2か所だけ) ===== */
+/* 1. 仕事の進め方(6ページ): 番号を大きく(Outfit 40px・真朱)して左の軸にし、導入文・事例・料金も同じ軸から始める(番号が「ぶら下がる」組み)。
+      隣の「責任の範囲」(小さな項目名｜中身の行)と、同じ行の一覧に見えないようにする。箱は戻さない。スマホは番号 28px、軸は外す */
+.bd2 ol.st li { grid-template-columns: 80px minmax(0, 1fr); gap: 6px 0; padding: 30px 0 32px; border-top-color: var(--line); }
+.bd2 ol.st li:last-child { border-bottom-color: var(--line); }
+.bd2 ol.st b { font: 500 40px/1 var(--en); letter-spacing: -.02em; align-self: start; padding-top: 2px; }
+.bd2 ol.st h3, .bd2 ol.st h4 { font-size: var(--t3); line-height: 1.5; } .bd2 ol.st p { margin-top: 2px; }   /* 番号の列 80px・行の上限なし: 96px・36em より「ます。」だけの行が少ない(6ページ×7幅で 8 → 5) */
+.bd2:has(> ol.st) > p, .bd2:has(> ol.st) > .fe, .bd2:has(> ol.st) > .fn { margin-left: 80px; }
+@media (max-width: 639px) { .bd2 ol.st li { grid-template-columns: 56px minmax(0, 1fr); padding: 22px 0 24px; } .bd2 ol.st b { font-size: 28px; } .bd2:has(> ol.st) > p, .bd2:has(> ol.st) > .fe, .bd2:has(> ol.st) > .fn { margin-left: 0; } }
+/* 2. 代表あいさつの2つの大きな一文(代表本人の声)だけを明朝に。同じページの「原則」の枠と同じ書体(新しい書体ではない)。
+      大きさ・改行・文の間の空きは前と同じ。字間 .02em なら、どの幅でも「セーフティーネットです。」は1行に収まる(10幅で確認) */
+section:has(> #message) .two > .stk > .state.q { font-family: var(--min); letter-spacing: .02em; line-height: 1.66; }
+section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top: .5em; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
