@@ -1026,12 +1026,17 @@ section:has(> #message) > .two:not(.love) > .stk > p.state.q .sl.s2 { margin-top
 section:has(> #deliverables) ul.li li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 40px; align-items: baseline; }
 section:has(> #deliverables) ul.li li .sv { font-size: var(--t2); letter-spacing: .06em; color: var(--fg2); white-space: nowrap; text-align: right; }
 @media (max-width: 639px) { section:has(> #deliverables) ul.li li { grid-template-columns: minmax(0, 1fr); row-gap: 2px; } section:has(> #deliverables) ul.li li .sv { text-align: left; } }
+/* 成果物の例 PC＝C 索引（成果物の列 24em＋業務の列 11em を隣に。業務名を右端へ押し出さない） 2026-11-25 */
+@media (min-width: 640px) { section:has(> #deliverables) ul.li li { grid-template-columns: minmax(0, 24em) 11em; column-gap: 24px; justify-content: start; } section:has(> #deliverables) ul.li li .sv { text-align: left; white-space: normal; } }
 /* 3. 足もとのリンク(全ページ): 1つのリンクの中の行間(27px)と、リンクとリンクの間(35px)の差が小さく、折り返した長いリンクの境目が分かりにくかった。
       中の行間を 1.6 に詰め、間を 12px に広げる(差 8px → 約21px)。1.6 なら1行のリンクの高さが 24px で、押せる所の大きさ(24px 以上)を保つ(1.55 では 23.3px になり点検で出た) */
 .ft .col ul { gap: 12px; } .ft .col li a { line-height: 1.6; }
 /* 404 の見出し(幅359以下): 「見つかりませんでした。」(11字)が入らず「。」だけの行ができていた(幅320 の点検で見つけた、前からの不具合)。字の大きさを画面の幅から決める */
 @media (max-width: 359px) { .dh .dt { font-size: min(26px, calc((100vw - 32px) / 11.8)); } }
 /* 修正試作: 工程の説明の文節の折れ目(.ph)は、3列になる幅1200 以上だけで効かせる。1199 以下は前と同じ折り方 */
-@media (max-width: 1199px) { section:has(> #approach) .bd2 ol.st p.ph { word-break: normal; overflow-wrap: normal; } }
+/* 工程の説明は全幅で文節の切れ目（<wbr>）だけで折る。WebKit の狭い幅で語の途中（つ／ながり・作／業）で折れていたのを直す 2026-11-25 */
+section:has(> #approach) .bd2 ol.st p.ph { word-break: keep-all; overflow-wrap: normal; }
+/* 足もとのリンク: 見た目は同じまま、押せる範囲を上下 4px ずつ広げる（1行 24px → 32px。リンクの間は 4px 残る） 2026-11-25 */
+.ft .col li a { padding-block: 4px; margin-block: -4px; }
 
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
